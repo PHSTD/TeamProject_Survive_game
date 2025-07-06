@@ -122,7 +122,7 @@ public class CraftingPanelUI : MonoBehaviour
     }
     private void Start()
     {
-
+        
     }
 
     public void OpenStorage()
