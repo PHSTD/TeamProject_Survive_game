@@ -29,6 +29,7 @@ public class TestUI : MonoBehaviour
 
     private void Update()
     {
+        if (PlayerManager.Instance.Player == null) return;
         SetInteractText();
         SetHotbarHighlight();
         SetInteractDelay(PlayerManager.Instance.InteractDelay);
