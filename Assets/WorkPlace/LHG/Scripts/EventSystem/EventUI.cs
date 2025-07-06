@@ -18,24 +18,50 @@ public class EventUI : MonoBehaviour
     public TMP_Text mainUIEventDesc;
     public TMP_Text mainUIEventEffectName; //�ΰ��� �̻��ΰ��?
     public TMP_Text mainUIEEventRequireItemName; //�ΰ��� �̻��ΰ��?
+    public TMP_Text uncompletedEventListText; //bedroom subui uncompleted events list display
 
     [Header("subUI ��ũ�Ѻ��� content")]
     public GameObject[] EventListContent;
 
     private int eventIndex;
 
+
     public void SetEventListTitleText(GameEventData data, int _eventIndex)
     {
         CanCompleteBtns.onClick.RemoveAllListeners();
+
         mainUIEventTitle.text = data.title;
         mainUIEventDesc.text = data.description;
         mainUIEventEffectName.text = data.eventEffectDesc;
-        mainUIEEventRequireItemName.text = data.eventRquirementDesc;
+
+        if (data.id == 10001)
+        {
+            mainUIEventEffectName.text += $"\n실제 적용될 패널티: 내구도 -{(int)data.RandomMinusDuraValue}";
+        }
+
+        // 필요 아이템 표시 (보유 수 / 필요 수) 0706추가
+        string requireText = "";
+
+        if (data.requiredItemA != null)
+        {
+            int haveA = Storage.Instance.GetItemCount(data.requiredItemA);
+            requireText += $"{data.requiredItemA.itemName}: {haveA}/{data.requiredAmountA}";
+        }
+
+        if (data.requiredItemB != null)
+        {
+            int haveB = Storage.Instance.GetItemCount(data.requiredItemB);
+            requireText += $"\n{data.requiredItemB.itemName}: {haveB}/{data.requiredAmountB}";
+        }
+
+        mainUIEEventRequireItemName.text = requireText;
+
         EventClearDetermine(data);
         CanCompleteBtns.onClick.AddListener(() => EventClearOnUI(data));
         eventIndex = _eventIndex;
-        Completed.gameObject.SetActive(false); //0704�Ϸ�ʹ�ư���� ��Ȱ��ȭ��ġ
+        Completed.gameObject.SetActive(false);
     }
+
 
 
     public void SetEventSubUIBtnTitle(GameObject go, int eventIndex) //����uiŸ��Ʋ����Ʈ�����
@@ -61,6 +87,23 @@ public class EventUI : MonoBehaviour
         EventManager.Instance.EventClear(data, eventIndex);
     }
 
-    
-    
+    public void UpdateUncompletedEventList()
+    {
+        List<GameEventData> uncompleted = EventManager.Instance.GetUnCompletedEvents();
+
+        if (uncompleted.Count == 0)
+        {
+            uncompletedEventListText.text = "오늘 완료하지 못한 이벤트가 없습니다.";
+            return;
+        }
+
+        string text = "오늘 완료하지 못한 이벤트 목록:\n";
+        foreach (var evt in uncompleted)
+        {
+            text += $"- {evt.title}\n";
+        }
+
+        uncompletedEventListText.text = text;
+    }
+
 }
