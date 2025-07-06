@@ -4398,7 +4398,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &549943514
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6160,7 +6160,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6a18f2d1a6a4d604e9dd012fa2bf61d8, type: 2}
   - {fileID: 11400000, guid: e184dbcaf88fc1f4f8e54e095b56b686, type: 2}
   - {fileID: 11400000, guid: 42376d7416c03554486722aebbffe32b, type: 2}
-  - {fileID: 11400000, guid: da1b147848eaaab47b244ba14acdbb86, type: 2}
+  - {fileID: 11400000, guid: 1671c48249f383448bff733fec230a4b, type: 2}
   - {fileID: 11400000, guid: 890741cee4a3d9045828d0fb771a7a91, type: 2}
   - {fileID: 11400000, guid: 7d356303085e91d4881ac39bf51a5b78, type: 2}
   - {fileID: 11400000, guid: 7c4cb31bc839660488c96c696c926db1, type: 2}
@@ -15751,7 +15751,7 @@ MonoBehaviour:
   numberOfSlotsToCreate: 50
   StorageUIPanel: {fileID: 1482989837}
   _gameCanvas: {fileID: 1903160403}
-  Testitem: {fileID: 11400000, guid: b67b81ee75f36e54f818f78822acd46f, type: 2}
+  Testitem: {fileID: 11400000, guid: 3a5f26ef8db564045b084fb7dfd08f27, type: 2}
 --- !u!114 &1903160401
 MonoBehaviour:
   m_ObjectHideFlags: 0
