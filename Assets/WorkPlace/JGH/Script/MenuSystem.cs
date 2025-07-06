@@ -641,8 +641,7 @@ public class MenuSystem : Singleton<MenuSystem>
         if (StatusSystem.Instance != null)
         {
             StatusSystem.Instance.SetCurrentDay(1);
-            // StatusSystem.Instance.SetOxygen(100f);
-            StatusSystem.Instance.SetOxygen(0.2f);
+            StatusSystem.Instance.SetOxygen(100f);
             StatusSystem.Instance.SetEnergy(300f);
             StatusSystem.Instance.SetDurability(100f);
             StatusSystem.Instance.SetIsToDay(false);
