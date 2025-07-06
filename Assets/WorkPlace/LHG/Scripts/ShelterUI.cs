@@ -14,7 +14,7 @@ public class ShelterUI : MonoBehaviour
     public GameObject[] ShelterMenu, Tabs, EventContainer, MapLocations, ExitShelterCases;
     [SerializeField] public TMP_Text[] Indicators, TonightEventText;
     public Image[] TabButtons, MapLocationsButtons;
-    public Sprite InactiveTabBG, ActiveTabBG; // 활성 비활성 시각화를 백그라운드스프라이트로 처리할 때 필요
+    //public Sprite InactiveTabBG, ActiveTabBG; // 활성 비활성 시각화를 백그라운드스프라이트로 처리할 때 필요
 
 
     //0704 실시간으로 인디케이터에 수치를 반영하기 위한 변수
@@ -145,11 +145,7 @@ public class ShelterUI : MonoBehaviour
         }
         Tabs[TabID].SetActive(true);
 
-        foreach (Image im in TabButtons)
-        {
-            im.sprite = InactiveTabBG;
-        }
-        TabButtons[TabID].sprite = ActiveTabBG;
+        
     }
 
 
@@ -167,19 +163,33 @@ public class ShelterUI : MonoBehaviour
     //패널-맵- 침실,쉘터,출구를 선택하면 해당 서브ui가 액티브
     public void SelectMapList(int MapLocationsID)
     {
-        //MapLocations 0:침실, 1:쉘터, 2,출구
+        ////MapLocations 0:침실, 1:쉘터, 2,출구
+        //foreach (GameObject go in MapLocations)
+        //{
+        //    go.SetActive(false);
+        //}
+        //MapLocations[MapLocationsID].SetActive(true);
+
+        ////[패널-지도탭] 0:침실 1: 쉘터 2:출구
+        //foreach (Image im in MapLocationsButtons)
+        //{
+        //    im.sprite = InactiveTabBG;
+        //}
+        //MapLocationsButtons[MapLocationsID].sprite = ActiveTabBG;
+
+        // MapLocations[0]: 침실
         foreach (GameObject go in MapLocations)
-        {
             go.SetActive(false);
-        }
         MapLocations[MapLocationsID].SetActive(true);
 
-        //[패널-지도탭] 0:침실 1: 쉘터 2:출구
-        foreach (Image im in MapLocationsButtons)
+        
+
+        //  침실로 진입할 때만 이벤트 목록 갱신
+        if (MapLocationsID == 0)
         {
-            im.sprite = InactiveTabBG;
+            EventUI.Instance?.UpdateUncompletedEventList();
+            Debug.Log("침실 진입: UpdateUncompletedEventList 호출");
         }
-        MapLocationsButtons[MapLocationsID].sprite = ActiveTabBG;
 
     }
 
