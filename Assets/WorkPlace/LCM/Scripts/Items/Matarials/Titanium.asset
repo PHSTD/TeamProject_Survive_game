@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Titanium
   m_EditorClassIdentifier: 
   itemName: Titanium
-  description: A basic item.
+  description: "\uD2F0\uD0C0\uB284\uC774\uB2E4."
   icon: {fileID: 21300000, guid: ac95252b53ab5eb4380f21aa0882c35c, type: 3}
   WorldPrefab: {fileID: 1644994281815225958, guid: 523da8c48cb98864db2f0bf7fc76ff13,
     type: 3}

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: JetPack
   m_EditorClassIdentifier: 
   itemName: JetPack
-  description: "\uC81C\uD2B8\uD329\uC774\uB2E4"
+  description: "\uC81C\uD2B8\uD329\uC774\uB2E4. \uC774\uAC83\uB9CC \uC788\uB2E4\uBA74
+    \uB098\uAC00\uC11C \uB354\uC6B1 \uBA40\uB9AC \uAC08\uC218 \uC788\uB2E4."
   icon: {fileID: 21300000, guid: cf2c247b2ae057c4fb8012c447c04d3c, type: 3}
   WorldPrefab: {fileID: 0}
   HandleItem: {fileID: 0}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80c94433e8ebb464da247dcb2b096056, type: 3}
   m_Name: Sunglasses
   m_EditorClassIdentifier: 
-  itemName: Sunglasses
+  itemName: "\uC36C\uAE00\uB77C\uC2A4"
   description: "\uC36C\uAE00\uB77C\uC2A4\uC774\uB2E4."
   icon: {fileID: 21300000, guid: f87cf12a73a70cd4e83fa083f93247cd, type: 3}
   WorldPrefab: {fileID: 0}
