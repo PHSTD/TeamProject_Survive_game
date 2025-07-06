@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: AirTank
   description: AirTank
-  icon: {fileID: 21300000, guid: 508d165ece597f34f9804422bd96709d, type: 3}
+  icon: {fileID: 21300000, guid: 391b730a49d533c46a724fa6575a6f1d, type: 3}
   WorldPrefab: {fileID: 5276651184178949307, guid: 8dd880c959d102346b64abee9fd0a344,
     type: 3}
   HandleItem: {fileID: 5276651184178949307, guid: 7211f1060e203f241bd42d0fc8b3da20,
