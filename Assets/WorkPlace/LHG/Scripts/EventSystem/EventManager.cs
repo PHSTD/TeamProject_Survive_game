@@ -8,7 +8,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-//전체 이벤트 시스템을 관리, 이벤트 데이터 로드, 이벤트 활성화, 진행 상태 업데이트, 이벤트완료 등
 public class EventManager : MonoBehaviour
 {
     public static EventManager Instance { get; private set; }
@@ -22,10 +21,6 @@ public class EventManager : MonoBehaviour
     [SerializeField] private Transform eventContents;
     [SerializeField] private Button eventButtonPrefab;
     [SerializeField] private EventUI eventUI;
-    
-
-    ////참조연결 지붕조각 연결하기 **테스트용코드 반드시 삭제**
-    //[SerializeField] Item testItem;
 
     private void Awake()
     {
@@ -44,29 +39,14 @@ public class EventManager : MonoBehaviour
 
     private void Start()
     {
-        // 너무 빨리 불러와서 널 오류나옴 
-        // EventStart();
         StartCoroutine(DelayedEventStart());
     }
     
-    // 250705 코루틴 추가
     private IEnumerator DelayedEventStart()
     {
-        yield return new WaitUntil(() => Storage.Instance != null); //대기
+        yield return new WaitUntil(() => Storage.Instance != null);
         EventStart();
     }
-
-    //private void Update()
-    //{
-    //    //**테스트용 코드 반드시 삭제**
-    //    if (Input.GetKeyDown(KeyCode.H))
-    //    {
-
-    //        Storage.Instance.AddItemToStorage(testItem, 1);
-    //        Debug.Log($"{testItem.name}창고에 추가됨");
-    //    }
-    //    //**테스트용 코드 반드시 삭제**
-    //}
 
     private void InitializeCurrentDay()
     {
@@ -81,7 +61,6 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    // 모든 이벤트 데이터 목록을 가져오고
     private void LoadAllEvents()
     {
         var events = Resources.LoadAll<GameEventData>("Events");
@@ -106,46 +85,276 @@ public class EventManager : MonoBehaviour
         return result;
     }
 
-    public void EventStart() // 일자가 시작될때 호출.
+    public void EventStart()
     {
-        GenerateDailyEvent();
-        GenerateRandomEvent();
-        DettachButton();
-        AttachButton(CurEventButtons);
-        AttachButton(FinishedButtons);
-
-        EventUI.Instance?.UpdateUncompletedEventList();
-    }
-
-    public void DettachButton()
-    {
-        for (int i = 0; i < eventContents.childCount; i++)
+        try
         {
-            eventContents.DetachChildren();
+            Debug.Log("EventStart 시작");
+            
+            // 기존 이벤트와 버튼 정리
+            ClearAllEvents();
+            
+            // 새로운 이벤트 생성
+            GenerateDailyEvent();
+            GenerateRandomEvent();
+            
+            // UI 업데이트
+            RefreshEventUI();
+            
+            EventUI.Instance?.UpdateUncompletedEventList();
+            
+            // 인덱스 동기화 검증
+            ValidateIndexSync();
+            
+            Debug.Log("EventStart 완료");
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"EventStart에서 오류 발생: {ex.Message}\n{ex.StackTrace}");
         }
     }
 
-    public void AttachButton(List<Button> list)
+    // 모든 이벤트와 버튼을 안전하게 정리하는 함수
+    private void ClearAllEvents()
     {
-        for (int i = 0; i < list.Count; i++)
+        Debug.Log("ClearAllEvents 시작");
+        
+        // 1. 먼저 기존 버튼들을 안전하게 정리
+        SafeDestroyButtons();
+        
+        // 2. 리스트 초기화
+        CurEvents.Clear();
+        CurEventButtons.Clear();
+        
+        Debug.Log("ClearAllEvents 완료");
+    }
+
+    // 안전한 버튼 파괴 함수
+    private void SafeDestroyButtons()
+    {
+        Debug.Log($"SafeDestroyButtons 시작 - CurEventButtons: {CurEventButtons.Count}개");
+        
+        // eventContents가 null인지 확인
+        if (eventContents == null)
         {
-            list[i].transform.SetParent(eventContents);
-            int temp = i; //??
-            if (list == CurEventButtons)
+            Debug.LogWarning("eventContents is null!");
+            return;
+        }
+
+        // 1. CurEventButtons 리스트의 버튼들을 안전하게 파괴
+        for (int i = CurEventButtons.Count - 1; i >= 0; i--)
+        {
+            if (CurEventButtons[i] != null)
             {
-                list[i].onClick.RemoveAllListeners();
-                list[i].onClick.AddListener(() => eventUI.SetEventListTitleText(CurEvents[temp], temp)); //0704 
+                try
+                {
+                    // 이벤트 리스너 제거
+                    CurEventButtons[i].onClick.RemoveAllListeners();
+                    
+                    // 오브젝트 파괴
+                    if (CurEventButtons[i].gameObject != null)
+                    {
+                        DestroyImmediate(CurEventButtons[i].gameObject);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogWarning($"버튼 파괴 중 오류: {ex.Message}");
+                }
+            }
+        }
+
+        // 2. eventContents의 모든 자식을 안전하게 파괴
+        List<Transform> childrenToDestroy = new List<Transform>();
+        
+        // 먼저 모든 자식을 리스트에 수집
+        for (int i = 0; i < eventContents.childCount; i++)
+        {
+            Transform child = eventContents.GetChild(i);
+            if (child != null)
+            {
+                childrenToDestroy.Add(child);
+            }
+        }
+        
+        // 수집된 자식들을 파괴
+        foreach (Transform child in childrenToDestroy)
+        {
+            if (child != null && child.gameObject != null)
+            {
+                try
+                {
+                    // 버튼 컴포넌트가 있다면 리스너 제거
+                    Button button = child.GetComponent<Button>();
+                    if (button != null)
+                    {
+                        button.onClick.RemoveAllListeners();
+                    }
+                    
+                    DestroyImmediate(child.gameObject);
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogWarning($"자식 오브젝트 파괴 중 오류: {ex.Message}");
+                }
+            }
+        }
+
+        Debug.Log("SafeDestroyButtons 완료");
+    }
+
+    // 기존의 DettachButton 함수를 더 안전하게 수정
+    public void DettachButton()
+    {
+        if (eventContents == null)
+        {
+            Debug.LogWarning("eventContents is null in DettachButton!");
+            return;
+        }
+
+        // 안전한 방법으로 자식들을 분리
+        List<Transform> children = new List<Transform>();
+        
+        // 현재 자식들을 리스트에 복사
+        for (int i = 0; i < eventContents.childCount; i++)
+        {
+            Transform child = eventContents.GetChild(i);
+            if (child != null)
+            {
+                children.Add(child);
+            }
+        }
+        
+        // 복사된 리스트를 통해 안전하게 분리
+        foreach (Transform child in children)
+        {
+            if (child != null && child.parent == eventContents)
+            {
+                try
+                {
+                    child.SetParent(null);
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogWarning($"자식 분리 중 오류: {ex.Message}");
+                }
             }
         }
     }
 
+    // 인덱스 동기화 검증 함수
+    private void ValidateIndexSync()
+    {
+        if (CurEvents.Count != CurEventButtons.Count)
+        {
+            Debug.LogError($"인덱스 불일치 발견! CurEvents: {CurEvents.Count}, CurEventButtons: {CurEventButtons.Count}");
+            RecoverIndexSync();
+        }
+        else
+        {
+            Debug.Log($"인덱스 동기화 확인: {CurEvents.Count}개 이벤트");
+        }
+    }
+
+    // 인덱스 동기화 복구 함수
+    private void RecoverIndexSync()
+    {
+        Debug.LogWarning("인덱스 동기화 복구 시도 중...");
+        
+        // 기존 버튼들 모두 제거
+        SafeDestroyButtons();
+        CurEventButtons.Clear();
+        
+        // 이벤트 수만큼 버튼 재생성
+        for (int i = 0; i < CurEvents.Count; i++)
+        {
+            CreateEventButton(i);
+        }
+        
+        // UI 재구성
+        RefreshEventUI();
+    }
+
+    public void AttachButton(List<Button> list)
+    {
+        if (eventContents == null)
+        {
+            Debug.LogWarning("eventContents is null in AttachButton!");
+            return;
+        }
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            // null 체크 강화
+            if (list[i] == null || list[i].gameObject == null)
+            {
+
+                Debug.LogWarning($"Button at index {i} is null or destroyed!");
+                continue;
+            }
+
+            try
+            {
+                list[i].transform.SetParent(eventContents);
+                
+                if (list == CurEventButtons)
+                {
+                    int capturedIndex = i;
+                    list[i].onClick.RemoveAllListeners();
+                    
+                    list[i].onClick.AddListener(() => 
+                    {
+                        if (IsValidEventIndex(capturedIndex))
+                        {
+                            eventUI?.SetEventListTitleText(CurEvents[capturedIndex], capturedIndex);
+                        }
+                        else
+                        {
+                            Debug.LogError($"Invalid event index: {capturedIndex}, CurEvents.Count: {CurEvents.Count}");
+                        }
+                    });
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"AttachButton에서 오류 발생: {ex.Message}");
+            }
+        }
+    }
+
+    // 유효한 이벤트 인덱스인지 확인
+    private bool IsValidEventIndex(int index)
+    {
+        return index >= 0 && index < CurEvents.Count && index < CurEventButtons.Count;
+    }
+
+    // UI 새로고침
+    private void RefreshEventUI()
+    {
+        try
+        {
+            DettachButton();
+            AttachButton(CurEventButtons);
+            AttachButton(FinishedButtons);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"RefreshEventUI에서 오류 발생: {ex.Message}");
+        }
+    }
 
     public void GenerateDailyEvent()
     {
-        // 중복 방지: CurEvents에 이미 id 10001이 있으면 추가 안 함
+        // 중복 방지
         if (CurEvents.Any(e => e.id == 10001))
         {
             Debug.Log("DailyEvent(id:10001)는 이미 존재하여 중복 생성하지 않음.");
+            return;
+        }
+
+        if (!eventDict.ContainsKey(10001))
+        {
+            Debug.LogError("Daily event (id: 10001) not found in eventDict!");
             return;
         }
 
@@ -153,74 +362,122 @@ public class EventManager : MonoBehaviour
         dailyEvent.GenerateRandomDuraValue();
         dailyEvent.isComplete = false;
 
-        CurEvents.Add(dailyEvent);
-        EventButtonCreate(CurEvents.Count - 1);
-
+        AddEventWithButton(dailyEvent);
         Debug.Log("내구도 수리 이벤트 발생(매일)");
     }
 
-
-    //public void GenerateDailyEvent() 
-    //{
-    //    //중복발생불가 로직이 필요한가?
-    //    CurEvents.Add(eventDict[10001]);
-    //    CurEvents[CurEvents.Count - 1].GenerateRandomDuraValue();
-    //    CurEvents[CurEvents.Count - 1].isComplete = false;
-    //    EventButtonCreate(CurEvents.Count - 1);
-    //    Debug.Log("내구도 수리 이벤트 발생(매일)");
-    //}
-
-    public void EventButtonCreate(int eventIndex)
+    // 이벤트와 버튼을 동시에 추가하는 함수
+    private void AddEventWithButton(GameEventData eventData)
     {
-        CurEventButtons.Add(Instantiate(eventButtonPrefab));
-        eventUI.SetEventSubUIBtnTitle(CurEventButtons[eventIndex].gameObject, eventIndex); //추가한부분**서브타이틀용**
+        if (eventData == null)
+        {
+            Debug.LogError("eventData is null in AddEventWithButton!");
+            return;
+        }
+
+        try
+        {
+            // 1. 이벤트 추가
+            CurEvents.Add(eventData);
+            
+            // 2. 버튼 생성 및 추가
+            int newIndex = CurEvents.Count - 1;
+            CreateEventButton(newIndex);
+            
+            Debug.Log($"이벤트 추가: {eventData.title}, 인덱스: {newIndex}");
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"AddEventWithButton에서 오류 발생: {ex.Message}");
+        }
+    }
+
+    // 버튼 생성 함수
+    private void CreateEventButton(int eventIndex)
+    {
+        if (eventButtonPrefab == null)
+        {
+            Debug.LogError("eventButtonPrefab is null!");
+            return;
+        }
+
+        try
+        {
+            Button newButton = Instantiate(eventButtonPrefab);
+            if (newButton != null)
+            {
+                CurEventButtons.Add(newButton);
+                eventUI?.SetEventSubUIBtnTitle(newButton.gameObject, eventIndex);
+            }
+            else
+            {
+                Debug.LogError("Failed to instantiate event button!");
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"CreateEventButton에서 오류 발생: {ex.Message}");
+        }
     }
 
     public void GenerateRandomEvent() 
     {
-        int eventID = 0;
-        if (3 >= StatusSystem.Instance.GetCurrentDay())
+        try
         {
-            eventID = Random.Range(10002, 10005); //1~3일차에 id 10002~10004 중 1개
-            Debug.Log("1~3일차 이벤트 발생");
-            CurEvents.Add(eventDict[eventID]);
-            CurEvents[CurEvents.Count - 1].isComplete = false;
-
-            EventButtonCreate(CurEvents.Count - 1);
-            return;
-        }
-
-        for (int i = 0; i < 2; i++)
-        {
-            if (6 >= StatusSystem.Instance.GetCurrentDay())
+            int currentDay = StatusSystem.Instance.GetCurrentDay();
+            List<int> availableEvents = new List<int>();
+            
+            // 일차별 사용 가능한 이벤트 ID 결정
+            if (currentDay <= 3)
             {
-                eventID = Random.Range(10002, 10007); //4~6일차에 id10002~10006 중 2개
-                Debug.Log("4~6일차 이벤트 발생");
+                availableEvents.AddRange(new int[] { 10002, 10003, 10004 });
+                Debug.Log("1~3일차 이벤트 풀 설정");
+            }
+            else if (currentDay <= 6)
+            {
+                availableEvents.AddRange(new int[] { 10002, 10003, 10004, 10005, 10006 });
+                Debug.Log("4~6일차 이벤트 풀 설정");
             }
             else
             {
-                eventID = Random.Range(10005, 10010); //7일차~ id10005~10009 중 2개
-                Debug.Log("7일차~ 이벤트 발생");
+                availableEvents.AddRange(new int[] { 10005, 10006, 10007, 10008, 10009 });
+                Debug.Log("7일차~ 이벤트 풀 설정");
             }
 
-            CurEvents.Add(eventDict[eventID]);
-            CurEvents[CurEvents.Count - 1].isComplete = false;
-
-            EventButtonCreate(CurEvents.Count - 1);
+            int eventsToGenerate = (currentDay <= 3) ? 1 : 2;
+            
+            for (int i = 0; i < eventsToGenerate && availableEvents.Count > 0; i++)
+            {
+                int randomIndex = Random.Range(0, availableEvents.Count);
+                int selectedEventID = availableEvents[randomIndex];
+                
+                // 이미 존재하는 이벤트인지 확인
+                if (!CurEvents.Any(e => e.id == selectedEventID) && eventDict.ContainsKey(selectedEventID))
+                {
+                    var eventData = eventDict[selectedEventID];
+                    eventData.isComplete = false;
+                    
+                    AddEventWithButton(eventData);
+                    Debug.Log($"랜덤 이벤트 생성: ID {selectedEventID}");
+                }
+                
+                availableEvents.RemoveAt(randomIndex);
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"GenerateRandomEvent에서 오류 발생: {ex.Message}");
         }
     }
 
-    // 이벤트가 완료가능인지 판별
     public bool DetermineEventComplete(GameEventData data)
     {
-        // null 오류
         if (data == null)
         {
             Debug.LogError("GameEventData is null!");
             return false;
         }
 
-        // null 오류
         if (Storage.Instance == null)
         {
             Debug.LogError("Storage.Instance is null!");
@@ -255,25 +512,74 @@ public class EventManager : MonoBehaviour
         }
 
         Debug.Log($"완료여부 점검 : [EventEffect] {data.title}, isComplete: {data.isComplete}");
-
-        Debug.Log($"[EventEffect] {data.title} 미완료로 패널티 적용: 산소 -{data.MinusOxygen}, 에너지 -{data.MinusEnergy}, 내구도 -{data.RandomMinusDuraValue + data.MinusDurability}");
     }
 
     public void EventClear(GameEventData data, int eventIndex)
     {
-        Storage.Instance.RemoveItem(data.requiredItemA, data.requiredAmountA);
-        if (data.requiredItemB != null)
-            Storage.Instance.RemoveItem(data.requiredItemB, data.requiredAmountB);
-        CurEventButtons[eventIndex].interactable = false;
-        FinishedButtons.Add(CurEventButtons[eventIndex]);
-        CurEvents.RemoveAt(eventIndex);
-        CurEventButtons.RemoveAt(eventIndex);
+        if (!IsValidEventIndex(eventIndex))
+        {
+            Debug.LogError($"Invalid event index: {eventIndex}, CurEvents.Count: {CurEvents.Count}");
+            return;
+        }
 
-        DettachButton();
-        AttachButton(CurEventButtons);
-        AttachButton(FinishedButtons);
+        try
+        {
+            // 아이템 제거
+            if (data.requiredItemA != null)
+            {
+                Storage.Instance.RemoveItem(data.requiredItemA, data.requiredAmountA);
+            }
+            
+            if (data.requiredItemB != null)
+            {
+                Storage.Instance.RemoveItem(data.requiredItemB, data.requiredAmountB);
+            }
 
-        EventUI.Instance?.UpdateUncompletedEventList();
+            // 버튼을 완료된 버튼 리스트로 이동
+            Button clearedButton = CurEventButtons[eventIndex];
+            if (clearedButton != null)
+            {
+                clearedButton.interactable = false;
+                FinishedButtons.Add(clearedButton);
+            }
+
+            // 동시에 제거하여 인덱스 동기화 유지
+            CurEvents.RemoveAt(eventIndex);
+            CurEventButtons.RemoveAt(eventIndex);
+
+            // 남은 버튼들의 이벤트 핸들러 재설정
+            UpdateRemainingButtonHandlers();
+
+            // UI 새로고침
+            RefreshEventUI();
+            EventUI.Instance?.UpdateUncompletedEventList();
+            
+            Debug.Log($"이벤트 클리어: {data.title}, 남은 이벤트 수: {CurEvents.Count}");
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"EventClear에서 오류 발생: {ex.Message}");
+        }
+    }
+
+    // 남은 버튼들의 이벤트 핸들러 재설정
+    private void UpdateRemainingButtonHandlers()
+    {
+        for (int i = 0; i < CurEventButtons.Count; i++)
+        {
+            if (CurEventButtons[i] != null && CurEventButtons[i].gameObject != null)
+            {
+                int capturedIndex = i;
+                CurEventButtons[i].onClick.RemoveAllListeners();
+                CurEventButtons[i].onClick.AddListener(() => 
+                {
+                    if (IsValidEventIndex(capturedIndex))
+                    {
+                        eventUI?.SetEventListTitleText(CurEvents[capturedIndex], capturedIndex);
+                    }
+                });
+            }
+        }
     }
 
     public List<GameEventData> GetUnCompletedEvents()
