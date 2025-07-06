@@ -6,6 +6,7 @@ using DesignPattern;
 
 public class StorageManager : Singleton<StorageManager>
 {
+    public static InventoryItem CarriedItem;
 
     public GameObject inventorySlotPrefab; // 인벤토리 슬롯 프리팹
     public Transform contentParent;         // Scroll Rect의 Content 오브젝트
@@ -21,7 +22,11 @@ public class StorageManager : Singleton<StorageManager>
 
     private List<InventorySlot> generatedStorageSlots = new List<InventorySlot>();
 
-    public Item Testitem;
+    public Transform draggablesTransform;
+
+
+    //특정 아이템이 들어갈시 테스트 용도
+    //public Item Testitem;
 
 
     private void Awake()
@@ -93,9 +98,17 @@ public class StorageManager : Singleton<StorageManager>
             Debug.LogError("StorageUIPanel이 할당되지 않았습니다. Inspector에서 할당해주세요!");
         }
 
-        Storage.Instance.AddItemToStorage(Testitem, 1);
+        //특정 아이템이 들어갈시 테스트용
+        //Storage.Instance.AddItemToStorage(Testitem, 1);
     }
 
+
+    private void Update()
+    {
+        if (CarriedItem == null) return;
+
+        CarriedItem.transform.position = Input.mousePosition;
+    }
     public void OpenStorageUI()
     {
         if (StorageUIPanel != null)
@@ -137,6 +150,84 @@ public class StorageManager : Singleton<StorageManager>
             {
                 Debug.LogError("인스턴스화된 슬롯 프리팹에 InventorySlot 컴포넌트가 없습니다!");
             }
+        }
+    }
+
+    public void SetCarriedItem(InventoryItem item)
+    {
+        if (CarriedItem != null)
+        {
+            item.activeSlot.SetItem(CarriedItem);
+        }
+
+        CarriedItem = item;
+        CarriedItem.canvasGroup.blocksRaycasts = false;
+        item.transform.SetParent(draggablesTransform);
+    }
+
+    public void HandleItemDropOrClick(InventorySlot targetSlot, InventoryItem droppedItemUI)
+    {
+        if (CarriedItem == null)
+        {
+            return;
+        }
+
+        // 아이템을 들고 있고, 빈 슬롯에 드롭하는 경우 (클릭은 아님)
+        // (CarriedItem != null && targetSlot.myItemUI == null)
+        else if (targetSlot.myItemUI == null)
+        {
+            Debug.Log("HangleItem: 빈 슬롯에 내려놓기 (드롭)");
+            InventorySlot originalSlot = CarriedItem.activeSlot;
+
+            targetSlot.SetItem(CarriedItem);
+
+
+            //이전 슬롯 지우기
+            if (originalSlot != null)
+            {
+                //originalSlot.ClearSlot(); // <-- 이 라인을 주석 처리하거나 제거해야 합니다!
+                originalSlot.myItemData = null; // 원본 슬롯의 데이터만 비웁니다.
+                originalSlot.myItemUI = null;   // 원본 슬롯의 UI 참조만 비웁니다.
+
+
+            }
+
+            CarriedItem = null; // 들고 있는 아이템 해제
+        }
+        // 아이템을 들고 있고, 아이템이 있는 슬롯에 드롭하는 경우 (클릭은 아님)
+        else // (CarriedItem != null && targetSlot.myItemUI != null)
+        {
+            // 같은 아이템이고 스택 가능하다면 스택 시도
+            if (CarriedItem.myItem == targetSlot.myItemData && CarriedItem.myItem.isStackable)
+            {
+                int transferAmount = Mathf.Min(
+                    CarriedItem.CurrentQuantity,
+                    CarriedItem.myItem.maxStackSize - targetSlot.myItemUI.CurrentQuantity
+                );
+
+                if (transferAmount > 0)
+                {
+                    targetSlot.myItemUI.CurrentQuantity += transferAmount;
+                    CarriedItem.CurrentQuantity -= transferAmount;
+
+
+                    if (CarriedItem.CurrentQuantity <= 0) // 들고 있던 아이템이 모두 스택되었으면
+                    {
+                        Destroy(CarriedItem.gameObject); // 들고 있던 아이템 UI 파괴
+                        CarriedItem = null; // 들고 있던 아이템 해제
+                    }
+                    // else: 들고 있던 아이템이 남아있으면, CarriedItem은 계속 마우스에 붙어있으므로 별도 처리 불필요.
+                    return; // 스택 완료 후 함수 종료
+                }
+            }
+
+            // 스택 불가능하거나 스택 공간이 없으면 아이템 교환
+            Debug.Log("HangleItem: 아이템 교환");
+            InventoryItem tempCarriedItem = CarriedItem;
+            InventoryItem tempTargetItem = targetSlot.myItemUI;
+
+
+            CarriedItem = null; // 들고 있는 아이템 해제
         }
     }
 }

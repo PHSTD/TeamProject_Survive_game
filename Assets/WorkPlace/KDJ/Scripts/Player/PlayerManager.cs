@@ -11,6 +11,7 @@ public class PlayerManager : Singleton<PlayerManager>
     private Akimbo _akimboCheck;
 
     public float Speed;
+    public int EventCount { get; set; } = 0; // 이벤트 카운트
 
     public bool CanUseJetpack { get; set; } = false; // 제트팩 사용 가능 여부
     public bool IsInIntercation = false;
@@ -83,8 +84,12 @@ public class PlayerManager : Singleton<PlayerManager>
         if (SceneSystem.Instance?.GetCurrentSceneName() != SceneSystem.Instance?.GetFarmingSceneName() || Player == null)
             return;
 
-        // 초당 0.2 소모
-        if(AirGauge.Value > 0)
+        if (AirGauge.Value <= 0)
+        {
+            AirGauge.Value = 0; 
+            return;
+        }
+
         AirGauge.Value -= 0.2f * Time.deltaTime;
 
         if (AirGauge.Value <= 0)

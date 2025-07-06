@@ -18,7 +18,7 @@ public class Storage : Singleton<Storage>
     // 창고 아이템 데이터 변경을 알리는 이벤트 (UI 업데이트용)
     public event Action<int, Item, int> OnStorageSlotItemUpdated;
 
-    public Item Testitem;
+
 
     private void Awake()
     {
@@ -163,15 +163,18 @@ public class Storage : Singleton<Storage>
 
                 if (slot.myItemUI.CurrentQuantity <= 0)
                 {
-                    // 슬롯의 아이템 데이터와 UI를 완전히 제거
-                    slot.ClearSlot(); // InventorySlot에 ClearSlot() 메서드가 필요합니다!
+                    slot.ClearSlot();
+                    // ClearSlot() 호출 후 myItemUI가 null이 될 수 있으므로,
+                    // 이벤트 호출 시에는 0을 전달하거나, myItemUI에 접근하지 않도록 합니다.
+                    OnStorageSlotItemUpdated?.Invoke(Array.IndexOf(storageSlots, slot), itemData, 0);
                 }
                 else
                 {
                     slot.UpdateSlotUI(); // UI 업데이트
+                    OnStorageSlotItemUpdated?.Invoke(Array.IndexOf(storageSlots, slot), itemData, slot.myItemUI.CurrentQuantity); // 이벤트 발생
                 }
 
-                OnStorageSlotItemUpdated?.Invoke(Array.IndexOf(storageSlots, slot), itemData, slot.myItemUI.CurrentQuantity); // 이벤트 발생
+                
 
                 if (quantityToRemove <= 0) break; // 모두 제거됨
             }

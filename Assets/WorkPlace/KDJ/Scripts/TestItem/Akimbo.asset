@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "\uB450 \uAC1C\uC758 \uCC44\uAD74\uAE30"
   description: "\uCC44\uAD74\uAE30 \uB450 \uAC1C\uC640 \uC120\uAE00\uB77C\uC2A4"
-  icon: {fileID: 21300000, guid: dac859c53cb773e4b99b194baf563dbd, type: 3}
+  icon: {fileID: 21300000, guid: 92db41ad1a8c974429b716b35b6724c2, type: 3}
   WorldPrefab: {fileID: 4477834618670588494, guid: 6bde9563558eab540bea86a5df9197ee,
     type: 3}
   HandleItem: {fileID: 4477834618670588494, guid: 643d3df462cd8cf459bb8f7ddd25565c,
