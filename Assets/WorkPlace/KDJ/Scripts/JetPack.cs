@@ -11,9 +11,9 @@ public class JetPack : MonoBehaviour
 
     private float _airUsage = 0;
 
-    private void Awake()
+    private void Start()
     {
-        PlayerManager.Instance.CanUseJetpack = _isJetPackOn;
+        //PlayerManager.Instance.CanUseJetpack = _isJetPackOn;
 
         if (PlayerManager.Instance.CanUseJetpack)
         {

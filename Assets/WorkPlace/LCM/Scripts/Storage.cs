@@ -18,6 +18,8 @@ public class Storage : Singleton<Storage>
     // 창고 아이템 데이터 변경을 알리는 이벤트 (UI 업데이트용)
     public event Action<int, Item, int> OnStorageSlotItemUpdated;
 
+    public Item Testitem;
+
     private void Awake()
     {
         base.Awake();
@@ -26,7 +28,7 @@ public class Storage : Singleton<Storage>
             _storageUIRootPanel.SetActive(false); // 초기에는 숨김
         }
 
-
+        
     }
 
     public void SetStorageSlots(InventorySlot[] slots)

@@ -6,7 +6,7 @@ using UnityEngine;
 public class ResultUI : MonoBehaviour
 {
     [Header("UI 기본요소")]
-    [SerializeField] private Canvas _canvas;
+    public Canvas Canvas;
     [SerializeField] private TMP_Text _remainO2;
     [SerializeField] private TMP_Text _O2TankMulti;
     [SerializeField] private TMP_Text _allO2Tank;
@@ -26,17 +26,17 @@ public class ResultUI : MonoBehaviour
 
     private void Awake()
     {
-        if (_canvas.enabled == true)
+        if (Canvas.enabled == true)
         {
-            _canvas.enabled = false;
+            Canvas.enabled = false;
         }
     }
 
     public void OnResultUI()
     {
-        if (_canvas != null)
+        if (Canvas != null)
         {
-            _canvas.enabled = true;
+            Canvas.enabled = true;
             UpdateResultUI();
             Cursor.lockState = CursorLockMode.None; // 커서 잠금 해제
         }
@@ -48,7 +48,7 @@ public class ResultUI : MonoBehaviour
 
     public void OffResultUI()
     {
-        if (_canvas != null)
+        if (Canvas != null)
         {
             //_canvas.enabled = false;
             ResetGainItemList();

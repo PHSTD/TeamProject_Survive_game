@@ -6,6 +6,7 @@ public class ShelterEntrance : Structure
     [SerializeField] private ResultUI _resultUI;
 
     private int _interactCount = 0;
+    private int _interactCount2 = 0;
     private float _timer = 0f;
 
     private void Update()
@@ -25,7 +26,9 @@ public class ShelterEntrance : Structure
 
         if (!MenuSystem.Instance.PauseMenu.activeSelf)
         {
-            if (!DayScriptSystem.Instance.DayScript.activeSelf && Cursor.lockState != CursorLockMode.Locked && !SampleUIManager.Instance.inventoryPanel.activeSelf)
+            if (!DayScriptSystem.Instance.DayScript.activeSelf && Cursor.lockState != CursorLockMode.Locked &&
+                !SampleUIManager.Instance.inventoryPanel.activeSelf && !_resultUI.Canvas.enabled && !MenuSystem.Instance.BackToMenuDialog.activeSelf &&
+                !MenuSystem.Instance.SettingMenu.activeSelf && !MenuSystem.Instance.GameOverDialog.activeSelf)
             {
                 Cursor.lockState = CursorLockMode.Locked;
             }
@@ -44,7 +47,7 @@ public class ShelterEntrance : Structure
             {
                 case 1:
                     Cursor.lockState = CursorLockMode.None;
-                    DayScriptSystem.Instance.SetDialogue(DayScriptSystem.Instance.ShToBack1());
+                    DayScriptSystem.Instance.SetDialogue(DayScriptSystem.Instance.ShToBack2());
                     break;
                 case 2:
                     Cursor.lockState = CursorLockMode.None;
@@ -57,7 +60,7 @@ public class ShelterEntrance : Structure
                 case 4:
                     Cursor.lockState = CursorLockMode.None;
                     DayScriptSystem.Instance.SetDialogue(DayScriptSystem.Instance.ShToBack4());
-                    break;
+                    break; 
                 default:
                     _resultUI.OnResultUI();
                     break;
@@ -65,7 +68,16 @@ public class ShelterEntrance : Structure
         }
         else
         {
-            _resultUI.OnResultUI();
+            _interactCount2++;
+
+            if (_interactCount2 == 1)
+            {
+                DayScriptSystem.Instance.ShowDialoguse();
+                Cursor.lockState = CursorLockMode.None;
+                DayScriptSystem.Instance.SetDialogue(DayScriptSystem.Instance.ShToBack1());
+            }
+            else 
+                _resultUI.OnResultUI();
         }
     }
 }
