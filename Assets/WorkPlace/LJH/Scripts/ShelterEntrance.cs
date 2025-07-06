@@ -27,7 +27,8 @@ public class ShelterEntrance : Structure
         if (!MenuSystem.Instance.PauseMenu.activeSelf)
         {
             if (!DayScriptSystem.Instance.DayScript.activeSelf && Cursor.lockState != CursorLockMode.Locked &&
-                !SampleUIManager.Instance.inventoryPanel.activeSelf && !_resultUI.Canvas.enabled)
+                !SampleUIManager.Instance.inventoryPanel.activeSelf && !_resultUI.Canvas.enabled && !MenuSystem.Instance.BackToMenuDialog.activeSelf &&
+                !MenuSystem.Instance.SettingMenu.activeSelf && !MenuSystem.Instance.GameOverDialog.activeSelf)
             {
                 Cursor.lockState = CursorLockMode.Locked;
             }

@@ -49,6 +49,7 @@ public class PlayerManager : Singleton<PlayerManager>
             PlayerInit();
         }
 
+        AirConsume();
         AkimboCheck(); // 아킴보 상태 확인
     }
 
@@ -74,6 +75,19 @@ public class PlayerManager : Singleton<PlayerManager>
         if (SelectItem != null)
         {
             IsAkimbo = SelectItem.HandleItem.TryGetComponent<Akimbo>(out _akimboCheck);
+        }
+    }
+
+    private void AirConsume()
+    {
+        // 초당 0.2 소모
+        AirGauge.Value -= 0.2f * Time.deltaTime;
+
+        if (AirGauge.Value <= 0)
+        {
+            // 게임오버
+            GameSystem.Instance.CheckGameOver();
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 
