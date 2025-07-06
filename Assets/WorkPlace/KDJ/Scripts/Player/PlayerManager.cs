@@ -9,9 +9,9 @@ public class PlayerManager : Singleton<PlayerManager>
     [field: SerializeField] public GameObject SunGlasses;
 
     private Akimbo _akimboCheck;
-    
+
     public float Speed;
-    
+
     public bool CanUseJetpack { get; set; } = false; // 제트팩 사용 가능 여부
     public bool IsInIntercation = false;
     public bool IsAkimbo { get; set; } = false;
@@ -19,7 +19,7 @@ public class PlayerManager : Singleton<PlayerManager>
     public TestWorldItem InteractableTestItem { get; set; }
     public Structure InteractableStructure { get; set; }
     public GameObject InHandItem { get; set; }
-    public GameObject InHandItem2 { get; set; } 
+    public GameObject InHandItem2 { get; set; }
     public GameObject InHeadItem { get; set; } // 헬멧, 선글라스 등 머리에 착용하는 아이템
     public Item SelectItem { get; set; }
     public ObseravableProperty<double> AirGauge = new();
@@ -80,7 +80,11 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private void AirConsume()
     {
+        if (SceneSystem.Instance?.GetCurrentSceneName() != SceneSystem.Instance?.GetFarmingSceneName() || Player == null)
+            return;
+
         // 초당 0.2 소모
+        if(AirGauge.Value > 0)
         AirGauge.Value -= 0.2f * Time.deltaTime;
 
         if (AirGauge.Value <= 0)
