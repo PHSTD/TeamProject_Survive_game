@@ -21,6 +21,8 @@ public class StorageManager : Singleton<StorageManager>
 
     private List<InventorySlot> generatedStorageSlots = new List<InventorySlot>();
 
+    public Item Testitem;
+
 
     private void Awake()
     {
@@ -90,6 +92,8 @@ public class StorageManager : Singleton<StorageManager>
         {
             Debug.LogError("StorageUIPanel이 할당되지 않았습니다. Inspector에서 할당해주세요!");
         }
+
+        Storage.Instance.AddItemToStorage(Testitem, 1);
     }
 
     public void OpenStorageUI()

@@ -77,13 +77,13 @@ public class ShelterUI : MonoBehaviour
         //셋텍스트말고..
         //[패널상단] 0:날짜 1:산소 / [패널]-[맵]-[쉘터]-[subUI] 2:산소, 3:전력(Energy/Electricity 용어통일필요?), 4:내구도
         Indicators[0].SetText($"Day : {StatusSystem.Instance.GetCurrentDay()}");
-        Indicators[1].SetText($"Oxygen : " + StatusSystem.Instance.GetOxygen().ToString("F1"));
-        Indicators[2].SetText($"Oxygen : " + StatusSystem.Instance.GetOxygen().ToString("F1"));
-        Indicators[3].SetText($"Energy : " + StatusSystem.Instance.GetEnergy().ToString("F1"));
-        Indicators[4].SetText($"Durability : " + StatusSystem.Instance.GetDurability().ToString("F1"));
-        Indicators[5].SetText($"Oxygen : " + StatusSystem.Instance.GetOxygen().ToString("F1"));
-        Indicators[6].SetText($"Energy : " + StatusSystem.Instance.GetEnergy().ToString("F1"));
-        Indicators[7].SetText($"Durability : " + StatusSystem.Instance.GetDurability().ToString("F1"));
+        //Indicators[1].SetText($"Oxygen : " + StatusSystem.Instance.GetOxygen().ToString("F1"));
+        //Indicators[2].SetText($"Oxygen : " + StatusSystem.Instance.GetOxygen().ToString("F1"));
+        //Indicators[3].SetText($"Energy : " + StatusSystem.Instance.GetEnergy().ToString("F1"));
+        //Indicators[4].SetText($"Durability : " + StatusSystem.Instance.GetDurability().ToString("F1"));
+        Indicators[5].SetText($"현재 산소 : " + StatusSystem.Instance.GetOxygen().ToString("F1"));
+        Indicators[6].SetText($"현재 전력 : " + StatusSystem.Instance.GetEnergy().ToString("F1"));
+        Indicators[7].SetText($"현재 쉘터 내구도 : " + StatusSystem.Instance.GetDurability().ToString("F1"));
     }
 
     public void ActiveUI(int ShelterMenuID)

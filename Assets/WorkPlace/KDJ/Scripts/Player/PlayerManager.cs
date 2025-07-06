@@ -39,6 +39,7 @@ public class PlayerManager : Singleton<PlayerManager>
     private void Start()
     {
         PlayerInit();
+        Debug.Log("플레이어 입장!!");
     }
 
     private void Update()
