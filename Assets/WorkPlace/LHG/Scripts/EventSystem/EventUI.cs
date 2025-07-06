@@ -8,6 +8,8 @@ public class EventUI : MonoBehaviour
 {
     //�г�, ��ư, ��ũ�� �� �� ui���� ���� ����ȭ
 
+    public static EventUI Instance { get; private set; }
+
     [Header("mainUI �Ϸ�Ұ�, �Ϸᰡ��, �Ϸ��")]
     public Button CanNotCompleteBtns;
     public Button CanCompleteBtns;
@@ -25,6 +27,19 @@ public class EventUI : MonoBehaviour
 
     private int eventIndex;
 
+    private void OnEnable()
+    {
+        EventUI.Instance?.UpdateUncompletedEventList();
+    }
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
+
 
     public void SetEventListTitleText(GameEventData data, int _eventIndex)
     {
@@ -34,10 +49,10 @@ public class EventUI : MonoBehaviour
         mainUIEventDesc.text = data.description;
         mainUIEventEffectName.text = data.eventEffectDesc;
 
-        if (data.id == 10001)
-        {
-            mainUIEventEffectName.text += $"\n실제 적용될 패널티: 내구도 -{(int)data.RandomMinusDuraValue}";
-        }
+        //if (data.id == 10001)
+        //{
+        //    mainUIEventEffectName.text += $"\n실제 적용될 패널티: 내구도 -{(int)data.RandomMinusDuraValue}";
+        //}
 
         // 필요 아이템 표시 (보유 수 / 필요 수) 0706추가
         string requireText = "";
@@ -60,6 +75,8 @@ public class EventUI : MonoBehaviour
         CanCompleteBtns.onClick.AddListener(() => EventClearOnUI(data));
         eventIndex = _eventIndex;
         Completed.gameObject.SetActive(false);
+
+        
     }
 
 
@@ -94,16 +111,19 @@ public class EventUI : MonoBehaviour
         if (uncompleted.Count == 0)
         {
             uncompletedEventListText.text = "오늘 완료하지 못한 이벤트가 없습니다.";
+            Debug.Log("BedRoom 오늘 완료하지 못한 이벤트 없음");
             return;
         }
 
-        string text = "오늘 완료하지 못한 이벤트 목록:\n";
+        string text = "완료하지 못한\n 이벤트들이 있다..:\n";
         foreach (var evt in uncompleted)
         {
             text += $"- {evt.title}\n";
         }
 
         uncompletedEventListText.text = text;
+        Debug.Log("BedRoom 오늘 완료하지 못한 이벤트가 있음");
+
     }
 
 }
