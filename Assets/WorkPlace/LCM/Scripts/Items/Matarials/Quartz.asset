@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Quartz
   m_EditorClassIdentifier: 
   itemName: Quartz
-  description: A basic item.
+  description: "\uC11D\uC601\uC774\uB2E4."
   icon: {fileID: 21300000, guid: 8f164afa81464b6478871329d930e845, type: 3}
   WorldPrefab: {fileID: 9125706204648540306, guid: c116181418c1be04da0e4bc94c046424,
     type: 3}

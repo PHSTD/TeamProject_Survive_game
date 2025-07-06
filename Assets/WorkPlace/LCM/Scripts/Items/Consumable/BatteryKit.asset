@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BatteryKit
   m_EditorClassIdentifier: 
   itemName: BatteryRepairKit
-  description: A basic item.
+  description: "\uBC30\uD130\uB9AC\uC218\uB9AC\uD0A4\uD2B8"
   icon: {fileID: 21300000, guid: 035c8247be0bb794db9b51b18ad647ce, type: 3}
   WorldPrefab: {fileID: 0}
   HandleItem: {fileID: 0}

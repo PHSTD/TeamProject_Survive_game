@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80c94433e8ebb464da247dcb2b096056, type: 3}
   m_Name: Lithium
   m_EditorClassIdentifier: 
-  itemName: Litium
-  description: A basic item.
+  itemName: "\uB9AC\uD2AC"
+  description: "\uB9AC\uD2AC\uC774\uB2E4."
   icon: {fileID: 21300000, guid: 60b0c1c69a0965d47b34dc900927ac91, type: 3}
   WorldPrefab: {fileID: 380808698533326205, guid: 83e7d47f0ca68494a9a2dc11ac77e0fe,
     type: 3}

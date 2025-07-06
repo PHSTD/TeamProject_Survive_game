@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: FieldBatteryPack
   m_EditorClassIdentifier: 
   itemName: BatteryPack
-  description: FeildBatteryPack
+  description: "\uC258\uD130\uB85C\uAC00\uC838\uAC00\uBA74 \uC5D0\uB108\uC9C0\uB97C
+    \uD68C\uBCF5\uD560\uC218 \uC788\uB2E4."
   icon: {fileID: 21300000, guid: 27de5ce4f20a63f41af00e7ac23f923c, type: 3}
   WorldPrefab: {fileID: 3834548869729833458, guid: 7a3a21fdb573dd24d852ae955c979ed7,
     type: 3}

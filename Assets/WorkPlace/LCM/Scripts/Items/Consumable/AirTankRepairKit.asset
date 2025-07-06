@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AirTankRepairKit
   m_EditorClassIdentifier: 
   itemName: AirTankRepairKit
-  description: A basic item.
+  description: "\uC5D0\uC5B4\uD0F1\uD06C\uC218\uB9AC\uD0A4\uD2B8"
   icon: {fileID: 21300000, guid: 508d165ece597f34f9804422bd96709d, type: 3}
   WorldPrefab: {fileID: 0}
   HandleItem: {fileID: 0}

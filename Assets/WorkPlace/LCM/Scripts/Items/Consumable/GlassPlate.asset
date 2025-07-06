@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GlassPlate
   m_EditorClassIdentifier: 
   itemName: GlassPlate
-  description: A basic item.
+  description: "\uC720\uB9AC\uD310\uC774\uB2E4. "
   icon: {fileID: 21300000, guid: c2c11550b1f3e2f488a58425959c0c94, type: 3}
   WorldPrefab: {fileID: 0}
   HandleItem: {fileID: 0}

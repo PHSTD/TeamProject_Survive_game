@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: New Item
   description: MiningRig
-  icon: {fileID: 21300000, guid: fe489cbfbf7ddb24d85d2047b053261c, type: 3}
+  icon: {fileID: 21300000, guid: 8ea169ce4a73f1e4a838723d64f1f388, type: 3}
   WorldPrefab: {fileID: 3752825578907025319, guid: b92a26f3684bc8242a96c99c8778b6bc,
     type: 3}
   HandleItem: {fileID: 3752825578907025319, guid: 86fa091089a84b3459516bc1392c17b3,
@@ -24,7 +24,5 @@ MonoBehaviour:
   maxStackSize: 99
   miningPower: 1
   toolType: 0
-  toolPrefab: {fileID: 3752825578907025319, guid: 86fa091089a84b3459516bc1392c17b3,
-    type: 3}
   toolObject: {fileID: 0}
   toolAction: {fileID: 0}
