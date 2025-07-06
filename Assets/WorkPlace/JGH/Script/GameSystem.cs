@@ -187,10 +187,11 @@ public class GameSystem : Singleton<GameSystem>
         // 하나라도 0 이하가 되면 게임 오버
         if (oxygen <= 0 || energy <= 0 || durability <= 0)
         {
-            Debug.Log("게임 오버!");
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             
-            // 게임 오버 처리
-            MenuSystem.Instance.ShowGameoverView();
+            MenuSystem.Instance.GameOverDialog.SetActive(true);
+            
         }
     }
     
