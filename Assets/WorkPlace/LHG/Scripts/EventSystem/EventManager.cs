@@ -135,9 +135,7 @@ public class EventManager : MonoBehaviour
             {
                 list[i].onClick.RemoveAllListeners();
                 list[i].onClick.AddListener(() => eventUI.SetEventListTitleText(CurEvents[temp], temp)); //0704 
-
             }
-
         }
     }
 
