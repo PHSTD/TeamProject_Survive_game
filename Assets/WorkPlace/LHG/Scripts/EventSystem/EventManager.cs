@@ -113,6 +113,8 @@ public class EventManager : MonoBehaviour
         DettachButton();
         AttachButton(CurEventButtons);
         AttachButton(FinishedButtons);
+
+        EventUI.Instance?.UpdateUncompletedEventList();
     }
 
     public void DettachButton()
@@ -272,6 +274,8 @@ public class EventManager : MonoBehaviour
         DettachButton();
         AttachButton(CurEventButtons);
         AttachButton(FinishedButtons);
+
+        EventUI.Instance?.UpdateUncompletedEventList();
     }
 
     public List<GameEventData> GetUnCompletedEvents()
