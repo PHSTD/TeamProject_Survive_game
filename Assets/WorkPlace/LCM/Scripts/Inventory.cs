@@ -49,7 +49,7 @@ public class Inventory : Singleton<Inventory>
 
     void Awake()
     {
-        SingletonInit();
+        base.Awake();
 
         // Canvas를 찾거나 설정
         //SetupCanvas();
