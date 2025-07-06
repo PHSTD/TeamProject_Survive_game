@@ -55,6 +55,7 @@ public class DayScriptSystem : Singleton<DayScriptSystem>
     public TMP_Text NameText;
 
     private int currentLine = 0;
+    
     private Dictionary<string, GameObject> characters;
     private List<DayScriptEntry> dialogues;
     
@@ -168,6 +169,7 @@ public class DayScriptSystem : Singleton<DayScriptSystem>
     public void OnClickSkip()
     {
         DayScript.SetActive(false);
+        TryGoToEndingScene();
     }
 
     void ShowNextLine()
@@ -189,6 +191,9 @@ public class DayScriptSystem : Singleton<DayScriptSystem>
             ScriptText.text = "";
             NameText.text = "";
             DayScript.SetActive(false);
+            
+            TryGoToEndingScene();
+
             return;
         }
 
@@ -212,6 +217,27 @@ public class DayScriptSystem : Singleton<DayScriptSystem>
 
         currentLine++; // 큐에 넣은 다음에 증가시켜야 중복 출력 안 됨
         ShowNextLine(); // 큐에서 첫 줄 출력
+    }
+    
+    private void TryGoToEndingScene()
+    {
+        if (dialogues.Count > 0)
+        {
+            var lastEntry = dialogues[dialogues.Count - 1];
+            if (!lastEntry.isRandom && lastEntry.lines.Count > 0)
+            {
+                var lastLine = lastEntry.lines[lastEntry.lines.Count - 1];
+                if (lastLine.text.Trim() == "포기하지 않기")
+                {
+                    SceneSystem.Instance.LoadSceneWithCallback(SceneSystem.Instance.GetTitleSceneName(), () =>
+                    {
+                        MenuSystem.Instance.AllMenuFalse();
+                        MenuSystem.Instance.TitleMusic();
+                        StartCoroutine(MenuSystem.Instance.SetupVideoAfterSceneLoad());
+                    });
+                }
+            }
+        }
     }
 
 

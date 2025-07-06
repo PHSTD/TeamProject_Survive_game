@@ -723,7 +723,7 @@ public class MenuSystem : Singleton<MenuSystem>
         AllMenuFalse();
     } 
     
-    private IEnumerator SetupVideoAfterSceneLoad()
+    public IEnumerator SetupVideoAfterSceneLoad()
     {
         // 씬 오브젝트들이 완전히 로드될 때까지 기다림
         yield return null;
