@@ -54,36 +54,28 @@ public class Inventory : Singleton<Inventory>
         // Canvas를 찾거나 설정
         //SetupCanvas();
 
-        
+
 
 
         // _gameCanvas가 에디터에서 직접 할당되지 않았다면 태그로 찾기
         if (_gameCanvas == null)
         {
             GameObject canvasGO = GameObject.FindWithTag(MAIN_CANVAS_TAG);
-            if (canvasGO != null)
-            {
-                _gameCanvas = canvasGO.GetComponent<Canvas>();
-            }
-
-            if (_gameCanvas == null)
-            {
-                Debug.LogError($"'{MAIN_CANVAS_TAG}' 태그를 가진 Canvas를 찾을 수 없습니다. 씬에 Canvas가 있는지, 태그가 올바른지 확인해주세요.");
-                return;
-            }
+            if (canvasGO != null) _gameCanvas = canvasGO.GetComponent<Canvas>();
+            if (_gameCanvas == null) Debug.LogError($"Inventory: '{MAIN_CANVAS_TAG}' 태그 Canvas를 찾을 수 없습니다! 수동 할당하거나 Manager Scene에 배치하세요.");
+        }
+        if (_inventoryUIRootPanel == null)
+        {
+            Debug.LogError("Inventory: Inventory UI Root Panel이 할당되지 않았습니다. UI 토글이 작동하지 않을 수 있습니다.");
         }
 
         // _gameCanvas가 DDOL 씬에 있는지 확인 (최초 1회만 설정)
-        if (_gameCanvas.gameObject.scene.buildIndex != -1)
+        if (_gameCanvas != null && _gameCanvas.gameObject.scene.buildIndex != -1)
         {
             DontDestroyOnLoad(_gameCanvas.gameObject);
-            Debug.Log($"Inventory: '{MAIN_CANVAS_TAG}' 태그를 가진 _gameCanvas를 DontDestroyOnLoad로 설정했습니다.");
+            Debug.Log($"Inventory: _gameCanvas를 DontDestroyOnLoad로 설정했습니다.");
         }
-        else
-        {
-            Debug.Log($"Inventory: '{MAIN_CANVAS_TAG}' 태그를 가진 _gameCanvas가 이미 DontDestroyOnLoad 씬에 있습니다.");
 
-        }
 
         if (_inventoryUIRootPanel != null && _inventoryUIRootPanel.transform.parent != _gameCanvas.transform)
         {
