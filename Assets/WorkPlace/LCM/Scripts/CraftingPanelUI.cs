@@ -206,7 +206,7 @@ public class CraftingPanelUI : MonoBehaviour
         if (_craftedItemDescriptionText != null) _craftedItemDescriptionText.text = recipe.description;
 
         int currentCraftedItemAmount = Storage.Instance.GetItemCount(recipe.craftedItem);
-        if (_craftedItemCurrentAmountText != null) _craftedItemCurrentAmountText.text = $"????: {currentCraftedItemAmount}??";
+        if (_craftedItemCurrentAmountText != null) _craftedItemCurrentAmountText.text = $"보유: {currentCraftedItemAmount}개";
 
         ClearMaterialList();
         foreach (var material in recipe.requiredMaterials)
@@ -230,7 +230,7 @@ public class CraftingPanelUI : MonoBehaviour
 
         if (_energyCostText != null)
         {
-            string energyStatus = $"????? ??????: {recipe.energyCost}";
+            string energyStatus = $"제작시 전력: {recipe.energyCost}";
             if (StatusSystem.Instance != null && StatusSystem.Instance.GetEnergy() < recipe.energyCost)
             {
                 _energyCostText.color = Color.red; // ?????? ??????? ?????????? ???
