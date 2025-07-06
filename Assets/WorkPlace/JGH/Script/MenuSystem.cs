@@ -341,7 +341,7 @@ public class MenuSystem : Singleton<MenuSystem>
 
         if (GameOverDialog != null)
         {
-            _gameOverYesButton= GameOverDialog.transform.Find("YesButton").GetComponent<Button>();
+            _gameOverYesButton = GameOverDialog.transform.Find("YesButton").GetComponent<Button>();
             _gameOverYesButton.onClick.AddListener(OnClickGameOverYes);
         }
     }
@@ -623,8 +623,9 @@ public class MenuSystem : Singleton<MenuSystem>
         ExitMenu.SetActive(false);
     }
 
-    private void AllMenuFalse()
+    public void AllMenuFalse()
     {
+        GameOverDialog.SetActive(false);
         NewGameDialog.SetActive(false);
         ExitMenu.SetActive(false);
         ContinueDialog.SetActive(false);
@@ -641,7 +642,6 @@ public class MenuSystem : Singleton<MenuSystem>
         {
             StatusSystem.Instance.SetCurrentDay(1);
             StatusSystem.Instance.SetOxygen(100f);
-            // StatusSystem.Instance.SetOxygen(90f);
             StatusSystem.Instance.SetEnergy(300f);
             StatusSystem.Instance.SetDurability(100f);
             StatusSystem.Instance.SetIsToDay(false);
@@ -767,25 +767,14 @@ public class MenuSystem : Singleton<MenuSystem>
         PauseMenu.SetActive(true);
     }
 
-    public void ShowGameoverView()
-    {
-        GameOverDialog.SetActive(true);
-    }
-    
     private void OnClickGameOverYes()
     {
-        
         SceneSystem.Instance.LoadSceneWithCallback(SceneSystem.Instance.GetTitleSceneName(), () =>
         {
-            // 씬이 전환된 후 1~2 프레임 기다린 뒤 수행
+            AllMenuFalse();
+            TitleMusic();
             StartCoroutine(SetupVideoAfterSceneLoad());
         });
-        
-        TitleMusic();
-
-        AllMenuFalse();
-        GameOverDialog.SetActive(false);
-        MainMenu.SetActive(true);
     }
 
     public void TitleMusic()

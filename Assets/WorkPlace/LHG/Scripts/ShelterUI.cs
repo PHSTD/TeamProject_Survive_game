@@ -96,17 +96,14 @@ public class ShelterUI : MonoBehaviour
             case 1: // 모니터 → 이벤트 탭
                 SwitchToTab(0); // 탭 전환
                 AutoSelectFirstEvent(); // 제일 위 이벤트 자동 선택
-                Debug.LogError("모니터 선택됨");
                 break;
             case 4: // 워크벤치 → 제작 탭
                 SwitchToTab(2); // 탭 전환
                                 // TODO: 제작 탭 초기화 코드 추가 예정
-                Debug.LogError("작업대 선택됨");
                 break;
             case 2: // 맵 → 맵 탭 + 쉘터 자동 선택
                 SwitchToTab(1);
                 SelectMapList(1); // 쉘터 선택 (0:침실, 1:쉘터, 2:출구)
-                Debug.LogError("지도 선택됨");
                 break;
         }
     }
