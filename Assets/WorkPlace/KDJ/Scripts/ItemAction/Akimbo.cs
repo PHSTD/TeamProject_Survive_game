@@ -11,6 +11,8 @@ public class Akimbo : ToolAction
     public override void Action(int power)
     {
         // ±¤¹° Ã¼±¼ ·ÎÁ÷
+        if (PlayerManager.Instance.InHandItem == null) return;
+
         int count = Physics.OverlapSphereNonAlloc(PlayerManager.Instance.InHandItem.transform.position
             + PlayerManager.Instance.Player.transform.forward * 1.5f, 3f, _colls, _layerMask);
 
