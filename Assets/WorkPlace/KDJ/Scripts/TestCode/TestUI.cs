@@ -70,23 +70,25 @@ public class TestUI : MonoBehaviour
 
     private void ToggleKeyUI()
     {
-        if(PlayerManager.Instance.Player.CanJump)
-        {
-            _space.SetActive(true);
-        }
-        else
-        {
-            _space.SetActive(false);
-        }
+        if (PlayerManager.Instance.Player != null)
+            if (PlayerManager.Instance.Player.CanJump)
+            {
+                _space.SetActive(true);
+            }
+            else
+            {
+                _space.SetActive(false);
+            }
 
-        if (!PlayerManager.Instance.Player.Controller.isGrounded && PlayerManager.Instance.CanUseJetpack)
-        {
-            _shift.SetActive(true);
-        }
-        else
-        {
-            _shift.SetActive(false);
-        }
+        if (PlayerManager.Instance.Player != null)
+            if (!PlayerManager.Instance.Player.Controller.isGrounded && PlayerManager.Instance.CanUseJetpack)
+            {
+                _shift.SetActive(true);
+            }
+            else
+            {
+                _shift.SetActive(false);
+            }
     }
 
     private void SetInteractText()
