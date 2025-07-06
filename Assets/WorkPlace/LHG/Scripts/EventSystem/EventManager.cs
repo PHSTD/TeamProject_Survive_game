@@ -288,6 +288,7 @@ public class EventManager : MonoBehaviour
             // null 체크 강화
             if (list[i] == null || list[i].gameObject == null)
             {
+
                 Debug.LogWarning($"Button at index {i} is null or destroyed!");
                 continue;
             }
