@@ -186,6 +186,7 @@ public class DayScriptSystem : Singleton<DayScriptSystem>
     public void OnClickSkip()
     {
         DayScript.SetActive(false);
+        Time.timeScale = 1f;
         TryGoToEndingScene();
     }
 
