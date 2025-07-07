@@ -41,6 +41,38 @@ public class Storage : Singleton<Storage>
         LoadItemsFromFolder("Items/Matarials");
 
         LoadItemsFromFolder("Items/Tool");
+        Debug.Log($"Storage.Awake: 모든 폴더에서 총 {_allItemsDictionary.Count}개의 아이템이 _allItemsDictionary에 로드되었습니다.");
+    }
+
+    void Update()
+    {
+        // 디버그 키를 눌렀을 때만 실행
+        if (Input.GetKeyDown(KeyCode.L)) // 'L' 키를 눌렀을 때
+        {
+            Debug.Log("--- [DEBUG] 현재 창고 슬롯 상태 (L 키 입력) ---");
+            if (storageSlots == null || storageSlots.Length == 0)
+            {
+                Debug.Log("창고 슬롯이 설정되지 않았거나 비어있습니다.");
+                return;
+            }
+
+            for (int i = 0; i < storageSlots.Length; i++)
+            {
+                if (storageSlots[i] != null && storageSlots[i].myItemData != null && storageSlots[i].myItemUI != null)
+                {
+                    Debug.Log($"- 슬롯 {i}: {storageSlots[i].myItemData.itemName}, 수량: {storageSlots[i].myItemUI.CurrentQuantity}");
+                }
+                else if (storageSlots[i] != null)
+                {
+                    Debug.Log($"- 슬롯 {i}: 비어있음");
+                }
+                else
+                {
+                    Debug.Log($"- 슬롯 {i}: (슬롯 오브젝트 자체도 null)");
+                }
+            }
+            Debug.Log("-------------------------------------------");
+        }
     }
 
     public void SetStorageSlots(InventorySlot[] slots)
@@ -245,34 +277,49 @@ public class Storage : Singleton<Storage>
 
     public void LoadStorageData()
     {
+
+        Debug.Log("LoadStorageData() 호출");
         if (File.Exists(saveFilePath))
         {
+            Debug.Log("저장파일 존재");
             string json = File.ReadAllText(saveFilePath);
             StorageSaveData loadedData = JsonUtility.FromJson<StorageSaveData>(json);
 
             // 기존 슬롯 초기화
             foreach (var slot in storageSlots)
             {
-                slot.ClearSlot(); // 기존 UI 아이템 제거
+                if (slot != null) // null 체크 추가
+                {
+                    slot.ClearSlot(); // 기존 UI 아이템 제거
+                    Debug.Log($"클리어 슬롯 진행: {Array.IndexOf(storageSlots, slot)}번 슬롯 초기화됨."); // 디버그 로그 추가
+                }
             }
 
             for (int i = 0; i < loadedData.slots.Count; i++)
             {
+
+                InventorySlotSaveData slotSaveData = loadedData.slots[i];
+
                 if (i >= storageSlots.Length)
                 {
                     Debug.LogWarning("불러온 슬롯 개수가 현재 창고 슬롯 개수보다 많습니다. 초과된 데이터는 무시됩니다.");
                     break;
                 }
 
-                InventorySlotSaveData slotSaveData = loadedData.slots[i];
+                
                 if (slotSaveData.itemInSlot != null)
                 {
                     string itemName = slotSaveData.itemInSlot.itemData.itemName;
                     int quantity = slotSaveData.itemInSlot.currentQuantity;
 
+                    Debug.Log($"[LoadStorageData] 슬롯 {i}: JSON에서 '{itemName}' (수량: {quantity}) 아이템 로드 시도 중.");
+
                     // 저장된 아이템 이름으로 실제 Item ScriptableObject 찾기
                     if (_allItemsDictionary.TryGetValue(itemName, out Item actualItemData))
                     {
+                        Debug.Log($"[LoadStorageData] 슬롯 {i}: _allItemsDictionary에서 '{itemName}' 아이템 찾기 성공!");
+
+
                         // 새로운 InventoryItem UI 생성 및 초기화
                         InventoryItem newItemUI = Instantiate(_itemPrefab, storageSlots[i].transform);
                         newItemUI.Initialize(actualItemData, storageSlots[i]);
@@ -288,6 +335,7 @@ public class Storage : Singleton<Storage>
                         storageSlots[i].SetItem(newItemUI);
                         storageSlots[i].UpdateSlotUI();
                         OnStorageSlotItemUpdated?.Invoke(i, actualItemData, quantity);
+                        Debug.Log($"[LoadStorageData] 슬롯 {i}: UI에 '{itemName}' 아이템 설정 완료.");
                     }
                     else
                     {
@@ -297,11 +345,12 @@ public class Storage : Singleton<Storage>
                 else
                 {
                     // 슬롯이 비어있으면 ClearSlot()을 호출하여 UI를 비움 (이미 위에서 전체 초기화했지만 명시적으로)
+                    Debug.Log($"[LoadStorageData] 슬롯 {i}: 비어있는 슬롯입니다. ClearSlot 호출.");
                     storageSlots[i].ClearSlot();
                     OnStorageSlotItemUpdated?.Invoke(i, null, 0); // 비어있는 슬롯 UI 업데이트 알림
                 }
             }
-            Debug.Log("창고 데이터 불러오기 완료.");
+            Debug.Log("Storage 창고 데이터 불러오기 완료.");
         }
         else
         {
@@ -312,11 +361,19 @@ public class Storage : Singleton<Storage>
     private void LoadItemsFromFolder(string folderPath)
     {
         Item[] itemsInFolder = Resources.LoadAll<Item>(folderPath);
+        Debug.Log($"Resources.LoadAll<Item>('{folderPath}') 결과: {itemsInFolder.Length}개의 아이템 발견.");
         foreach (Item item in itemsInFolder)
         {
+            if (item == null)
+            {
+                Debug.LogWarning($"경로 '{folderPath}'에서 null 아이템이 로드되었습니다. 에셋 손상 또는 잘못된 타입일 수 있습니다.");
+                continue;
+            }
+
             if (!_allItemsDictionary.ContainsKey(item.itemName))
             {
                 _allItemsDictionary.Add(item.itemName, item);
+                Debug.Log($"'_allItemsDictionary'에 아이템 추가됨: {item.itemName}");
             }
             else
             {
