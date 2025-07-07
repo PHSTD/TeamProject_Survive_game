@@ -190,6 +190,7 @@ public class GameSystem : Singleton<GameSystem>
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             
+            DayScriptSystem.Instance.DayScript.SetActive(false);
             MenuSystem.Instance.GameOverDialog.SetActive(true);
             
         }
