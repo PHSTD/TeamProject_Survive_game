@@ -14,10 +14,9 @@ public class PlayerManager : Singleton<PlayerManager>
     public int EventCount { get; set; } = 0; // 이벤트 카운트
 
     public bool CanUseJetpack { get; set; } = false; // 제트팩 사용 가능 여부
-    public bool IsInIntercation = false;
+    public bool IsInIntercation => InteractableItem != null || InteractableStructure != null;
     public bool IsAkimbo { get; set; } = false;
     public WorldItem InteractableItem { get; set; }
-    public TestWorldItem InteractableTestItem { get; set; }
     public Structure InteractableStructure { get; set; }
     public GameObject InHandItem { get; set; }
     public GameObject InHandItem2 { get; set; }
@@ -52,6 +51,9 @@ public class PlayerManager : Singleton<PlayerManager>
 
         AirConsume();
         AkimboCheck(); // 아킴보 상태 확인
+
+        Debug.Log("InteractableItem: " + InteractableItem);
+        Debug.Log("InteractableStructure: " + InteractableStructure);
     }
 
     private void Init()
@@ -86,18 +88,13 @@ public class PlayerManager : Singleton<PlayerManager>
 
         if (AirGauge.Value <= 0)
         {
-            AirGauge.Value = 0; 
+            AirGauge.Value = 0;
+            GameSystem.Instance.CheckGameOver();
+            Cursor.lockState = CursorLockMode.None;
             return;
         }
 
         AirGauge.Value -= 0.2f * Time.deltaTime;
-
-        if (AirGauge.Value <= 0)
-        {
-            // 게임오버
-            GameSystem.Instance.CheckGameOver();
-            Cursor.lockState = CursorLockMode.None;
-        }
     }
 
     public void AkimboReset()
