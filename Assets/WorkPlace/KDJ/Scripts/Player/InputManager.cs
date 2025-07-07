@@ -8,7 +8,7 @@ public class InputManager : Singleton<InputManager>
     public Vector3 MoveDir { get; set; } // 이동 방향
 
     public bool IsUsingTool { get; private set; } // 테스트용 bool 값, 마이닝 애니메이션 실행 여부
-    public bool CanMove => !PlayerManager.Instance.Player.IsSlipping && !PlayerManager.Instance.Player.IsUsingJetPack;
+    public bool CanMove => !PlayerManager.Instance.Player.IsSlipping && !PlayerManager.Instance.Player.IsUsingJetPack && PlayerManager.Instance.Player != null;
     public int CurHotbar { get; private set; } = 1; // 현재 선택된 핫바 번호, 초기값은 1
 
     private Coroutine _itemCo;
@@ -34,6 +34,8 @@ public class InputManager : Singleton<InputManager>
 
     private void PlayerInput()
     {
+        if (PlayerManager.Instance.Player == null) return; // 플레이어가 없으면 입력 처리 중단
+
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 

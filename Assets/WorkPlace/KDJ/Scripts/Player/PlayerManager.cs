@@ -49,11 +49,10 @@ public class PlayerManager : Singleton<PlayerManager>
             PlayerInit();
         }
 
+        if (Player == null) return;
+
         AirConsume();
         AkimboCheck(); // 아킴보 상태 확인
-
-        Debug.Log("InteractableItem: " + InteractableItem);
-        Debug.Log("InteractableStructure: " + InteractableStructure);
     }
 
     private void Init()
@@ -108,18 +107,14 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         double shelterAir = StatusSystem.Instance.GetOxygen();
 
-        Debug.Log($"쉘터 산소량: {shelterAir}");
-
         if (shelterAir > 100)
         {
             AirGauge.Value = 100;
             StatusSystem.Instance.SetMinusOxygen(100);
-            Debug.Log("플레이어 산소 초기화: 100");
             return;
         }
 
         AirGauge.Value = shelterAir;
         StatusSystem.Instance.SetMinusOxygen(shelterAir);
-        Debug.Log($"플레이어 산소 초기화: {shelterAir}");
     }
 }

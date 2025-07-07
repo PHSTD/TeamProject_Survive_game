@@ -128,7 +128,6 @@ public class PlayerInteraction : MonoBehaviour
             {
                 if (interactable as WorldItem)
                 {
-                    
                     PlayerManager.Instance.InteractableItem = interactable as WorldItem;
                 }
                 else if (interactable as Structure)
