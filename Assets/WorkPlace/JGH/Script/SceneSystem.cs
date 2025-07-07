@@ -65,9 +65,7 @@ public class SceneSystem : Singleton<SceneSystem>
     {
         base.Awake();
 
-
         ValidateSceneNames();
-
     }
 
     /// <summary>
@@ -123,7 +121,6 @@ public class SceneSystem : Singleton<SceneSystem>
     {
         // 씬 로드 후 저장하도록 변경
         LoadSceneWithDelay(_shelterSceneName);
-        EventManager.Instance.OnReturnShelter.Invoke();
     }
 
     /// <summary>
