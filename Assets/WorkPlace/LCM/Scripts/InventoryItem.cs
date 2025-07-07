@@ -15,6 +15,8 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     [SerializeField] private TextMeshProUGUI quantityText;
     private int _currentQuantity;
+
+    public bool CanDrag = true; 
     public int CurrentQuantity
     {
         get { return _currentQuantity; }
@@ -66,7 +68,7 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (canvasGroup != null)
         {
             canvasGroup.alpha = 1; // 보이게
-            canvasGroup.blocksRaycasts = true; // 레이캐스트 허용 (드래그 가능하도록)
+            canvasGroup.blocksRaycasts = CanDrag; // 레이캐스트 허용 (드래그 가능하도록)
         }
 
         transform.SetParent(parent.transform); // 초기 부모 설정
@@ -87,9 +89,11 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (myItem != null)
         {
             // SampleUIManager (또는 Inventory)의 SetItemDescription 메서드를 호출하여 설명을 표시합니다.
-            if(SampleUIManager.Instance != null)
-            SampleUIManager.Instance.SetItemDescription(myItem.description);
-            SampleUIManager.Instance.SetItemName(myItem.itemName);
+            if (SampleUIManager.Instance != null)
+            {
+                SampleUIManager.Instance.SetItemDescription(myItem.description);
+                SampleUIManager.Instance.SetItemName(myItem.itemName);
+            }
         }
         
     }
@@ -97,13 +101,16 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerExit(PointerEventData eventData)
     {
         // 마우스가 아이템 위에서 벗어나면 설명을 지웁니다.
-        SampleUIManager.Instance.SetItemDescription("");
-        SampleUIManager.Instance.SetItemName("");
+        if (SampleUIManager.Instance != null)
+        {
+            SampleUIManager.Instance.SetItemDescription("");
+            SampleUIManager.Instance.SetItemName("");
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (canvasGroup == null) return;
+        if (!CanDrag || canvasGroup == null) return;
 
         // Inventory에서 CarriedItem 설정
         Inventory.Instance.SetCarriedItem(this);
@@ -111,11 +118,13 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnDrag(PointerEventData eventData)
     {
+        if(!CanDrag) return;
         transform.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if(!CanDrag) return;
         // 원래 슬롯으로 돌아가도록 처리합니다.
         if (Inventory.CarriedItem != null)
         {
