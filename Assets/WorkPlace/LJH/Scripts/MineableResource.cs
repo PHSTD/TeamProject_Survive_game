@@ -46,6 +46,10 @@ public class MineableResource : MonoBehaviour
         
         if (currentHealth <= 0f)
         {
+            for (int i = 0; i < 3; i++)
+            {
+                SpawnLoot();
+            }
             UpdateEmissionColor();
             Debug.Log($"{gameObject.name} 채굴 완료!");
         }
