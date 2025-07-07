@@ -9,6 +9,7 @@ public class SampleUIManager : Singleton<SampleUIManager>
 {
     
     [SerializeField] private TextMeshProUGUI _itemDescriptionText;
+    [SerializeField] private TextMeshProUGUI _itemName;
 
     [Header("Hotbar UI")]
     [SerializeField] private GameObject[] hotbarSelectionIndicators;
@@ -41,6 +42,7 @@ public class SampleUIManager : Singleton<SampleUIManager>
         }
 
         SetItemDescription(""); // 아이템 설명 초기화
+        SetItemName("");
 
         // Inventory의 핫바 관련 이벤트 구독
         Inventory.Instance.OnHotbarSlotChanged += OnHotbarSlotSelectionChanged;
@@ -114,6 +116,14 @@ public class SampleUIManager : Singleton<SampleUIManager>
         if (_itemDescriptionText != null)
         {
             _itemDescriptionText.text = description;
+        }
+    }
+
+    public void SetItemName(string name)
+    {
+        if(_itemName != null)
+        {
+            _itemName.text = name;
         }
     }
 

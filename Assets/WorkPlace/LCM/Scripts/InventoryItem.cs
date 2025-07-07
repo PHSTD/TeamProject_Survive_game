@@ -89,6 +89,7 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             // SampleUIManager (또는 Inventory)의 SetItemDescription 메서드를 호출하여 설명을 표시합니다.
             if(SampleUIManager.Instance != null)
             SampleUIManager.Instance.SetItemDescription(myItem.description);
+            SampleUIManager.Instance.SetItemName(myItem.name);
         }
         
     }
@@ -97,6 +98,7 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         // 마우스가 아이템 위에서 벗어나면 설명을 지웁니다.
         SampleUIManager.Instance.SetItemDescription("");
+        SampleUIManager.Instance.SetItemName("");
     }
 
     public void OnBeginDrag(PointerEventData eventData)

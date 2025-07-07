@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85879ff987a41cc4c83d735bd223cc1e, type: 3}
   m_Name: FieldBatteryPack
   m_EditorClassIdentifier: 
-  itemName: BatteryPack
+  itemName: "\uBC30\uD130\uB9AC\uD329"
   description: "\uC804\uB958\uB97C \uCDA9\uC804\uD574\uC900\uB2E4. \uC804\uB825 +10"
   icon: {fileID: 21300000, guid: 27de5ce4f20a63f41af00e7ac23f923c, type: 3}
   WorldPrefab: {fileID: 3834548869729833458, guid: 7a3a21fdb573dd24d852ae955c979ed7,
