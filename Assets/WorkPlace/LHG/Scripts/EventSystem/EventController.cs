@@ -105,6 +105,8 @@ namespace Assets.WorkPlace.LHG.Scripts.EventSystem
             // 이벤트 완료 후 처리 로직
             Debug.Log($"이벤트 {data.title}이 완료되었습니다.");
             RefreshButton();
+            gameObject.transform.SetAsLastSibling();
+
         }
         private void OnButtonClick()
         {

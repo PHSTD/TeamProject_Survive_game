@@ -329,12 +329,11 @@ public class FileSystem : Singleton<FileSystem>
     }
     
     // ========== 이벤트 파일 관리 ==========
-    void SaveEventData(string value)
+    public void SaveEventData(string value)
     {
         if (EventManager.Instance != null)
         {
-            string eventDataString = EventManager.Instance.GetEventDataString();
-            File.WriteAllText(eventFilePath, eventDataString);
+            File.WriteAllText(eventFilePath, value);
         }
         else
         {

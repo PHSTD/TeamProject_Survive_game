@@ -27,7 +27,7 @@ public class DayTransitionUI : MonoBehaviour
     {
         gameObject.SetActive(true);
         StartCoroutine(TransitionSequence(uncompletedEvents));
-        EventManager.Instance.SaveEventData();
+        
     }
 
     private IEnumerator TransitionSequence(List<GameEventData> events)
@@ -68,6 +68,9 @@ public class DayTransitionUI : MonoBehaviour
 
         // 5. Ȯ�� ��ư
         confirmButton.gameObject.SetActive(true);
+
+        EventManager.Instance.EventGeneration(StatusSystem.Instance.GetCurrentDay());
+        EventManager.Instance.SaveEventData();
 
     }
 

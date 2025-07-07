@@ -767,7 +767,7 @@ public class EventManager : MonoBehaviour
     private void Start()
     {
         eventDict[10001].ActivateEvent();
-        loaodEventData(FileSystem.Instance.LoadEventData());
+        LoadEventData(FileSystem.Instance.LoadEventData());
         RefreshButtons();
     }
 
@@ -859,7 +859,7 @@ public class EventManager : MonoBehaviour
         }
         RefreshButtons();
     }
-    private string GetEventDataString()
+    public string GetEventDataString()
     {
         string eventDataString = "{";
         foreach (var kvp in eventDict)
