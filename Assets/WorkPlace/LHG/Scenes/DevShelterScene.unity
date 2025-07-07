@@ -838,7 +838,7 @@ GameObject:
   - component: {fileID: 83923389}
   - component: {fileID: 83923390}
   m_Layer: 5
-  m_Name: Content
+  m_Name: EventsContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -860,7 +860,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00035218723}
+  m_AnchoredPosition: {x: 0, y: -0.0000210514}
   m_SizeDelta: {x: 0, y: 392.18}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &83923390
@@ -2626,7 +2626,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &334657186
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4485,7 +4485,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &549943514
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8742,13 +8742,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18688205424db8641b77c7f8c7e49b96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnReturnShelter:
+    m_PersistentCalls:
+      m_Calls: []
   CurEvents: []
+  FinishedEvents: []
   CurEventButtons: []
   FinishedButtons: []
-  eventContents: {fileID: 83923389}
+  EventContents: {fileID: 0}
   eventButtonPrefab: {fileID: 1576431746535964494, guid: 5632298244e6ee945b8709a6bfb83b98,
     type: 3}
-  eventUI: {fileID: 1708774638}
+  EventUI: {fileID: 0}
 --- !u!4 &1079479337
 Transform:
   m_ObjectHideFlags: 0
@@ -11431,12 +11435,12 @@ PrefabInstance:
     - target: {fileID: 1080031413479747586, guid: a0eee75762c05aa4cada9e222cc8d4f7,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1080031413479747586, guid: a0eee75762c05aa4cada9e222cc8d4f7,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1080031413479747586, guid: a0eee75762c05aa4cada9e222cc8d4f7,
         type: 3}
@@ -11599,12 +11603,12 @@ PrefabInstance:
     - target: {fileID: 7591662803329607802, guid: a0eee75762c05aa4cada9e222cc8d4f7,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: -3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7591662803329607802, guid: a0eee75762c05aa4cada9e222cc8d4f7,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 60
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7591662803329607802, guid: a0eee75762c05aa4cada9e222cc8d4f7,
         type: 3}
@@ -13852,7 +13856,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: 0.00041628827}
+  m_AnchoredPosition: {x: 0.000030517578, y: 0.0000019886145}
   m_SizeDelta: {x: 0, y: 463}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1701694032
@@ -14113,6 +14117,7 @@ MonoBehaviour:
   mainUIEEventRequireItemName: {fileID: 1886892189}
   uncompletedEventListText: {fileID: 1993691482}
   EventListContent: []
+  eventContent: {fileID: 83923389}
 --- !u!1 &1714973337
 GameObject:
   m_ObjectHideFlags: 0
@@ -15326,7 +15331,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1826653268
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16076,7 +16081,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1903160399
 RectTransform:
   m_ObjectHideFlags: 0

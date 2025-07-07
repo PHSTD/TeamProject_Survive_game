@@ -102,10 +102,10 @@ public class DayTransitionUI : MonoBehaviour
         StatusSystem.Instance.NextCurrentDay();
         StatusSystem.Instance.SetIsToDay(false);
 
-        // 새로운 이벤트 시작
-        EventManager.Instance.EventStart();
-
         // 씬 재로딩
-        SceneSystem.Instance.LoadSceneWithDelayAndSave(SceneSystem.Instance.GetShelterSceneName());
+        SceneSystem.Instance.LoadSceneWithCallback(SceneSystem.Instance.GetShelterSceneName(), () =>
+        {
+            EventManager.Instance.EventStart();
+        });
     }
 }

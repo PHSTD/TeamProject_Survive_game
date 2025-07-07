@@ -28,8 +28,6 @@ public class SystemCanvasUI : MonoBehaviour
     
     public void ExitNotWithEnoughOxygenYes()
     {
-       
-        
         // 탐색한걸로 세팅 
         StatusSystem.Instance.SetIsToDay(true);
         
