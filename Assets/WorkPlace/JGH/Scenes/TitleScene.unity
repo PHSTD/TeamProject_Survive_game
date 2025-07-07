@@ -680,6 +680,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: DayScriptSystem, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 5719603473526848308, guid: 977d34212d0044a8ca36680c3489159c,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 6477548914595736795, guid: 977d34212d0044a8ca36680c3489159c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
