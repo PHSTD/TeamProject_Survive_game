@@ -117,9 +117,8 @@ public class MenuSystem : Singleton<MenuSystem>
     void Start()
     {
         TitleMusic();
-
-        InitializeMainMenu();
         
+        InitializeMainMenu();
         InitializeSettingMenu();
         InitializeOtherMenus();
         LoadAndApplySettings();
@@ -492,12 +491,10 @@ public class MenuSystem : Singleton<MenuSystem>
         {
             SettingMenu.SetActive(false);
             PauseMenu.SetActive(true);
-            Time.timeScale = 0f;
         }
         else
         {
             SettingMenu.SetActive(false);
-            Time.timeScale = 1f;
         }
     }
 
@@ -540,12 +537,10 @@ public class MenuSystem : Singleton<MenuSystem>
         {
             SettingMenu.SetActive(false);
             PauseMenu.SetActive(true);
-            Time.timeScale = 0f;
         }
         else
         {
             SettingMenu.SetActive(false);
-            Time.timeScale = 1f;
         }
     }
 
@@ -579,14 +574,7 @@ public class MenuSystem : Singleton<MenuSystem>
     {
         AllMenuFalse();
         MainMenu.SetActive(true);
-        if (PauseMenu.activeSelf)
-        {
-            _isPauseSettingMode = true;
-        }
-        else
-        {
-            _isPauseSettingMode = false;
-        }
+        _isPauseSettingMode = false;
         SettingMenu.SetActive(true);
     }
 
