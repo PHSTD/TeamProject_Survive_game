@@ -82,6 +82,10 @@ public class InputManager : Singleton<InputManager>
         {
             SampleUIManager.Instance.ToggleInventoryUI(); // SampleUIManager의 인벤토리 토글 메서드 호출
         }
+        if (Input.GetKeyUp(KeyCode.Tab))
+        {
+            SampleUIManager.Instance.ToggleInventoryUI();
+        }
 
         #region 핫바 선택
         // 아이템이 사용 중이 아닐때만 교체
