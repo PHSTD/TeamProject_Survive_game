@@ -14,10 +14,9 @@ public class PlayerManager : Singleton<PlayerManager>
     public int EventCount { get; set; } = 0; // 이벤트 카운트
 
     public bool CanUseJetpack { get; set; } = false; // 제트팩 사용 가능 여부
-    public bool IsInIntercation = false;
+    public bool IsInIntercation => InteractableItem != null || InteractableStructure != null;
     public bool IsAkimbo { get; set; } = false;
     public WorldItem InteractableItem { get; set; }
-    public TestWorldItem InteractableTestItem { get; set; }
     public Structure InteractableStructure { get; set; }
     public GameObject InHandItem { get; set; }
     public GameObject InHandItem2 { get; set; }

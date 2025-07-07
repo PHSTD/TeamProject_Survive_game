@@ -53,6 +53,7 @@ public class PickupItem : Structure
         }
 
         Destroy(gameObject, 2.5f);
+        Destroy(this);
     }
 
 

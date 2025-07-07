@@ -49,7 +49,7 @@ public class TestUI : MonoBehaviour
 
     private void SetInteractUI(bool value)
     {
-        if (_isInInteract.Value)
+        if (PlayerManager.Instance.InteractableItem != null || PlayerManager.Instance.InteractableStructure != null)
         {
             _interactUI.SetActive(true);
 
@@ -114,13 +114,6 @@ public class TestUI : MonoBehaviour
             if (!_itemName.text.Equals(PlayerManager.Instance.InteractableStructure.name))
             {
                 _itemName.text = PlayerManager.Instance.InteractableStructure.StructureName;
-            }
-        }
-        else if (PlayerManager.Instance.InteractableTestItem != null)
-        {
-            if (!_itemName.text.Equals(PlayerManager.Instance.InteractableTestItem.itemData.name))
-            {
-                _itemName.text = PlayerManager.Instance.InteractableTestItem.itemData.name;
             }
         }
     }

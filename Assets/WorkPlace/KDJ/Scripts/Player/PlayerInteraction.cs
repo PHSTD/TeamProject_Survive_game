@@ -128,28 +128,12 @@ public class PlayerInteraction : MonoBehaviour
             {
                 if (interactable as WorldItem)
                 {
+                    
                     PlayerManager.Instance.InteractableItem = interactable as WorldItem;
-                    PlayerManager.Instance.IsInIntercation = true;
-                    PlayerManager.Instance.InteractableStructure = null;
                 }
                 else if (interactable as Structure)
                 {
-                    Structure structure = interactable as Structure;
-                    if (structure.InteractCount > 0)
-                    {
-                        PlayerManager.Instance.InteractableStructure = null;
-                        return;
-                    }
-
                     PlayerManager.Instance.InteractableStructure = interactable as Structure;
-                    PlayerManager.Instance.IsInIntercation = true;
-                    PlayerManager.Instance.InteractableItem = null;
-                }
-                // 아래는 테스트 코드
-                else if (interactable as TestWorldItem)
-                {
-                    PlayerManager.Instance.InteractableTestItem = interactable as TestWorldItem;
-                    PlayerManager.Instance.IsInIntercation = true;
                 }
             }
         }
@@ -158,7 +142,6 @@ public class PlayerInteraction : MonoBehaviour
             // 주변에 인터렉션 가능한 오브젝트가 없으면 상호작용을 null로 설정
             PlayerManager.Instance.InteractableStructure = null;
             PlayerManager.Instance.InteractableItem = null;
-            PlayerManager.Instance.IsInIntercation = false;
         }
     }
 
