@@ -41,14 +41,6 @@ public class MineableResource : MonoBehaviour
         currentHealth -= miningDamage;
         currentHealth = Mathf.Max(currentHealth, 0f);
 
-        // 10 % 확률
-        if (Random.value > 0.1f) return;
-        else
-        {
-            SpawnLoot();
-            UpdateEmissionColor();
-        }
-        
         if (currentHealth <= 0f)
         {
             for (int i = 0; i < 3; i++)
@@ -58,6 +50,14 @@ public class MineableResource : MonoBehaviour
             UpdateEmissionColor();
             Debug.Log($"{gameObject.name} 채굴 완료!");
         }
+
+        // 10 % 확률
+        if (Random.value > 0.1f) return;
+        else
+        {
+            SpawnLoot();
+            UpdateEmissionColor();
+        }        
     }
 
     /* -------------------- Loot Spawn -------------------- */
