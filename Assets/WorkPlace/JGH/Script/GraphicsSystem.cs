@@ -1,8 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using System.IO;
 using DesignPattern;
 
 [System.Serializable]
