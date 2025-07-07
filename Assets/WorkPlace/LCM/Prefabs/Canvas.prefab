@@ -503,6 +503,7 @@ GameObject:
   - component: {fileID: 5012630976493846428}
   - component: {fileID: 7867315147702920349}
   - component: {fileID: 7799419131495119972}
+  - component: {fileID: 2308725127707348499}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: MainUICanvas
@@ -597,6 +598,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2308725127707348499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7954193157601205133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e5c916da4ea8264cac3a26de10a7291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetSceneNames:
+  - Map
 --- !u!1001 &1576480636673730042
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1094,6 +1109,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3234444091232990651, guid: 79272d9b5f77222489acbda31e7d48b3,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 404.9854
+      objectReference: {fileID: 0}
+    - target: {fileID: 3234444091232990651, guid: 79272d9b5f77222489acbda31e7d48b3,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 143.7347
+      objectReference: {fileID: 0}
+    - target: {fileID: 3234444091232990651, guid: 79272d9b5f77222489acbda31e7d48b3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.3073
+      objectReference: {fileID: 0}
+    - target: {fileID: 3234444091232990651, guid: 79272d9b5f77222489acbda31e7d48b3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.6327
       objectReference: {fileID: 0}
     - target: {fileID: 3496049383251861224, guid: 79272d9b5f77222489acbda31e7d48b3,
         type: 3}
@@ -1770,7 +1805,30 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8800207008318000948, guid: 79272d9b5f77222489acbda31e7d48b3,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 8800207008318000948, guid: 79272d9b5f77222489acbda31e7d48b3,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: f0c0de8322f33469b8bcb92ba15733b9,
+        type: 2}
+    - target: {fileID: 8800207008318000948, guid: 79272d9b5f77222489acbda31e7d48b3,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 8800207008318000948, guid: 79272d9b5f77222489acbda31e7d48b3,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -9128841849589680303, guid: f0c0de8322f33469b8bcb92ba15733b9,
+        type: 2}
+    m_RemovedComponents:
+    - {fileID: 6662373069113161442, guid: 79272d9b5f77222489acbda31e7d48b3, type: 3}
     m_RemovedGameObjects:
     - {fileID: 3388108074775825015, guid: 79272d9b5f77222489acbda31e7d48b3, type: 3}
     m_AddedGameObjects: []
