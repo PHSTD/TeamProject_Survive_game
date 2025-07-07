@@ -110,10 +110,11 @@ public class ShelterUI : MonoBehaviour
 
     private void AutoSelectFirstEvent()
     {
-        if (EventManager.Instance.eventButtons.Count > 0)
+        if (EventManager.Instance.CurEvents.Count > 0)
         {
-            var firstEvent = EventManager.Instance.eventButtons[0];
-            firstEvent.GetComponent<Button>().onClick.Invoke();
+            var firstEvent = EventManager.Instance.CurEvents[0];
+            var eventUI = FindObjectOfType<EventUI>(); // 참조 방식에 따라 수정
+            eventUI.SetEventListTitleText(firstEvent, 0); // 첫 번째 이벤트 출력
         }
     }
 

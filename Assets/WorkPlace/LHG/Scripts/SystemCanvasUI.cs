@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-using System.Linq;
 
 
 public class SystemCanvasUI : MonoBehaviour
@@ -78,8 +77,7 @@ public class SystemCanvasUI : MonoBehaviour
         if (LoadingCanvas.activeSelf == false)
         {
             LoadingCanvas.SetActive(true);
-            var uncompleted = EventManager.Instance.GetUnCompletedEvents().Select(ctr => ctr.data).ToList(); // 따로 만들어야 함
-
+            var uncompleted = EventManager.Instance.GetUnCompletedEvents(); // 따로 만들어야 함
             dayTransitionUI.StartDayTransition(uncompleted);
         }
 

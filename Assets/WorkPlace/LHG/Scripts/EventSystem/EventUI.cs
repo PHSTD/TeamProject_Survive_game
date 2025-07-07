@@ -1,8 +1,5 @@
-using Assets.WorkPlace.LHG.Scripts.EventSystem;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,6 +38,13 @@ public class EventUI : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
+        
+
+        if(EventManager.Instance.EventUI == null)
+        {
+            EventManager.Instance.EventUI = this;
+            EventManager.Instance.EventContents = eventContent;
+        }
     }
 
 
@@ -74,33 +78,40 @@ public class EventUI : MonoBehaviour
 
         mainUIEEventRequireItemName.text = requireText;
 
-        bool temp=true;
-        temp =EventManager.Instance.eventDict[data.id].CanComplete();
-        CanCompleteBtns.gameObject.SetActive(temp);
-
-        CanNotCompleteBtns.gameObject.SetActive(!temp);
-
-        CanCompleteBtns.onClick.AddListener(() => EventManager.Instance.eventDict[data.id].CompleteEvent());
+        EventClearDetermine(data);
+        CanCompleteBtns.onClick.AddListener(() => EventClearOnUI(data));
         eventIndex = _eventIndex;
         Completed.gameObject.SetActive(false);
     }
 
-    //public void EventClearOnUI(GameEventData data)
-    //{
-    //    CanCompleteBtns.gameObject.SetActive(false);//0704�Ϸᰡ�ɹ�ư���� ��Ȱ��ȭ��ġ
-    //    Completed.gameObject.SetActive(true);
-    //    data.isComplete = true;
-    //    EventManager.Instance.EventClear(data, eventIndex);
-    //}
+
+
+    public void SetEventSubUIBtnTitle(GameObject go, int eventIndex) //����uiŸ��Ʋ����Ʈ�����
+    {
+        CanCompleteBtns.onClick.RemoveAllListeners();
+        TMP_Text text = go.GetComponentInChildren<TMP_Text>();
+        text.SetText(EventManager.Instance.CurEvents[eventIndex].title);
+        //go.GetComponent<Button>().interactable = false; �̺�Ʈ�� ������Ʈ���� �Ϸ�Ȱ��
+            //�÷�ƾƮ�� ���̶���Ʈ�� �𽺿��̺��� ������ �ٸ��� �������
+    }
+    public void EventClearDetermine(GameEventData data)
+    {
+        CanCompleteBtns.gameObject.SetActive(EventManager.Instance.DetermineEventComplete(data));
+        CanNotCompleteBtns.gameObject.SetActive(!EventManager.Instance.DetermineEventComplete(data));
+    }
+
+
+    public void EventClearOnUI(GameEventData data)
+    {
+        CanCompleteBtns.gameObject.SetActive(false);//0704�Ϸᰡ�ɹ�ư���� ��Ȱ��ȭ��ġ
+        Completed.gameObject.SetActive(true);
+        data.isComplete = true;
+        EventManager.Instance.EventClear(data, eventIndex);
+    }
 
     public void UpdateUncompletedEventList()
     {
-        if(EventManager.Instance == null)
-        {
-            return;
-        }
-
-        List<EventController> uncompleted = EventManager.Instance.eventDict.Values.Where(e => e.eventState == EventController.EventState.Valid).ToList();
+        List<GameEventData> uncompleted = EventManager.Instance.GetUnCompletedEvents();
 
         if (uncompleted.Count == 0)
         {
@@ -112,7 +123,7 @@ public class EventUI : MonoBehaviour
         string text = "완료하지 못한\n 이벤트들이 있다..:\n";
         foreach (var evt in uncompleted)
         {
-            text += $"- {evt.data.title}\n";
+            text += $"- {evt.title}\n";
         }
 
         uncompletedEventListText.text = text;
