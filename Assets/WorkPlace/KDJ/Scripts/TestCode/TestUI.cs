@@ -59,8 +59,9 @@ public class TestUI : MonoBehaviour
             _interactUI.SetActive(false);
         }
 
-        if (PlayerManager.Instance.InteractableItem == null && PlayerManager.Instance.InteractableStructure == null)
+        if (PlayerManager.Instance.InteractableItem == null && PlayerManager.Instance.InteractableStructure != null)
         {
+            if (PlayerManager.Instance.InteractableStructure.InteractCount > 0)
             _interactUI.SetActive(false);
         }
     }

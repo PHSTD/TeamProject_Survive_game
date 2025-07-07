@@ -130,6 +130,7 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     PlayerManager.Instance.InteractableItem = interactable as WorldItem;
                     PlayerManager.Instance.IsInIntercation = true;
+                    PlayerManager.Instance.InteractableStructure = null;
                 }
                 else if (interactable as Structure)
                 {
@@ -142,6 +143,7 @@ public class PlayerInteraction : MonoBehaviour
 
                     PlayerManager.Instance.InteractableStructure = interactable as Structure;
                     PlayerManager.Instance.IsInIntercation = true;
+                    PlayerManager.Instance.InteractableItem = null;
                 }
                 // 아래는 테스트 코드
                 else if (interactable as TestWorldItem)

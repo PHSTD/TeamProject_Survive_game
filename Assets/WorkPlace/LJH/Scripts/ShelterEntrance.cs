@@ -12,15 +12,17 @@ public class ShelterEntrance : Structure
     private void Update()
     {
         _timer += Time.deltaTime;
+        if (DayScriptSystem.Instance.DayScript.activeSelf)
+        {
+            Time.timeScale = 0f;
+        }
     }
 
     private void LateUpdate()
     {
-        // MenuSystem �ν��Ͻ� �Ǵ� PauseMenu�� null�̸� ���� ����
         if (MenuSystem.Instance == null || MenuSystem.Instance.PauseMenu == null)
             return;
 
-        // DayScriptSystem �ν��Ͻ� �Ǵ� DayScript�� null�̸� ���� ����
         if (DayScriptSystem.Instance == null || DayScriptSystem.Instance.DayScript == null)
             return;
 
@@ -31,6 +33,7 @@ public class ShelterEntrance : Structure
                 !MenuSystem.Instance.SettingMenu.activeSelf && !MenuSystem.Instance.GameOverDialog.activeSelf)
             {
                 Cursor.lockState = CursorLockMode.Locked;
+                Time.timeScale = 1f;
             }
         }
     }
