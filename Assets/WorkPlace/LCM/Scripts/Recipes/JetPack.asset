@@ -24,4 +24,4 @@ MonoBehaviour:
   - materialItem: {fileID: 11400000, guid: 7fdc3ce51dcc7ef4686dac2e29d61f16, type: 2}
     quantity: 1
   description: "\uC81C\uD2B8\uD329"
-  energyCost: 0
+  energyCost: 10

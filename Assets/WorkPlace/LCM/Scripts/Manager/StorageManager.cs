@@ -27,7 +27,7 @@ public class StorageManager : Singleton<StorageManager>
 
 
     //특정 아이템이 들어갈시 테스트 용도
-    //public Item Testitem;
+    public Item Testitem;
 
 
     private void Awake()
@@ -99,7 +99,7 @@ public class StorageManager : Singleton<StorageManager>
         }
 
         //특정 아이템이 들어갈시 테스트용
-        //Storage.Instance.AddItemToStorage(Testitem, 1);
+        Storage.Instance.AddItemToStorage(Testitem, 1);
         CloseStorageUI();
     }
 
