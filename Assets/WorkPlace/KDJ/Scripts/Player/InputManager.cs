@@ -52,9 +52,9 @@ public class InputManager : Singleton<InputManager>
             }
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) && PlayerManager.Instance.InteractableStructure != null)
         {
-            if (PlayerManager.Instance.InteractableStructure != null)
+            if (PlayerManager.Instance.InteractableStructure.InteractCount == 0)
             {
                 // 구조물의 경우 1초간 눌러야만 상호작용
                 PlayerManager.Instance.InteractDelay += 1 * Time.deltaTime;
@@ -65,10 +65,10 @@ public class InputManager : Singleton<InputManager>
                     PlayerManager.Instance.InteractDelay = 0f; // 상호작용 후 딜레이 초기화
                 }
             }
-            else
-            {
-                PlayerManager.Instance.InteractDelay = 0f; // 중간에 다른곳을 바라보아도 초기화
-            }
+            //else
+            //{
+            //    PlayerManager.Instance.InteractDelay = 0f; // 중간에 다른곳을 바라보아도 초기화
+            //}
         }
         else
         {
