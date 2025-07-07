@@ -52,8 +52,8 @@ public class PlayerManager : Singleton<PlayerManager>
         AirConsume();
         AkimboCheck(); // 아킴보 상태 확인
 
-        Debug.Log("InteractableItem: " + InteractableItem);
-        Debug.Log("InteractableStructure: " + InteractableStructure);
+        //Debug.Log("InteractableItem: " + InteractableItem);
+        //Debug.Log("InteractableStructure: " + InteractableStructure);
     }
 
     private void Init()
