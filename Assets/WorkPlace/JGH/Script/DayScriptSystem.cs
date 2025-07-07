@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using DesignPattern;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class DayScriptLine
@@ -106,6 +108,22 @@ public class DayScriptSystem : Singleton<DayScriptSystem>
         };
     }
 
+    private void Update()
+    {
+        try
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                ShowNextLine(); // 다음 대사로 넘기는 함수 호출
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log($"초기화 안함: {e.Message}");
+        }
+    }
+
+
     void Start()
     {
         characters = new Dictionary<string, GameObject>
@@ -176,12 +194,6 @@ public class DayScriptSystem : Singleton<DayScriptSystem>
         }
     }
 
-    // 다음 대사로 넘어가는 버튼용 함수
-    public void OnClickNext()
-    {
-        ShowNextLine();
-    }
-
 // 전체 대사를 스킵하는 버튼용 함수
     public void OnClickSkip()
     {
@@ -194,7 +206,7 @@ public class DayScriptSystem : Singleton<DayScriptSystem>
     {
         if (dialogues == null || dialogues.Count == 0)
         {
-            Debug.LogError("ShowNextLine 호출 전에 dialogues를 초기화해야 합니다.");
+            Debug.Log("ShowNextLine 호출 전에 dialogues를 초기화해야 합니다.");
             return;
         }
 
