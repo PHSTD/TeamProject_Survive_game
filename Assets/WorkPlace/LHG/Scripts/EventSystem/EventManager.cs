@@ -836,6 +836,7 @@ public class EventManager : MonoBehaviour
             eventDataString += $"{id}:{status},";
         }
         eventDataString = eventDataString.TrimEnd(',') + "}"; // 마지막 쉼표 제거
+        
         return eventDataString;
     }
     //저장

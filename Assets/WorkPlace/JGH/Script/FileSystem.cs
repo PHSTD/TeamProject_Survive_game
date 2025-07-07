@@ -333,8 +333,8 @@ public class FileSystem : Singleton<FileSystem>
     {
         if (EventManager.Instance != null)
         {
-            // string eventDataString = EventManager.Instance.GetEventDataString();
-            File.WriteAllText(eventFilePath, value);
+            string eventDataString = EventManager.Instance.GetEventDataString();
+            File.WriteAllText(eventFilePath, eventDataString);
         }
         else
         {
