@@ -25,6 +25,8 @@ public class PickupItem : Structure
 
     public override void Interact()
     {
+        InteractCount++;
+
         if (_used) return;
         _used = true;
         for (int i = 0; i < 3; i++)
