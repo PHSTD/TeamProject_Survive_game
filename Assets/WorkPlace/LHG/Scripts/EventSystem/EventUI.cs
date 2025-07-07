@@ -86,14 +86,14 @@ public class EventUI : MonoBehaviour
 
 
 
-    public void SetEventSubUIBtnTitle(GameObject go, int eventIndex) //����uiŸ��Ʋ����Ʈ�����
-    {
-        CanCompleteBtns.onClick.RemoveAllListeners();
-        TMP_Text text = go.GetComponentInChildren<TMP_Text>();
-        text.SetText(EventManager.Instance.CurEvents[eventIndex].title);
-        //go.GetComponent<Button>().interactable = false; �̺�Ʈ�� ������Ʈ���� �Ϸ�Ȱ��
-            //�÷�ƾƮ�� ���̶���Ʈ�� �𽺿��̺��� ������ �ٸ��� �������
-    }
+    // public void SetEventSubUIBtnTitle(GameObject go, int eventIndex) //����uiŸ��Ʋ����Ʈ�����
+    // {
+    //     CanCompleteBtns.onClick.RemoveAllListeners();
+    //     TMP_Text text = go.GetComponentInChildren<TMP_Text>();
+    //     text.SetText(EventManager.Instance.CurEvents[eventIndex].title);
+    //     //go.GetComponent<Button>().interactable = false; �̺�Ʈ�� ������Ʈ���� �Ϸ�Ȱ��
+    //         //�÷�ƾƮ�� ���̶���Ʈ�� �𽺿��̺��� ������ �ٸ��� �������
+    // }
     public void EventClearDetermine(GameEventData data)
     {
         CanCompleteBtns.gameObject.SetActive(EventManager.Instance.DetermineEventComplete(data));
