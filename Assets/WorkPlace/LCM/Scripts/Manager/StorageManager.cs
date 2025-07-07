@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DesignPattern;
+using UnityEngine.SceneManagement;
 
 public class StorageManager : Singleton<StorageManager>
 {
@@ -64,10 +65,9 @@ public class StorageManager : Singleton<StorageManager>
     // Start is called before the first frame update
     void Start()
     {
-        GenerateInventorySlots(numberOfSlotsToCreate);
-        if (Storage.Instance != null)
+        if (generatedStorageSlots.Count == 0) // 첫 초기화 시에만 슬롯 생성
         {
-            Storage.Instance.SetStorageSlots(generatedStorageSlots.ToArray());
+            GenerateInventorySlots(numberOfSlotsToCreate);
         }
         else
         {
@@ -100,6 +100,7 @@ public class StorageManager : Singleton<StorageManager>
 
         //특정 아이템이 들어갈시 테스트용
         //Storage.Instance.AddItemToStorage(Testitem, 1);
+        CloseStorageUI();
     }
 
 
@@ -228,6 +229,50 @@ public class StorageManager : Singleton<StorageManager>
 
 
             CarriedItem = null; // 들고 있는 아이템 해제
+        }
+    }
+
+    private void OnEnable()
+    {
+        // 씬 로드 이벤트에 등록 (StorageManager가 활성화될 때마다)
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        // 씬 로드 이벤트에서 해제 (StorageManager가 비활성화될 때)
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log($"StorageManager: 씬 '{scene.name}' 로드됨.");
+        // 각 씬 로드 시마다 UI 슬롯을 재생성하고 Storage에 할당
+        // 이 로직은 씬마다 UI가 달라질 경우 유용하며,
+        // UI가 동일하다면 단순히 Storage.Instance.LoadStorageData()만 호출해도 됩니다.
+
+        // StorageUI 패널이 비활성화되어 있다면 찾아서 활성화 (UI를 재배치하거나 초기화할 경우)
+        if (StorageUIPanel != null && !StorageUIPanel.activeSelf)
+        {
+            // StorageUIPanel.SetActive(true); // 필요한 경우 UI 활성화
+        }
+
+        // GenerateInventorySlots를 다시 호출하여 새로운 슬롯 생성 (만약 씬마다 UI가 달라진다면)
+        // 주의: 매 씬마다 슬롯을 새로 만들면 성능 부하가 있을 수 있습니다.
+        // UI가 변하지 않는다면 굳이 매번 다시 만들 필요는 없습니다.
+        // GenerateInventorySlots(numberOfSlotsToCreate); // 이 부분은 신중하게 결정
+
+        // Storage 인스턴스에 슬롯 정보 전달 (가장 중요)
+        if (Storage.Instance != null)
+        {
+            // 새로 생성된 (또는 재활성화된) 슬롯 배열을 Storage에 전달
+            // 이 호출이 LoadStorageData를 다시 트리거합니다.
+            Storage.Instance.SetStorageSlots(generatedStorageSlots.ToArray());
+            Debug.Log($"StorageManager: 씬 로드 후 Storage 인스턴스에 슬롯 정보 다시 전달 완료. ({scene.name})");
+        }
+        else
+        {
+            Debug.LogError($"Storage 인스턴스를 찾을 수 없습니다. 씬 '{scene.name}'에서 Storage 스크립트가 로드되었는지 확인하세요.");
         }
     }
 }

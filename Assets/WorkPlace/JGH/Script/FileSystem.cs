@@ -770,7 +770,7 @@ public class FileSystem : Singleton<FileSystem>
         {
             Debug.Log($"창고 아이템 복원 시작 - 아이템 수: {data.storageData.storageItems.Count}");
             
-            ClearAllStorageSlots();
+            //ClearAllStorageSlots();
             yield return null;
             
             foreach (var itemData in data.storageData.storageItems)
