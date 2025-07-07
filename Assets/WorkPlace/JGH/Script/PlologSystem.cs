@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -31,8 +32,26 @@ public class PlologSystem : MonoBehaviour
     private int currentLine = 0;
 
     private Dictionary<string, GameObject> characters;
+    
 
-    private List<DialogueLine> dialogues = new List<DialogueLine>
+
+    private void Update()
+    {
+        try
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                ShowNextLine(); // 다음 대사로 넘기는 함수 호출
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log($"초기화 안함: {e.Message}");
+        }
+    }
+
+
+        private List<DialogueLine> dialogues = new List<DialogueLine>
     {
         new DialogueLine
         {
@@ -369,11 +388,6 @@ public class PlologSystem : MonoBehaviour
         ShowNextLine();
     }
 
-    // 다음 대사로 넘어가는 버튼용 함수
-    public void OnClickNext()
-    {
-        ShowNextLine();
-    }
 
 // 전체 대사를 스킵하는 버튼용 함수
     public void OnClickSkip()

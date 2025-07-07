@@ -40,29 +40,28 @@ public class MineableResource : MonoBehaviour
 
         currentHealth -= miningDamage;
         currentHealth = Mathf.Max(currentHealth, 0f);
-        
-        SpawnLoot();
-        UpdateEmissionColor();
-        
+
         if (currentHealth <= 0f)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                SpawnLoot();
-            }
+            StartCoroutine(SpawnLootSequentially(3, 0.1f));  // 3개, 0.1초 간격
             UpdateEmissionColor();
             Debug.Log($"{gameObject.name} 채굴 완료!");
         }
+
+        // 10 % 확률
+        if (Random.value > 0.1f) return;
+        else
+        {
+            SpawnLoot();
+            UpdateEmissionColor();
+        }        
     }
 
     /* -------------------- Loot Spawn -------------------- */
     private void SpawnLoot()
     {
         if (lootPrefab == null) return;
-
-        // 10 % 확률
-        if (Random.value > 0.1f) return;
-
+        
         /* 1) 드롭 위치 계산 */
         Vector3 spawnPos;
         Vector3 launchDir;
@@ -100,7 +99,14 @@ public class MineableResource : MonoBehaviour
             rb.AddForce(launchDir * lootLaunchForce, ForceMode.Impulse);
         }
     }
-
+    private IEnumerator SpawnLootSequentially(int count, float delay)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            SpawnLoot();
+            yield return new WaitForSeconds(delay);
+        }
+    }
     private void UpdateEmissionColor()
     {
         HpCount hpCount = GetComponent<HpCount>();

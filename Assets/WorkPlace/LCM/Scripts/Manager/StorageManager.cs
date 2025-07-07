@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DesignPattern;
+using UnityEngine.SceneManagement;
 
 public class StorageManager : Singleton<StorageManager>
 {
@@ -26,7 +27,7 @@ public class StorageManager : Singleton<StorageManager>
 
 
     //특정 아이템이 들어갈시 테스트 용도
-    //public Item Testitem;
+    public Item Testitem;
 
 
     private void Awake()
@@ -64,15 +65,21 @@ public class StorageManager : Singleton<StorageManager>
     // Start is called before the first frame update
     void Start()
     {
-        GenerateInventorySlots(numberOfSlotsToCreate);
+        if (generatedStorageSlots.Count == 0) // 첫 초기화 시에만 슬롯 생성
+        {
+            GenerateInventorySlots(numberOfSlotsToCreate);
+        }
+
         if (Storage.Instance != null)
         {
             Storage.Instance.SetStorageSlots(generatedStorageSlots.ToArray());
+            Debug.Log("StorageManager: Start()에서 Storage 인스턴스에 슬롯 정보 전달 완료.");
         }
         else
         {
             Debug.LogError("Storage 인스턴스를 찾을 수 없습니다. Storage 스크립트가 씬에 있는지 확인하세요.");
         }
+
         CloseStorageUI();
         if (StorageUIPanel != null && StorageUIPanel.transform.parent != _gameCanvas.transform)
         {
@@ -99,7 +106,9 @@ public class StorageManager : Singleton<StorageManager>
         }
 
         //특정 아이템이 들어갈시 테스트용
-        //Storage.Instance.AddItemToStorage(Testitem, 1);
+        //Debug.Log("채굴기추가");
+        
+        CloseStorageUI();
     }
 
 
@@ -230,4 +239,37 @@ public class StorageManager : Singleton<StorageManager>
             CarriedItem = null; // 들고 있는 아이템 해제
         }
     }
+
+    //private void OnEnable()
+    //{
+    //    // 씬 로드 이벤트에 등록 (StorageManager가 활성화될 때마다)
+    //    SceneManager.sceneLoaded += OnSceneLoaded;
+    //}
+
+    //private void OnDisable()
+    //{
+    //    // 씬 로드 이벤트에서 해제 (StorageManager가 비활성화될 때)
+    //    SceneManager.sceneLoaded -= OnSceneLoaded;
+    //}
+
+    //private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    //{
+    //    Debug.Log($"StorageManager: 씬 '{scene.name}' 로드됨.");
+
+    //    if (StorageUIPanel != null && !StorageUIPanel.activeSelf)
+    //    {
+
+    //    }
+
+
+    //    if (Storage.Instance != null)
+    //    {
+    //        Storage.Instance.SetStorageSlots(generatedStorageSlots.ToArray());
+    //        Debug.Log($"StorageManager: 씬 로드 후 Storage 인스턴스에 슬롯 정보 다시 전달 완료. ({scene.name})");
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError($"Storage 인스턴스를 찾을 수 없습니다. 씬 '{scene.name}'에서 Storage 스크립트가 로드되었는지 확인하세요.");
+    //    }
+    //}
 }

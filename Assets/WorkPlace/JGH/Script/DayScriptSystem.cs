@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using DesignPattern;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class DayScriptLine
@@ -75,7 +77,24 @@ public class DayScriptSystem : Singleton<DayScriptSystem>
         {
             { "Day1", Day1Script() },
             { "Day2", Day2Script() },
-            { "Day3", Day3Script() },
+            { "Day3", DayRandomScript() },
+            { "Day4", DayRandomScript() },
+            { "Day5", DayRandomScript() },
+            { "Day6", DayRandomScript() },
+            { "Day7", DayRandomScript() },
+            { "Day8", DayRandomScript() },
+            { "Day9", DayRandomScript() },
+            { "Day10", DayRandomScript() },
+            { "Day11", DayRandomScript() },
+            { "Day12", DayRandomScript() },
+            { "Day13", DayRandomScript() },
+            { "Day14", DayRandomScript() },
+            { "Day15", DayRandomScript() },
+            { "Day16", DayRandomScript() },
+            { "Day17", DayRandomScript() },
+            { "Day18", DayRandomScript() },
+            { "Day19", DayRandomScript() },
+            { "Day20", DayRandomScript() },
             { "ShToBack1", ShToBack1() },
             { "ShToBack2", ShToBack2() },
             { "ShToBack3", ShToBack3() },
@@ -88,6 +107,22 @@ public class DayScriptSystem : Singleton<DayScriptSystem>
             { "EndingScript", EndingScript() },
         };
     }
+
+    private void Update()
+    {
+        try
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                ShowNextLine(); // 다음 대사로 넘기는 함수 호출
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log($"초기화 안함: {e.Message}");
+        }
+    }
+
 
     void Start()
     {
@@ -159,16 +194,11 @@ public class DayScriptSystem : Singleton<DayScriptSystem>
         }
     }
 
-    // 다음 대사로 넘어가는 버튼용 함수
-    public void OnClickNext()
-    {
-        ShowNextLine();
-    }
-
 // 전체 대사를 스킵하는 버튼용 함수
     public void OnClickSkip()
     {
         DayScript.SetActive(false);
+        Time.timeScale = 1f;
         TryGoToEndingScene();
     }
 
@@ -176,7 +206,7 @@ public class DayScriptSystem : Singleton<DayScriptSystem>
     {
         if (dialogues == null || dialogues.Count == 0)
         {
-            Debug.LogError("ShowNextLine 호출 전에 dialogues를 초기화해야 합니다.");
+            Debug.Log("ShowNextLine 호출 전에 dialogues를 초기화해야 합니다.");
             return;
         }
 
@@ -186,6 +216,7 @@ public class DayScriptSystem : Singleton<DayScriptSystem>
             return;
         }
 
+        Time.timeScale = 0f;
         if (currentLine >= dialogues.Count)
         {
             ScriptText.text = "";
@@ -194,6 +225,7 @@ public class DayScriptSystem : Singleton<DayScriptSystem>
             
             TryGoToEndingScene();
 
+            Time.timeScale = 1f;
             return;
         }
 
@@ -362,7 +394,7 @@ public class DayScriptSystem : Singleton<DayScriptSystem>
     /// 3일차 랜덤 
     /// </summary>
     /// <returns></returns>
-    public List<DayScriptEntry> Day3Script()
+    public List<DayScriptEntry> DayRandomScript()
     {
         return new List<DayScriptEntry>
         {

@@ -68,7 +68,6 @@ public class SamplePlayerController : MonoBehaviour
                 //}
                 //_interactableItem = interactable as WorldItem;
                 SamplePlayerManager.Instance.InteractableItem = interactable as WorldItem;
-                SamplePlayerManager.Instance.IsInIntercation = true;
             }
         }
         else
@@ -79,7 +78,6 @@ public class SamplePlayerController : MonoBehaviour
                 //Debug.Log("[감지 해제됨] 플레이어가 아이템 범위에서 벗어났습니다.");
                 //_interactableItem = null;
                 SamplePlayerManager.Instance.InteractableItem = null;
-                SamplePlayerManager.Instance.IsInIntercation = false;
             }
         }
     }
