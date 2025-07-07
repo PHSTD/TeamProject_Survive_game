@@ -57,12 +57,4 @@ public class GameEventData : ScriptableObject
         AlreadyComplted
     }
 
-    public enum EventIsActivated //버튼? 이벤트?
-    {
-        NotExist,
-        Activated,
-        Disabled
-    }
-
-    public EventIsActivated isActivated;//이벤트활성화여부?
 }

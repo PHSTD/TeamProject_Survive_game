@@ -54,10 +54,7 @@ public class ResultUI : MonoBehaviour
             ResetGainItemList();
             // Cursor.lockState = CursorLockMode.Locked; // 커서 잠금
             // 테스트 끝나면 아래 코드로 교체
-            SceneSystem.Instance.LoadSceneWithCallback(SceneSystem.Instance.GetShelterSceneName(), () =>
-            {
-                EventManager.Instance.OnReturnShelter.Invoke();
-            });
+            SceneSystem.Instance.LoadSceneWithDelay(SceneSystem.Instance.GetShelterSceneName());
         }
         else
         {
