@@ -146,6 +146,7 @@ public class Storage : Singleton<Storage>
                 {
                     InventoryItem newItemUI = Instantiate(_itemPrefab, slot.transform);
                     newItemUI.Initialize(itemData, slot);
+                    newItemUI.CanDrag = false;
                     RectTransform itemRectTransform = newItemUI.GetComponent<RectTransform>();
                     if (itemRectTransform != null)
                     {
@@ -350,6 +351,7 @@ public class Storage : Singleton<Storage>
                         // 새로운 InventoryItem UI 생성 및 초기화
                         InventoryItem newItemUI = Instantiate(_itemPrefab, storageSlots[i].transform);
                         newItemUI.Initialize(actualItemData, storageSlots[i]);
+                        newItemUI.CanDrag = false;
                         RectTransform itemRectTransform = newItemUI.GetComponent<RectTransform>();
                         if (itemRectTransform != null)
                         {
