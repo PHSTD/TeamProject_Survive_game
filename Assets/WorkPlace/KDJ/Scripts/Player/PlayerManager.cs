@@ -52,6 +52,9 @@ public class PlayerManager : Singleton<PlayerManager>
 
         AirConsume();
         AkimboCheck(); // 아킴보 상태 확인
+
+        Debug.Log("InteractableItem: " + InteractableItem);
+        Debug.Log("InteractableStructure: " + InteractableStructure);
     }
 
     private void Init()
@@ -86,18 +89,13 @@ public class PlayerManager : Singleton<PlayerManager>
 
         if (AirGauge.Value <= 0)
         {
-            AirGauge.Value = 0; 
+            AirGauge.Value = 0;
+            GameSystem.Instance.CheckGameOver();
+            Cursor.lockState = CursorLockMode.None;
             return;
         }
 
         AirGauge.Value -= 0.2f * Time.deltaTime;
-
-        if (AirGauge.Value <= 0)
-        {
-            // 게임오버
-            GameSystem.Instance.CheckGameOver();
-            Cursor.lockState = CursorLockMode.None;
-        }
     }
 
     public void AkimboReset()

@@ -58,6 +58,11 @@ public class TestUI : MonoBehaviour
         {
             _interactUI.SetActive(false);
         }
+
+        if (PlayerManager.Instance.InteractableItem == null && PlayerManager.Instance.InteractableStructure == null)
+        {
+            _interactUI.SetActive(false);
+        }
     }
     private void SetTextUI(double value)
     {

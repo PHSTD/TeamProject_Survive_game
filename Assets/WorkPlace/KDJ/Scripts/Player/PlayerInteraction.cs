@@ -133,6 +133,13 @@ public class PlayerInteraction : MonoBehaviour
                 }
                 else if (interactable as Structure)
                 {
+                    Structure structure = interactable as Structure;
+                    if (structure.InteractCount > 0)
+                    {
+                        PlayerManager.Instance.InteractableStructure = null;
+                        return;
+                    }
+
                     PlayerManager.Instance.InteractableStructure = interactable as Structure;
                     PlayerManager.Instance.IsInIntercation = true;
                 }
