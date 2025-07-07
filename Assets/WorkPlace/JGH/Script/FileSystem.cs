@@ -342,30 +342,23 @@ public class FileSystem : Singleton<FileSystem>
         }
     } 
     
-    public Dictionary<int, EventController> LoadEventData()
+    public Dictionary<int, int> LoadEventData()
     {
+        Dictionary<int, int> loadedData = new Dictionary<int, int>();
         if (File.Exists(eventFilePath))
         {
             string json = File.ReadAllText(eventFilePath);
 
             json = json.Trim('{', '}');
-            Dictionary<int, int> loadedData = json.Split(',')
+            loadedData = json.Split(',')
                 .Select(pair => pair.Split(':'))
                 .ToDictionary(
                     parts => int.Parse(parts[0]),
                     parts => int.Parse(parts[1])
                 );
-
-            foreach (var kvp in loadedData)
-            {
-                if (eventDict.ContainsKey(kvp.Key))
-                {
-                    eventDict[kvp.Key].SetEventState(kvp.Value);
-                }
-            }
-
+            
         }
-        return eventDict;
+        return loadedData;
     }
     
 
