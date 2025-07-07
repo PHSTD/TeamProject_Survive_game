@@ -44,23 +44,27 @@ public class ShelterEntrance : Structure
         {
             _interactCount++;
 
-            DayScriptSystem.Instance.ShowDialoguse();
 
             switch (_interactCount)
             {
+                // 파밍씬에서 결과 화면에 스크립트 나오는 문제로 인해 Case문 안으로 이동
                 case 1:
+                    DayScriptSystem.Instance.ShowDialoguse();
                     Cursor.lockState = CursorLockMode.None;
                     DayScriptSystem.Instance.SetDialogue(DayScriptSystem.Instance.ShToBack2());
                     break;
                 case 2:
+                    DayScriptSystem.Instance.ShowDialoguse();
                     Cursor.lockState = CursorLockMode.None;
                     DayScriptSystem.Instance.SetDialogue(DayScriptSystem.Instance.ShToBack2());
                     break;
                 case 3:
+                    DayScriptSystem.Instance.ShowDialoguse();
                     Cursor.lockState = CursorLockMode.None;
                     DayScriptSystem.Instance.SetDialogue(DayScriptSystem.Instance.ShToBack3());
                     break;
                 case 4:
+                    DayScriptSystem.Instance.ShowDialoguse();
                     Cursor.lockState = CursorLockMode.None;
                     DayScriptSystem.Instance.SetDialogue(DayScriptSystem.Instance.ShToBack4());
                     break; 
