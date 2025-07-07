@@ -34,14 +34,14 @@ public class PickupItem : Structure
             float roll = Random.value;
             Debug.LogWarning($"{roll}");
 
-            if (roll < 0.3f) SpawnLoot(batteryPrefab);
-            else if (roll < 0.6f) SpawnLoot(oxygenPrefab);
-            else if (roll < 0.65f) SpawnLoot(AluminumPrefab);
-            else if (roll < 0.7f) SpawnLoot(LithiumnPrefab);
-            else if (roll < 0.75f) SpawnLoot(IronPrefab);
-            else if (roll < 0.8f) SpawnLoot(QuartzPrefab);
-            else if (roll < 0.85f) SpawnLoot(TitaniumPrefab);
-            else if (roll < 0.95f) SpawnLoot(GoldPrefab);
+            if (roll < 0.4f) SpawnLoot(batteryPrefab);
+            else if (roll < 0.8f) SpawnLoot(oxygenPrefab);
+            else if (roll < 0.83f) SpawnLoot(AluminumPrefab);
+            else if (roll < 0.86f) SpawnLoot(LithiumnPrefab);
+            else if (roll < 0.89f) SpawnLoot(IronPrefab);
+            else if (roll < 0.92f) SpawnLoot(QuartzPrefab);
+            else if (roll < 0.95f) SpawnLoot(TitaniumPrefab);
+            //else if (roll < 0.98f) SpawnLoot(GoldPrefab);
             else SpawnLoot(GrappleGunPrefab);
         }
 
