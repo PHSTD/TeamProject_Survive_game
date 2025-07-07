@@ -16,8 +16,8 @@ MonoBehaviour:
   craftedAmount: 1
   requiredMaterials:
   - materialItem: {fileID: 11400000, guid: b69e1c68bbc5db9409c3041458924317, type: 2}
-    quantity: 7
+    quantity: 5
   - materialItem: {fileID: 11400000, guid: 9a5c5334c1d5f104481f4f0f1960fcc6, type: 2}
-    quantity: 4
+    quantity: 5
   description: AirTankRepairKit
-  energyCost: 7
+  energyCost: 10

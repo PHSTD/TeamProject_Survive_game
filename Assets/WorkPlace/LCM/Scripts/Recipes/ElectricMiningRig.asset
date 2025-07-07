@@ -20,8 +20,8 @@ MonoBehaviour:
   - materialItem: {fileID: 11400000, guid: 5ff1842030674094eb996057dfa06efb, type: 2}
     quantity: 1
   - materialItem: {fileID: 11400000, guid: 4ecea7ed59c25604abee38b3d917a93a, type: 2}
-    quantity: 4
+    quantity: 5
   - materialItem: {fileID: 11400000, guid: 7fdc3ce51dcc7ef4686dac2e29d61f16, type: 2}
-    quantity: 2
+    quantity: 5
   description: ElectronicMiningRig
-  energyCost: 10
+  energyCost: 20

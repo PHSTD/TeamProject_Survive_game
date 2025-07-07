@@ -20,6 +20,6 @@ MonoBehaviour:
   - materialItem: {fileID: 11400000, guid: 7928e7fd22a93114b8dbae8d13591cb5, type: 2}
     quantity: 1
   - materialItem: {fileID: 11400000, guid: 7fdc3ce51dcc7ef4686dac2e29d61f16, type: 2}
-    quantity: 3
+    quantity: 5
   description: "\uCC44\uAD74\uAE30 \uC544\uD0B4\uBCF4"
-  energyCost: 10
+  energyCost: 20
