@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,7 +52,6 @@ public class DayTransitionUI : MonoBehaviour
         Debug.Log($"남은 산소/전력/내구도 : {StatusSystem.Instance.GetOxygen()}, {StatusSystem.Instance.GetEnergy()}, {StatusSystem.Instance.GetDurability()}");
 
 
-        GameSystem.Instance.CheckGameOver();
 
         typingCoroutine = StartCoroutine(TypeText(eventText, fullEventText));
 
@@ -65,6 +65,7 @@ public class DayTransitionUI : MonoBehaviour
 
         // 5. 확인 버튼
         confirmButton.gameObject.SetActive(true);
+        
     }
 
     private IEnumerator FadeIn()
@@ -106,6 +107,10 @@ public class DayTransitionUI : MonoBehaviour
         EventManager.Instance.EventStart();
 
         // 씬 재로딩
-        SceneSystem.Instance.LoadSceneWithDelayAndSave(SceneSystem.Instance.GetShelterSceneName());
+        SceneSystem.Instance.LoadSceneWithCallback(SceneSystem.Instance.GetShelterSceneName(), () =>
+        {
+            DayScriptSystem.Instance.DayScript.SetActive(false);
+            GameSystem.Instance.CheckGameOver();
+        });
     }
 }
