@@ -75,8 +75,6 @@ public class EventUI : MonoBehaviour
         CanCompleteBtns.onClick.AddListener(() => EventClearOnUI(data));
         eventIndex = _eventIndex;
         Completed.gameObject.SetActive(false);
-
-        
     }
 
 
@@ -123,7 +121,6 @@ public class EventUI : MonoBehaviour
 
         uncompletedEventListText.text = text;
         Debug.Log("BedRoom 오늘 완료하지 못한 이벤트가 있음");
-
     }
 
 }
