@@ -16,10 +16,10 @@ MonoBehaviour:
   craftedAmount: 1
   requiredMaterials:
   - materialItem: {fileID: 11400000, guid: 27bfcdbf8961b834c8f8670c1e25fcec, type: 2}
-    quantity: 4
+    quantity: 5
   - materialItem: {fileID: 11400000, guid: 4ecea7ed59c25604abee38b3d917a93a, type: 2}
-    quantity: 4
+    quantity: 5
   - materialItem: {fileID: 11400000, guid: 2e8ad88021d9c3446aa895c9854fef94, type: 2}
-    quantity: 4
+    quantity: 5
   description: IronBar
-  energyCost: 6
+  energyCost: 10

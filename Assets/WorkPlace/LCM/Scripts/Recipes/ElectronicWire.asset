@@ -16,8 +16,8 @@ MonoBehaviour:
   craftedAmount: 1
   requiredMaterials:
   - materialItem: {fileID: 11400000, guid: b69e1c68bbc5db9409c3041458924317, type: 2}
-    quantity: 6
+    quantity: 5
   - materialItem: {fileID: 11400000, guid: 4ecea7ed59c25604abee38b3d917a93a, type: 2}
     quantity: 5
   description: ElectronicWire
-  energyCost: 3
+  energyCost: 10

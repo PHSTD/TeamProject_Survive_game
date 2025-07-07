@@ -16,6 +16,6 @@ MonoBehaviour:
   craftedAmount: 1
   requiredMaterials:
   - materialItem: {fileID: 11400000, guid: 27bfcdbf8961b834c8f8670c1e25fcec, type: 2}
-    quantity: 6
+    quantity: 5
   description: Nail
-  energyCost: 3
+  energyCost: 10

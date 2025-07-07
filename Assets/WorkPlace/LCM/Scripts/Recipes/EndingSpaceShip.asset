@@ -16,7 +16,7 @@ MonoBehaviour:
   craftedAmount: 1
   requiredMaterials:
   - materialItem: {fileID: 11400000, guid: 0e75b6e6f237d6d46acde45b0e4cd9d5, type: 2}
-    quantity: 2
+    quantity: 1
   - materialItem: {fileID: 11400000, guid: d7abb8f3714d5924eaa92f25dddd677b, type: 2}
     quantity: 1
   - materialItem: {fileID: 11400000, guid: dcb9d8f999db6c8428a5d9e970de5fe7, type: 2}
@@ -24,6 +24,6 @@ MonoBehaviour:
   - materialItem: {fileID: 11400000, guid: 2e8ad88021d9c3446aa895c9854fef94, type: 2}
     quantity: 5
   - materialItem: {fileID: 11400000, guid: 7fdc3ce51dcc7ef4686dac2e29d61f16, type: 2}
-    quantity: 2
+    quantity: 5
   description: EndingItem
-  energyCost: 10
+  energyCost: 40

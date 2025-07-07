@@ -16,10 +16,10 @@ MonoBehaviour:
   craftedAmount: 1
   requiredMaterials:
   - materialItem: {fileID: 11400000, guid: b69e1c68bbc5db9409c3041458924317, type: 2}
-    quantity: 2
+    quantity: 5
   - materialItem: {fileID: 11400000, guid: 4ecea7ed59c25604abee38b3d917a93a, type: 2}
-    quantity: 2
+    quantity: 5
   - materialItem: {fileID: 11400000, guid: d7abb8f3714d5924eaa92f25dddd677b, type: 2}
     quantity: 1
   description: Magnetic
-  energyCost: 7
+  energyCost: 10

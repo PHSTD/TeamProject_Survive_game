@@ -16,10 +16,10 @@ MonoBehaviour:
   craftedAmount: 1
   requiredMaterials:
   - materialItem: {fileID: 11400000, guid: b69e1c68bbc5db9409c3041458924317, type: 2}
-    quantity: 6
+    quantity: 5
   - materialItem: {fileID: 11400000, guid: 2e8ad88021d9c3446aa895c9854fef94, type: 2}
     quantity: 5
   - materialItem: {fileID: 11400000, guid: 7fdc3ce51dcc7ef4686dac2e29d61f16, type: 2}
     quantity: 1
   description: SunBarrier
-  energyCost: 8
+  energyCost: 10

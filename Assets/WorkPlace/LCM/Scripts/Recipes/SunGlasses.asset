@@ -16,8 +16,8 @@ MonoBehaviour:
   craftedAmount: 1
   requiredMaterials:
   - materialItem: {fileID: 11400000, guid: 0e75b6e6f237d6d46acde45b0e4cd9d5, type: 2}
-    quantity: 2
-  - materialItem: {fileID: 11400000, guid: b69e1c68bbc5db9409c3041458924317, type: 2}
     quantity: 1
+  - materialItem: {fileID: 11400000, guid: b69e1c68bbc5db9409c3041458924317, type: 2}
+    quantity: 5
   description: SunGlasses
-  energyCost: 5
+  energyCost: 10

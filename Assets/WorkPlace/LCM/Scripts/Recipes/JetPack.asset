@@ -16,12 +16,12 @@ MonoBehaviour:
   craftedAmount: 1
   requiredMaterials:
   - materialItem: {fileID: 11400000, guid: b69e1c68bbc5db9409c3041458924317, type: 2}
-    quantity: 2
+    quantity: 5
   - materialItem: {fileID: 11400000, guid: 4ecea7ed59c25604abee38b3d917a93a, type: 2}
-    quantity: 1
+    quantity: 5
   - materialItem: {fileID: 11400000, guid: 9a5c5334c1d5f104481f4f0f1960fcc6, type: 2}
-    quantity: 1
+    quantity: 5
   - materialItem: {fileID: 11400000, guid: 7fdc3ce51dcc7ef4686dac2e29d61f16, type: 2}
     quantity: 1
   description: "\uC81C\uD2B8\uD329"
-  energyCost: 10
+  energyCost: 20

@@ -16,10 +16,10 @@ MonoBehaviour:
   craftedAmount: 1
   requiredMaterials:
   - materialItem: {fileID: 11400000, guid: 27bfcdbf8961b834c8f8670c1e25fcec, type: 2}
-    quantity: 3
+    quantity: 5
   - materialItem: {fileID: 11400000, guid: b69e1c68bbc5db9409c3041458924317, type: 2}
     quantity: 5
   - materialItem: {fileID: 11400000, guid: 4ecea7ed59c25604abee38b3d917a93a, type: 2}
-    quantity: 4
+    quantity: 5
   description: RepairKit
-  energyCost: 5
+  energyCost: 10
