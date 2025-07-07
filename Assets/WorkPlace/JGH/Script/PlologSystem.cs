@@ -35,14 +35,11 @@ public class PlologSystem : MonoBehaviour
     
 
 
-    private void Update()
+    public void OnClickScreen()
     {
         try
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                ShowNextLine(); // 다음 대사로 넘기는 함수 호출
-            }
+            ShowNextLine(); // 다음 대사로 넘기는 함수 호출
         }
         catch (Exception e)
         {
