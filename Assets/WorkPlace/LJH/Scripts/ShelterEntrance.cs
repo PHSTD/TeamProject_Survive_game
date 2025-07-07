@@ -34,6 +34,7 @@ public class ShelterEntrance : Structure
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Time.timeScale = 1f;
+                Debug.Log("커서, 타임스케일 초기화됨.");
             }
         }
     }
