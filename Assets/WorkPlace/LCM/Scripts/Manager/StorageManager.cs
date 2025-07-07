@@ -240,36 +240,36 @@ public class StorageManager : Singleton<StorageManager>
         }
     }
 
-    private void OnEnable()
-    {
-        // 씬 로드 이벤트에 등록 (StorageManager가 활성화될 때마다)
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
+    //private void OnEnable()
+    //{
+    //    // 씬 로드 이벤트에 등록 (StorageManager가 활성화될 때마다)
+    //    SceneManager.sceneLoaded += OnSceneLoaded;
+    //}
 
-    private void OnDisable()
-    {
-        // 씬 로드 이벤트에서 해제 (StorageManager가 비활성화될 때)
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
+    //private void OnDisable()
+    //{
+    //    // 씬 로드 이벤트에서 해제 (StorageManager가 비활성화될 때)
+    //    SceneManager.sceneLoaded -= OnSceneLoaded;
+    //}
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        Debug.Log($"StorageManager: 씬 '{scene.name}' 로드됨.");
+    //private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    //{
+    //    Debug.Log($"StorageManager: 씬 '{scene.name}' 로드됨.");
 
-        if (StorageUIPanel != null && !StorageUIPanel.activeSelf)
-        {
+    //    if (StorageUIPanel != null && !StorageUIPanel.activeSelf)
+    //    {
 
-        }
+    //    }
 
 
-        if (Storage.Instance != null)
-        {
-            Storage.Instance.SetStorageSlots(generatedStorageSlots.ToArray());
-            Debug.Log($"StorageManager: 씬 로드 후 Storage 인스턴스에 슬롯 정보 다시 전달 완료. ({scene.name})");
-        }
-        else
-        {
-            Debug.LogError($"Storage 인스턴스를 찾을 수 없습니다. 씬 '{scene.name}'에서 Storage 스크립트가 로드되었는지 확인하세요.");
-        }
-    }
+    //    if (Storage.Instance != null)
+    //    {
+    //        Storage.Instance.SetStorageSlots(generatedStorageSlots.ToArray());
+    //        Debug.Log($"StorageManager: 씬 로드 후 Storage 인스턴스에 슬롯 정보 다시 전달 완료. ({scene.name})");
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError($"Storage 인스턴스를 찾을 수 없습니다. 씬 '{scene.name}'에서 Storage 스크립트가 로드되었는지 확인하세요.");
+    //    }
+    //}
 }
