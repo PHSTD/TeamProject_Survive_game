@@ -275,9 +275,9 @@ public class FileSystem : Singleton<FileSystem>
         return new GameData
         {
             currentDay = 1,
-            oxygenRemaining = 100f,
-            electricalEnergy = 300f,
-            shelterDurability = 100f,
+            oxygenRemaining = 60f,
+            electricalEnergy = 100f,
+            shelterDurability = 200f,
             isToDay = true
         };
     }

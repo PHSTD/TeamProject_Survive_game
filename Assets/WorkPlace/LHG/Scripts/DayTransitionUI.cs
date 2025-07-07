@@ -110,9 +110,9 @@ public class DayTransitionUI : MonoBehaviour
         StatusSystem.Instance.SetIsToDay(false);
 
         // �� ��ε�
+        // TODO: 
         SceneSystem.Instance.LoadSceneWithCallback(SceneSystem.Instance.GetShelterSceneName(), () =>
         {
-            DayScriptSystem.Instance.DayScript.SetActive(false);
             GameSystem.Instance.CheckGameOver();
         });
     }
