@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DesignPattern;
 using System;
+using System.IO;
 
 public class Storage : Singleton<Storage>
 {
@@ -18,7 +19,9 @@ public class Storage : Singleton<Storage>
     // 창고 아이템 데이터 변경을 알리는 이벤트 (UI 업데이트용)
     public event Action<int, Item, int> OnStorageSlotItemUpdated;
 
+    private Dictionary<string, Item> _allItemsDictionary = new Dictionary<string, Item>();
 
+    private string saveFilePath;
 
     private void Awake()
     {
@@ -28,13 +31,24 @@ public class Storage : Singleton<Storage>
             _storageUIRootPanel.SetActive(false); // 초기에는 숨김
         }
 
-        
+        saveFilePath = Path.Combine(Application.persistentDataPath, "storage_data.json");
+        Debug.Log("Storage Save Path: " + saveFilePath);
+
+        _allItemsDictionary.Clear();
+
+        LoadItemsFromFolder("Items/Consumable");
+
+        LoadItemsFromFolder("Items/Matarials");
+
+        LoadItemsFromFolder("Items/Tool");
     }
 
     public void SetStorageSlots(InventorySlot[] slots)
     {
         this.storageSlots = slots;
         Debug.Log($"Storage: {slots.Length}개의 슬롯이 Storage 인스턴스에 설정되었습니다.");
+
+        LoadStorageData();
     }
 
     public void AddItemToStorage(Item itemData, int quantity)
@@ -110,7 +124,7 @@ public class Storage : Singleton<Storage>
                 break;
             }
         }
-
+        SaveStorageData();
 
     }
 
@@ -184,6 +198,8 @@ public class Storage : Singleton<Storage>
         {
             Debug.LogWarning($"창고에서 '{itemData.itemName}' {quantityToRemove}개를 모두 제거할 수 없었습니다. 충분한 수량이 없습니다.");
         }
+
+        SaveStorageData();
     }
 
     public bool HasItem(Item itemData)
@@ -199,5 +215,114 @@ public class Storage : Singleton<Storage>
         }
 
         return false;
+    }
+
+    // -------- JSON 저장/불러오기 ---------------
+
+    public void SaveStorageData()
+    {
+        StorageSaveData saveData = new StorageSaveData();
+
+        foreach (var slot in storageSlots)
+        {
+            InventorySlotSaveData slotSaveData = new InventorySlotSaveData();
+            if (slot.myItemData != null && slot.myItemUI != null)
+            {
+                slotSaveData.itemInSlot = new InventoryItemSaveData
+                {
+                    itemData = new ItemSaveData { itemName = slot.myItemData.itemName }, // 아이템 이름만 저장
+                    currentQuantity = slot.myItemUI.CurrentQuantity
+                };
+            }
+            // 아이템이 없으면 itemInSlot은 null로 남음
+            saveData.slots.Add(slotSaveData);
+        }
+
+        string json = JsonUtility.ToJson(saveData, true); // true는 가독성을 위해 예쁘게 포맷팅
+        File.WriteAllText(saveFilePath, json);
+        Debug.Log("창고 데이터 저장 완료: " + saveFilePath);
+    }
+
+    public void LoadStorageData()
+    {
+        if (File.Exists(saveFilePath))
+        {
+            string json = File.ReadAllText(saveFilePath);
+            StorageSaveData loadedData = JsonUtility.FromJson<StorageSaveData>(json);
+
+            // 기존 슬롯 초기화
+            foreach (var slot in storageSlots)
+            {
+                slot.ClearSlot(); // 기존 UI 아이템 제거
+            }
+
+            for (int i = 0; i < loadedData.slots.Count; i++)
+            {
+                if (i >= storageSlots.Length)
+                {
+                    Debug.LogWarning("불러온 슬롯 개수가 현재 창고 슬롯 개수보다 많습니다. 초과된 데이터는 무시됩니다.");
+                    break;
+                }
+
+                InventorySlotSaveData slotSaveData = loadedData.slots[i];
+                if (slotSaveData.itemInSlot != null)
+                {
+                    string itemName = slotSaveData.itemInSlot.itemData.itemName;
+                    int quantity = slotSaveData.itemInSlot.currentQuantity;
+
+                    // 저장된 아이템 이름으로 실제 Item ScriptableObject 찾기
+                    if (_allItemsDictionary.TryGetValue(itemName, out Item actualItemData))
+                    {
+                        // 새로운 InventoryItem UI 생성 및 초기화
+                        InventoryItem newItemUI = Instantiate(_itemPrefab, storageSlots[i].transform);
+                        newItemUI.Initialize(actualItemData, storageSlots[i]);
+                        RectTransform itemRectTransform = newItemUI.GetComponent<RectTransform>();
+                        if (itemRectTransform != null)
+                        {
+                            itemRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 80);
+                            itemRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 80);
+                            itemRectTransform.sizeDelta = new Vector2(-10, -10);
+                        }
+                        newItemUI.CurrentQuantity = quantity;
+
+                        storageSlots[i].SetItem(newItemUI);
+                        storageSlots[i].UpdateSlotUI();
+                        OnStorageSlotItemUpdated?.Invoke(i, actualItemData, quantity);
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"아이템 '{itemName}'을(를) 찾을 수 없습니다. 해당 아이템은 로드되지 않습니다.");
+                    }
+                }
+                else
+                {
+                    // 슬롯이 비어있으면 ClearSlot()을 호출하여 UI를 비움 (이미 위에서 전체 초기화했지만 명시적으로)
+                    storageSlots[i].ClearSlot();
+                    OnStorageSlotItemUpdated?.Invoke(i, null, 0); // 비어있는 슬롯 UI 업데이트 알림
+                }
+            }
+            Debug.Log("창고 데이터 불러오기 완료.");
+        }
+        else
+        {
+            Debug.LogWarning("저장된 창고 데이터 파일이 없습니다. 새로운 창고를 시작합니다.");
+        }
+    }
+
+    private void LoadItemsFromFolder(string folderPath)
+    {
+        Item[] itemsInFolder = Resources.LoadAll<Item>(folderPath);
+        foreach (Item item in itemsInFolder)
+        {
+            if (!_allItemsDictionary.ContainsKey(item.itemName))
+            {
+                _allItemsDictionary.Add(item.itemName, item);
+            }
+            else
+            {
+                Debug.LogWarning($"중복된 아이템 이름이 발견되었습니다: {item.itemName} (경로: {folderPath}). 고유한 이름을 사용하세요.");
+            }
+        }
+        Debug.Log($"'{folderPath}'에서 {itemsInFolder.Length}개의 아이템을 로드했습니다.");
     }
 }
