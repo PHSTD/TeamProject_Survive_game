@@ -1074,6 +1074,7 @@ MonoBehaviour:
   _storageUIRootPanel: {fileID: 1482989837}
   _itemPrefab: {fileID: 8527893814601168996, guid: 1028cb616073445408e5c9f2550546dc,
     type: 3}
+  Startitem: {fileID: 11400000, guid: 3a5f26ef8db564045b084fb7dfd08f27, type: 2}
 --- !u!4 &94834924
 Transform:
   m_ObjectHideFlags: 0
@@ -16116,7 +16117,7 @@ MonoBehaviour:
   StorageUIPanel: {fileID: 1482989837}
   _gameCanvas: {fileID: 1903160403}
   draggablesTransform: {fileID: 1966520228}
-  Testitem: {fileID: 11400000, guid: 4841cc6d44b5d22469c0edaba75b11c1, type: 2}
+  Testitem: {fileID: 11400000, guid: b67b81ee75f36e54f818f78822acd46f, type: 2}
 --- !u!114 &1903160401
 MonoBehaviour:
   m_ObjectHideFlags: 0
