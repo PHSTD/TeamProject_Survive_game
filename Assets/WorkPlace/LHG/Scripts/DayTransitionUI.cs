@@ -1,3 +1,4 @@
+using Assets.WorkPlace.LHG.Scripts.EventSystem;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -26,10 +27,12 @@ public class DayTransitionUI : MonoBehaviour
     {
         gameObject.SetActive(true);
         StartCoroutine(TransitionSequence(uncompletedEvents));
+        EventManager.Instance.EventGeneration(StatusSystem.Instance.GetCurrentDay());
     }
 
     private IEnumerator TransitionSequence(List<GameEventData> events)
     {
+
         // 0. ���̵���
         yield return StartCoroutine(FadeIn());
 
@@ -44,9 +47,9 @@ public class DayTransitionUI : MonoBehaviour
             fullEventText += $"- {evt.dialogue}\n{evt.eventEffectDesc}\n\n";
         }
 
-        foreach (GameEventData data in EventManager.Instance.GetUnCompletedEvents())
+        foreach (EventController ctr in EventManager.Instance.GetUnCompletedEvents())
         {
-            EventManager.Instance.EventEffect(data);
+            EventManager.Instance.EventEffect(ctr.data);
         }
 
         Debug.Log($"���� ���/����/������ : {StatusSystem.Instance.GetOxygen()}, {StatusSystem.Instance.GetEnergy()}, {StatusSystem.Instance.GetDurability()}");
@@ -65,7 +68,7 @@ public class DayTransitionUI : MonoBehaviour
 
         // 5. Ȯ�� ��ư
         confirmButton.gameObject.SetActive(true);
-        
+
     }
 
     private IEnumerator FadeIn()

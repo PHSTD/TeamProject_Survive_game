@@ -1,8 +1,10 @@
+using Assets.WorkPlace.LHG.Scripts.EventSystem;
 using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -701,8 +703,81 @@ public class EventManager : MonoBehaviour
     public Dictionary<int, EventController> eventDict = new();
     [SerializeField] public Transform EventContents;
     public List<GameObject> eventButtons = new();
+
+    public List<EventController> GetUnCompletedEvents()
+    {
+        return eventDict.Values
+            .Where(controller => (int)controller.eventState == 1) // 활성화된 이벤트만 필터링
+            .ToList();
+    }
+
+    public void EventEffect(GameEventData data)
+    {
+        StatusSystem.Instance.SetMinusDurability(data.RandomMinusDuraValue);
+        StatusSystem.Instance.SetMinusDurability(data.MinusDurability);
+        StatusSystem.Instance.SetMinusEnergy(data.MinusEnergy);
+        StatusSystem.Instance.SetMinusOxygen(data.MinusOxygen);
+        //StatusSystem.Instance.SetMinusOxygenGainMultiplier(data.MinusOxygenEfficiency);
+        //StatusSystem.Instance.SetMinusEnergyGainMultiplier(data.MinusEnergyEfficiency);
+        Debug.Log($"완료여부 점검 : [EventEffect] {data.title}, isComplete: {data.isComplete}");
+    }
+
+    public void EventGeneration(int day)
+    {
+
+        day = day + 1;
+        Debug.Log($"{day}**으아아아*");
+
+        int3 randomRange = new int3(0, 0, 1);
+        if (day <= 3)
+        {
+            randomRange = new int3(10002, 10004, 1); // 1~3일차 이벤트
+        }
+        else if (day <= 6)
+        {
+            randomRange = new int3(10002, 10006, 2); // 4~6일차 이벤트
+        }
+        else
+        {
+            randomRange = new int3(10005, 10009, 2); // 7일차 이후 이벤트
+        }
+
+        List<EventController> vacantEvents = eventDict.Values
+            .Where(controller => (int)controller.eventState != 1)
+            .Where(controller => controller.data.id <= randomRange.y && controller.data.id >= randomRange.x) // 활성화된 이벤트만 필터링
+            .ToList();
+
+        
+
+        
+
+        for (int i = 0; i < randomRange.z; i++)
+        {
+            if (vacantEvents.Count == 0) break; // 더 이상 빈 이벤트가 없으면 종료
+            int randomIndex = Random.Range(0, vacantEvents.Count);
+            EventController selectedEvent = vacantEvents[randomIndex];
+
+            Debug.Log($"{selectedEvent.data.id}***************");
+
+            selectedEvent.ActivateEvent();
+            vacantEvents.RemoveAt(randomIndex); // 선택한 이벤트는 목록에서 제거
+        }
+    }
+
+    private void Start()
+    {
+        eventDict[10001].ActivateEvent(); 
+        RefreshButtons();
+        EventGeneration(1);
+    }
+
+
+    public static EventManager Instance { get; private set; }
     private void Awake()
     {
+        if (Instance == null)
+        Instance = this;
+
         eventButtons = EventContents.Cast<Transform>()
             .Select(t => t.gameObject)
             .ToList();
@@ -712,6 +787,15 @@ public class EventManager : MonoBehaviour
             {
                 go.SetActive(false); // 초기에는 모든 버튼을 비활성화
             }
+
+            if (go.GetComponent<EventController>() == null)
+            {
+                Debug.LogError($"EventController가 없는 버튼: {go.name}");
+                eventDict[10001] = go.GetComponent<EC10001>();
+                continue; // EventController가 없는 버튼은 무시
+            }
+
+            eventDict[go.GetComponent<EventController>().data.id] = go.GetComponent<EventController>(); //초기화
         }
     }
 
@@ -725,12 +809,12 @@ public class EventManager : MonoBehaviour
             {
                 if (controller.button.interactable == true)
                 {
-                    controller.gameObject.SetAsFirstSibling(); // 활성화된 버튼
+                    controller.gameObject.transform.SetAsFirstSibling(); // 활성화된 버튼
                 }
             }
             else
             {
-                controller.gameObject.SetAsLastSibling(); //없는 버튼, 완료된 버튼은 자동으로 중간으로
+                controller.gameObject.transform.SetAsLastSibling(); //없는 버튼, 완료된 버튼은 자동으로 중간으로
             }
         }
         //foreach eventDic에서  Eventcontroller에서 각 이벤트들의 상태에 맞춰서
@@ -748,7 +832,7 @@ public class EventManager : MonoBehaviour
         {
             int id = kvp.Key;
             EventController controller = kvp.Value;
-            int status = controller.GetEventStatus(); // 0: 미출현, 1: 활성화, 2: 완료
+            int status = (int)controller.eventState; // 0: 미출현, 1: 활성화, 2: 완료
             eventDataString += $"{id}:{status},";
         }
         eventDataString = eventDataString.TrimEnd(',') + "}"; // 마지막 쉼표 제거

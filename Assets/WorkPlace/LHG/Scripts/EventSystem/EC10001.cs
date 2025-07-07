@@ -8,10 +8,10 @@ namespace Assets.WorkPlace.LHG.Scripts.EventSystem
     public class EC10001 : EventController
     {
         public double durabilityPlusAmount = 10;
-        protected override void OnEventComplete()
+        protected override void OnEventCompleted()
         {
             // 이벤트 완료 시 추가 작업을 수행할 수 있습니다.
-            base.OnEventComplete();
+            base.OnEventCompleted();
             ActivateEvent();
             StatusSystem.Instance.SetPlusDurability(durabilityPlusAmount);
 
