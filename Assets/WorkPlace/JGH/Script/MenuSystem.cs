@@ -10,6 +10,7 @@ using Cursor = UnityEngine.Cursor;
 using Input = UnityEngine.Input;
 using Slider = UnityEngine.UI.Slider;
 using Toggle = UnityEngine.UI.Toggle;
+using System.IO;
 
 
 [Serializable]
@@ -75,8 +76,8 @@ public class MenuSystem : Singleton<MenuSystem>
     public GameObject BackToMenuDialog;
     private Button _backToMenuDialogNoButton;
     private Button _backToMenuDialogYesButton;
-    
-    
+
+    private const string STORAGE_FILE_NAME = "storage_data.json";
     // 전체화면 상태 관리
     private bool _isFullscreenEnabled = false;
     [SerializeField] private Toggle _fullscreenToggle;
@@ -649,6 +650,16 @@ public class MenuSystem : Singleton<MenuSystem>
         }
 
         FileSystem.Instance.DeleteGameSaveData();
+        string saveFilePath = Path.Combine(Application.persistentDataPath, STORAGE_FILE_NAME);
+        if (File.Exists(saveFilePath))
+        {
+            File.Delete(saveFilePath);
+            Debug.Log($"기존 저장 파일 삭제 완료: {saveFilePath}");
+        }
+        else
+        {
+            Debug.Log("삭제할 저장 파일이 없습니다. 새로운 게임을 시작합니다.");
+        }
         SceneSystem.Instance.LoadSceneWithDelay(SceneSystem.Instance.GetPlologSceneName());
         
         MainMenu.SetActive(false);

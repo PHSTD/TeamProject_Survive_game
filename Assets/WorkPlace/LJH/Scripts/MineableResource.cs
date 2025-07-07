@@ -43,10 +43,7 @@ public class MineableResource : MonoBehaviour
 
         if (currentHealth <= 0f)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                SpawnLoot();
-            }
+            StartCoroutine(SpawnLootSequentially(3, 0.1f));  // 3개, 0.1초 간격
             UpdateEmissionColor();
             Debug.Log($"{gameObject.name} 채굴 완료!");
         }
@@ -102,7 +99,14 @@ public class MineableResource : MonoBehaviour
             rb.AddForce(launchDir * lootLaunchForce, ForceMode.Impulse);
         }
     }
-
+    private IEnumerator SpawnLootSequentially(int count, float delay)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            SpawnLoot();
+            yield return new WaitForSeconds(delay);
+        }
+    }
     private void UpdateEmissionColor()
     {
         HpCount hpCount = GetComponent<HpCount>();
