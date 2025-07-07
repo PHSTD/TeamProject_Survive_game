@@ -9,10 +9,10 @@ public class StorageManager : Singleton<StorageManager>
 {
     public static InventoryItem CarriedItem;
 
-    public GameObject inventorySlotPrefab; // ÀÎº¥Åä¸® ½½·Ô ÇÁ¸®ÆÕ
-    public Transform contentParent;         // Scroll RectÀÇ Content ¿ÀºêÁ§Æ®
+    public GameObject inventorySlotPrefab; // ì¸ë²¤í† ë¦¬ ìŠ¬ë¡¯ í”„ë¦¬íŒ¹
+    public Transform contentParent;         // Scroll Rectì˜ Content ì˜¤ë¸Œì íŠ¸
 
-    public int numberOfSlotsToCreate = 50; // »ı¼ºÇÒ ½½·ÔÀÇ °³¼ö (¿¹½Ã)
+    public int numberOfSlotsToCreate = 50; // ìƒì„±í•  ìŠ¬ë¡¯ì˜ ê°œìˆ˜ (ì˜ˆì‹œ)
 
     public GameObject StorageUIPanel;
 
@@ -26,8 +26,8 @@ public class StorageManager : Singleton<StorageManager>
     public Transform draggablesTransform;
 
 
-    //Æ¯Á¤ ¾ÆÀÌÅÛÀÌ µé¾î°¥½Ã Å×½ºÆ® ¿ëµµ
-    //public Item Testitem;
+    //íŠ¹ì • ì•„ì´í…œì´ ë“¤ì–´ê°ˆì‹œ í…ŒìŠ¤íŠ¸ ìš©ë„
+    public Item Testitem;
 
 
     private void Awake()
@@ -45,7 +45,7 @@ public class StorageManager : Singleton<StorageManager>
 
             if (_gameCanvas == null)
             {
-                Debug.LogError($"'{MAIN_CANVAS_TAG}' ÅÂ±×¸¦ °¡Áø Canvas¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. ¾À¿¡ Canvas°¡ ÀÖ´ÂÁö, ÅÂ±×°¡ ¿Ã¹Ù¸¥Áö È®ÀÎÇØÁÖ¼¼¿ä.");
+                Debug.LogError($"'{MAIN_CANVAS_TAG}' íƒœê·¸ë¥¼ ê°€ì§„ Canvasë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ì”¬ì— Canvasê°€ ìˆëŠ”ì§€, íƒœê·¸ê°€ ì˜¬ë°”ë¥¸ì§€ í™•ì¸í•´ì£¼ì„¸ìš”.");
                 return;
             }
         }
@@ -53,11 +53,11 @@ public class StorageManager : Singleton<StorageManager>
         if (_gameCanvas.gameObject.scene.buildIndex != -1)
         {
             DontDestroyOnLoad(_gameCanvas.gameObject);
-            Debug.Log($"Inventory: '{MAIN_CANVAS_TAG}' ÅÂ±×¸¦ °¡Áø _gameCanvas¸¦ DontDestroyOnLoad·Î ¼³Á¤Çß½À´Ï´Ù.");
+            Debug.Log($"Inventory: '{MAIN_CANVAS_TAG}' íƒœê·¸ë¥¼ ê°€ì§„ _gameCanvasë¥¼ DontDestroyOnLoadë¡œ ì„¤ì •í–ˆìŠµë‹ˆë‹¤.");
         }
         else
         {
-            Debug.Log($"Inventory: '{MAIN_CANVAS_TAG}' ÅÂ±×¸¦ °¡Áø _gameCanvas°¡ ÀÌ¹Ì DontDestroyOnLoad ¾À¿¡ ÀÖ½À´Ï´Ù.");
+            Debug.Log($"Inventory: '{MAIN_CANVAS_TAG}' íƒœê·¸ë¥¼ ê°€ì§„ _gameCanvasê°€ ì´ë¯¸ DontDestroyOnLoad ì”¬ì— ìˆìŠµë‹ˆë‹¤.");
 
         }
 
@@ -65,13 +65,13 @@ public class StorageManager : Singleton<StorageManager>
     // Start is called before the first frame update
     void Start()
     {
-        if (generatedStorageSlots.Count == 0) // Ã¹ ÃÊ±âÈ­ ½Ã¿¡¸¸ ½½·Ô »ı¼º
+        if (generatedStorageSlots.Count == 0) // ì²« ì´ˆê¸°í™” ì‹œì—ë§Œ ìŠ¬ë¡¯ ìƒì„±
         {
             GenerateInventorySlots(numberOfSlotsToCreate);
         }
         else
         {
-            Debug.LogError("Storage ÀÎ½ºÅÏ½º¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. Storage ½ºÅ©¸³Æ®°¡ ¾À¿¡ ÀÖ´ÂÁö È®ÀÎÇÏ¼¼¿ä.");
+            Debug.LogError("Storage ì¸ìŠ¤í„´ìŠ¤ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤. Storage ìŠ¤í¬ë¦½íŠ¸ê°€ ì”¬ì— ìˆëŠ”ì§€ í™•ì¸í•˜ì„¸ìš”.");
         }
         CloseStorageUI();
         if (StorageUIPanel != null && StorageUIPanel.transform.parent != _gameCanvas.transform)
@@ -87,19 +87,19 @@ public class StorageManager : Singleton<StorageManager>
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(StorageUIPanel.GetComponent<RectTransform>());
 
-            Debug.Log("Storage ·ÎÁ÷ ¿ÀºêÁ§Æ®°¡ Canvas ¾Æ·¡·Î ÀÌµ¿µÇ¾ú½À´Ï´Ù.");
+            Debug.Log("Storage ë¡œì§ ì˜¤ë¸Œì íŠ¸ê°€ Canvas ì•„ë˜ë¡œ ì´ë™ë˜ì—ˆìŠµë‹ˆë‹¤.");
         }
         else if (StorageUIPanel != null && StorageUIPanel.transform.parent == _gameCanvas.transform)
         {
-            Debug.Log("StorageUIPanelÀº ÀÌ¹Ì Canvas ¾Æ·¡¿¡ ÀÖ½À´Ï´Ù. ´Ù½Ã ¼³Á¤ÇÒ ÇÊ¿ä°¡ ¾ø½À´Ï´Ù.");
+            Debug.Log("StorageUIPanelì€ ì´ë¯¸ Canvas ì•„ë˜ì— ìˆìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì„¤ì •í•  í•„ìš”ê°€ ì—†ìŠµë‹ˆë‹¤.");
         }
         else if (StorageUIPanel == null)
         {
-            Debug.LogError("StorageUIPanelÀÌ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù. Inspector¿¡¼­ ÇÒ´çÇØÁÖ¼¼¿ä!");
+            Debug.LogError("StorageUIPanelì´ í• ë‹¹ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤. Inspectorì—ì„œ í• ë‹¹í•´ì£¼ì„¸ìš”!");
         }
 
-        //Æ¯Á¤ ¾ÆÀÌÅÛÀÌ µé¾î°¥½Ã Å×½ºÆ®¿ë
-        //Storage.Instance.AddItemToStorage(Testitem, 1);
+        Storage.Instance.AddItemToStorage(Testitem, 1);
+
         CloseStorageUI();
     }
 
@@ -115,8 +115,8 @@ public class StorageManager : Singleton<StorageManager>
         if (StorageUIPanel != null)
         {
             StorageUIPanel.SetActive(true);
-            Debug.Log("Ã¢°í UI¸¦ ¿­¾ú½À´Ï´Ù.");
-            // ½½·Ô Àç»ı¼ºÀÌ ÇÊ¿äÇÏ´Ù¸é ¿©±â¼­ È£Ãâ (»õ·Î¿î ¾ÆÀÌÅÛÀÌ µé¾î¿ÔÀ» ¶§ µî)
+            Debug.Log("ì°½ê³  UIë¥¼ ì—´ì—ˆìŠµë‹ˆë‹¤.");
+            // ìŠ¬ë¡¯ ì¬ìƒì„±ì´ í•„ìš”í•˜ë‹¤ë©´ ì—¬ê¸°ì„œ í˜¸ì¶œ (ìƒˆë¡œìš´ ì•„ì´í…œì´ ë“¤ì–´ì™”ì„ ë•Œ ë“±)
             // GenerateInventorySlots(numberOfSlotsToCreate);
         }
     }
@@ -126,7 +126,7 @@ public class StorageManager : Singleton<StorageManager>
         if (StorageUIPanel != null)
         {
             StorageUIPanel.SetActive(false);
-            Debug.Log("Ã¢°í UI¸¦ ´İ¾Ò½À´Ï´Ù.");
+            Debug.Log("ì°½ê³  UIë¥¼ ë‹«ì•˜ìŠµë‹ˆë‹¤.");
         }
     }
 
@@ -136,20 +136,20 @@ public class StorageManager : Singleton<StorageManager>
         {
             Destroy(child.gameObject);
         }
-        generatedStorageSlots.Clear(); // ¸®½ºÆ®µµ ºñ¿öÁİ´Ï´Ù.
+        generatedStorageSlots.Clear(); // ë¦¬ìŠ¤íŠ¸ë„ ë¹„ì›Œì¤ë‹ˆë‹¤.
 
-        // »õ·Î¿î ½½·Ô »ı¼º
+        // ìƒˆë¡œìš´ ìŠ¬ë¡¯ ìƒì„±
         for (int i = 0; i < count; i++)
         {
             GameObject slotGO = Instantiate(inventorySlotPrefab, contentParent);
             InventorySlot slotComponent = slotGO.GetComponent<InventorySlot>();
             if (slotComponent != null)
             {
-                generatedStorageSlots.Add(slotComponent); // »ı¼ºµÈ InventorySlot ÄÄÆ÷³ÍÆ® ÀúÀå
+                generatedStorageSlots.Add(slotComponent); // ìƒì„±ëœ InventorySlot ì»´í¬ë„ŒíŠ¸ ì €ì¥
             }
             else
             {
-                Debug.LogError("ÀÎ½ºÅÏ½ºÈ­µÈ ½½·Ô ÇÁ¸®ÆÕ¿¡ InventorySlot ÄÄÆ÷³ÍÆ®°¡ ¾ø½À´Ï´Ù!");
+                Debug.LogError("ì¸ìŠ¤í„´ìŠ¤í™”ëœ ìŠ¬ë¡¯ í”„ë¦¬íŒ¹ì— InventorySlot ì»´í¬ë„ŒíŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤!");
             }
         }
     }
@@ -173,32 +173,32 @@ public class StorageManager : Singleton<StorageManager>
             return;
         }
 
-        // ¾ÆÀÌÅÛÀ» µé°í ÀÖ°í, ºó ½½·Ô¿¡ µå·ÓÇÏ´Â °æ¿ì (Å¬¸¯Àº ¾Æ´Ô)
+        // ì•„ì´í…œì„ ë“¤ê³  ìˆê³ , ë¹ˆ ìŠ¬ë¡¯ì— ë“œë¡­í•˜ëŠ” ê²½ìš° (í´ë¦­ì€ ì•„ë‹˜)
         // (CarriedItem != null && targetSlot.myItemUI == null)
         else if (targetSlot.myItemUI == null)
         {
-            Debug.Log("HangleItem: ºó ½½·Ô¿¡ ³»·Á³õ±â (µå·Ó)");
+            Debug.Log("HangleItem: ë¹ˆ ìŠ¬ë¡¯ì— ë‚´ë ¤ë†“ê¸° (ë“œë¡­)");
             InventorySlot originalSlot = CarriedItem.activeSlot;
 
             targetSlot.SetItem(CarriedItem);
 
 
-            //ÀÌÀü ½½·Ô Áö¿ì±â
+            //ì´ì „ ìŠ¬ë¡¯ ì§€ìš°ê¸°
             if (originalSlot != null)
             {
-                //originalSlot.ClearSlot(); // <-- ÀÌ ¶óÀÎÀ» ÁÖ¼® Ã³¸®ÇÏ°Å³ª Á¦°ÅÇØ¾ß ÇÕ´Ï´Ù!
-                originalSlot.myItemData = null; // ¿øº» ½½·ÔÀÇ µ¥ÀÌÅÍ¸¸ ºñ¿ó´Ï´Ù.
-                originalSlot.myItemUI = null;   // ¿øº» ½½·ÔÀÇ UI ÂüÁ¶¸¸ ºñ¿ó´Ï´Ù.
+                //originalSlot.ClearSlot(); // <-- ì´ ë¼ì¸ì„ ì£¼ì„ ì²˜ë¦¬í•˜ê±°ë‚˜ ì œê±°í•´ì•¼ í•©ë‹ˆë‹¤!
+                originalSlot.myItemData = null; // ì›ë³¸ ìŠ¬ë¡¯ì˜ ë°ì´í„°ë§Œ ë¹„ì›ë‹ˆë‹¤.
+                originalSlot.myItemUI = null;   // ì›ë³¸ ìŠ¬ë¡¯ì˜ UI ì°¸ì¡°ë§Œ ë¹„ì›ë‹ˆë‹¤.
 
 
             }
 
-            CarriedItem = null; // µé°í ÀÖ´Â ¾ÆÀÌÅÛ ÇØÁ¦
+            CarriedItem = null; // ë“¤ê³  ìˆëŠ” ì•„ì´í…œ í•´ì œ
         }
-        // ¾ÆÀÌÅÛÀ» µé°í ÀÖ°í, ¾ÆÀÌÅÛÀÌ ÀÖ´Â ½½·Ô¿¡ µå·ÓÇÏ´Â °æ¿ì (Å¬¸¯Àº ¾Æ´Ô)
+        // ì•„ì´í…œì„ ë“¤ê³  ìˆê³ , ì•„ì´í…œì´ ìˆëŠ” ìŠ¬ë¡¯ì— ë“œë¡­í•˜ëŠ” ê²½ìš° (í´ë¦­ì€ ì•„ë‹˜)
         else // (CarriedItem != null && targetSlot.myItemUI != null)
         {
-            // °°Àº ¾ÆÀÌÅÛÀÌ°í ½ºÅÃ °¡´ÉÇÏ´Ù¸é ½ºÅÃ ½Ãµµ
+            // ê°™ì€ ì•„ì´í…œì´ê³  ìŠ¤íƒ ê°€ëŠ¥í•˜ë‹¤ë©´ ìŠ¤íƒ ì‹œë„
             if (CarriedItem.myItem == targetSlot.myItemData && CarriedItem.myItem.isStackable)
             {
                 int transferAmount = Mathf.Min(
@@ -212,67 +212,67 @@ public class StorageManager : Singleton<StorageManager>
                     CarriedItem.CurrentQuantity -= transferAmount;
 
 
-                    if (CarriedItem.CurrentQuantity <= 0) // µé°í ÀÖ´ø ¾ÆÀÌÅÛÀÌ ¸ğµÎ ½ºÅÃµÇ¾úÀ¸¸é
+                    if (CarriedItem.CurrentQuantity <= 0) // ë“¤ê³  ìˆë˜ ì•„ì´í…œì´ ëª¨ë‘ ìŠ¤íƒë˜ì—ˆìœ¼ë©´
                     {
-                        Destroy(CarriedItem.gameObject); // µé°í ÀÖ´ø ¾ÆÀÌÅÛ UI ÆÄ±«
-                        CarriedItem = null; // µé°í ÀÖ´ø ¾ÆÀÌÅÛ ÇØÁ¦
+                        Destroy(CarriedItem.gameObject); // ë“¤ê³  ìˆë˜ ì•„ì´í…œ UI íŒŒê´´
+                        CarriedItem = null; // ë“¤ê³  ìˆë˜ ì•„ì´í…œ í•´ì œ
                     }
-                    // else: µé°í ÀÖ´ø ¾ÆÀÌÅÛÀÌ ³²¾ÆÀÖÀ¸¸é, CarriedItemÀº °è¼Ó ¸¶¿ì½º¿¡ ºÙ¾îÀÖÀ¸¹Ç·Î º°µµ Ã³¸® ºÒÇÊ¿ä.
-                    return; // ½ºÅÃ ¿Ï·á ÈÄ ÇÔ¼ö Á¾·á
+                    // else: ë“¤ê³  ìˆë˜ ì•„ì´í…œì´ ë‚¨ì•„ìˆìœ¼ë©´, CarriedItemì€ ê³„ì† ë§ˆìš°ìŠ¤ì— ë¶™ì–´ìˆìœ¼ë¯€ë¡œ ë³„ë„ ì²˜ë¦¬ ë¶ˆí•„ìš”.
+                    return; // ìŠ¤íƒ ì™„ë£Œ í›„ í•¨ìˆ˜ ì¢…ë£Œ
                 }
             }
 
-            // ½ºÅÃ ºÒ°¡´ÉÇÏ°Å³ª ½ºÅÃ °ø°£ÀÌ ¾øÀ¸¸é ¾ÆÀÌÅÛ ±³È¯
-            Debug.Log("HangleItem: ¾ÆÀÌÅÛ ±³È¯");
+            // ìŠ¤íƒ ë¶ˆê°€ëŠ¥í•˜ê±°ë‚˜ ìŠ¤íƒ ê³µê°„ì´ ì—†ìœ¼ë©´ ì•„ì´í…œ êµí™˜
+            Debug.Log("HangleItem: ì•„ì´í…œ êµí™˜");
             InventoryItem tempCarriedItem = CarriedItem;
             InventoryItem tempTargetItem = targetSlot.myItemUI;
 
 
-            CarriedItem = null; // µé°í ÀÖ´Â ¾ÆÀÌÅÛ ÇØÁ¦
+            CarriedItem = null; // ë“¤ê³  ìˆëŠ” ì•„ì´í…œ í•´ì œ
         }
     }
 
     private void OnEnable()
     {
-        // ¾À ·Îµå ÀÌº¥Æ®¿¡ µî·Ï (StorageManager°¡ È°¼ºÈ­µÉ ¶§¸¶´Ù)
+        // ì”¬ ë¡œë“œ ì´ë²¤íŠ¸ì— ë“±ë¡ (StorageManagerê°€ í™œì„±í™”ë  ë•Œë§ˆë‹¤)
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
-        // ¾À ·Îµå ÀÌº¥Æ®¿¡¼­ ÇØÁ¦ (StorageManager°¡ ºñÈ°¼ºÈ­µÉ ¶§)
+        // ì”¬ ë¡œë“œ ì´ë²¤íŠ¸ì—ì„œ í•´ì œ (StorageManagerê°€ ë¹„í™œì„±í™”ë  ë•Œ)
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log($"StorageManager: ¾À '{scene.name}' ·ÎµåµÊ.");
-        // °¢ ¾À ·Îµå ½Ã¸¶´Ù UI ½½·ÔÀ» Àç»ı¼ºÇÏ°í Storage¿¡ ÇÒ´ç
-        // ÀÌ ·ÎÁ÷Àº ¾À¸¶´Ù UI°¡ ´Ş¶óÁú °æ¿ì À¯¿ëÇÏ¸ç,
-        // UI°¡ µ¿ÀÏÇÏ´Ù¸é ´Ü¼øÈ÷ Storage.Instance.LoadStorageData()¸¸ È£ÃâÇØµµ µË´Ï´Ù.
+        Debug.Log($"StorageManager: ì”¬ '{scene.name}' ë¡œë“œë¨.");
+        // ê° ì”¬ ë¡œë“œ ì‹œë§ˆë‹¤ UI ìŠ¬ë¡¯ì„ ì¬ìƒì„±í•˜ê³  Storageì— í• ë‹¹
+        // ì´ ë¡œì§ì€ ì”¬ë§ˆë‹¤ UIê°€ ë‹¬ë¼ì§ˆ ê²½ìš° ìœ ìš©í•˜ë©°,
+        // UIê°€ ë™ì¼í•˜ë‹¤ë©´ ë‹¨ìˆœíˆ Storage.Instance.LoadStorageData()ë§Œ í˜¸ì¶œí•´ë„ ë©ë‹ˆë‹¤.
 
-        // StorageUI ÆĞ³ÎÀÌ ºñÈ°¼ºÈ­µÇ¾î ÀÖ´Ù¸é Ã£¾Æ¼­ È°¼ºÈ­ (UI¸¦ Àç¹èÄ¡ÇÏ°Å³ª ÃÊ±âÈ­ÇÒ °æ¿ì)
+        // StorageUI íŒ¨ë„ì´ ë¹„í™œì„±í™”ë˜ì–´ ìˆë‹¤ë©´ ì°¾ì•„ì„œ í™œì„±í™” (UIë¥¼ ì¬ë°°ì¹˜í•˜ê±°ë‚˜ ì´ˆê¸°í™”í•  ê²½ìš°)
         if (StorageUIPanel != null && !StorageUIPanel.activeSelf)
         {
-            // StorageUIPanel.SetActive(true); // ÇÊ¿äÇÑ °æ¿ì UI È°¼ºÈ­
+            // StorageUIPanel.SetActive(true); // í•„ìš”í•œ ê²½ìš° UI í™œì„±í™”
         }
 
-        // GenerateInventorySlots¸¦ ´Ù½Ã È£ÃâÇÏ¿© »õ·Î¿î ½½·Ô »ı¼º (¸¸¾à ¾À¸¶´Ù UI°¡ ´Ş¶óÁø´Ù¸é)
-        // ÁÖÀÇ: ¸Å ¾À¸¶´Ù ½½·ÔÀ» »õ·Î ¸¸µé¸é ¼º´É ºÎÇÏ°¡ ÀÖÀ» ¼ö ÀÖ½À´Ï´Ù.
-        // UI°¡ º¯ÇÏÁö ¾Ê´Â´Ù¸é ±»ÀÌ ¸Å¹ø ´Ù½Ã ¸¸µé ÇÊ¿ä´Â ¾ø½À´Ï´Ù.
-        // GenerateInventorySlots(numberOfSlotsToCreate); // ÀÌ ºÎºĞÀº ½ÅÁßÇÏ°Ô °áÁ¤
+        // GenerateInventorySlotsë¥¼ ë‹¤ì‹œ í˜¸ì¶œí•˜ì—¬ ìƒˆë¡œìš´ ìŠ¬ë¡¯ ìƒì„± (ë§Œì•½ ì”¬ë§ˆë‹¤ UIê°€ ë‹¬ë¼ì§„ë‹¤ë©´)
+        // ì£¼ì˜: ë§¤ ì”¬ë§ˆë‹¤ ìŠ¬ë¡¯ì„ ìƒˆë¡œ ë§Œë“¤ë©´ ì„±ëŠ¥ ë¶€í•˜ê°€ ìˆì„ ìˆ˜ ìˆìŠµë‹ˆë‹¤.
+        // UIê°€ ë³€í•˜ì§€ ì•ŠëŠ”ë‹¤ë©´ êµ³ì´ ë§¤ë²ˆ ë‹¤ì‹œ ë§Œë“¤ í•„ìš”ëŠ” ì—†ìŠµë‹ˆë‹¤.
+        // GenerateInventorySlots(numberOfSlotsToCreate); // ì´ ë¶€ë¶„ì€ ì‹ ì¤‘í•˜ê²Œ ê²°ì •
 
-        // Storage ÀÎ½ºÅÏ½º¿¡ ½½·Ô Á¤º¸ Àü´Ş (°¡Àå Áß¿ä)
+        // Storage ì¸ìŠ¤í„´ìŠ¤ì— ìŠ¬ë¡¯ ì •ë³´ ì „ë‹¬ (ê°€ì¥ ì¤‘ìš”)
         if (Storage.Instance != null)
         {
-            // »õ·Î »ı¼ºµÈ (¶Ç´Â ÀçÈ°¼ºÈ­µÈ) ½½·Ô ¹è¿­À» Storage¿¡ Àü´Ş
-            // ÀÌ È£ÃâÀÌ LoadStorageData¸¦ ´Ù½Ã Æ®¸®°ÅÇÕ´Ï´Ù.
+            // ìƒˆë¡œ ìƒì„±ëœ (ë˜ëŠ” ì¬í™œì„±í™”ëœ) ìŠ¬ë¡¯ ë°°ì—´ì„ Storageì— ì „ë‹¬
+            // ì´ í˜¸ì¶œì´ LoadStorageDataë¥¼ ë‹¤ì‹œ íŠ¸ë¦¬ê±°í•©ë‹ˆë‹¤.
             Storage.Instance.SetStorageSlots(generatedStorageSlots.ToArray());
-            Debug.Log($"StorageManager: ¾À ·Îµå ÈÄ Storage ÀÎ½ºÅÏ½º¿¡ ½½·Ô Á¤º¸ ´Ù½Ã Àü´Ş ¿Ï·á. ({scene.name})");
+            Debug.Log($"StorageManager: ì”¬ ë¡œë“œ í›„ Storage ì¸ìŠ¤í„´ìŠ¤ì— ìŠ¬ë¡¯ ì •ë³´ ë‹¤ì‹œ ì „ë‹¬ ì™„ë£Œ. ({scene.name})");
         }
         else
         {
-            Debug.LogError($"Storage ÀÎ½ºÅÏ½º¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. ¾À '{scene.name}'¿¡¼­ Storage ½ºÅ©¸³Æ®°¡ ·ÎµåµÇ¾ú´ÂÁö È®ÀÎÇÏ¼¼¿ä.");
+            Debug.LogError($"Storage ì¸ìŠ¤í„´ìŠ¤ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ì”¬ '{scene.name}'ì—ì„œ Storage ìŠ¤í¬ë¦½íŠ¸ê°€ ë¡œë“œë˜ì—ˆëŠ”ì§€ í™•ì¸í•˜ì„¸ìš”.");
         }
     }
 }
