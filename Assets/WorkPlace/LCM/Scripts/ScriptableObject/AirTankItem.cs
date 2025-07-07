@@ -16,7 +16,8 @@ public class AirTankItem : ConsumableItem
         Debug.Log($"{OxygenRestoreAmount}산소를 회복했습니다.");
         if (PlayerManager.Instance != null)
         {
-            PlayerManager.Instance.AirGauge.Value += (OxygenRestoreAmount/2);
+            PlayerManager.Instance.AirGauge.Value += (OxygenRestoreAmount/3);
+            Inventory.Instance.RemoveItem(this, 1);
         }
         else
         {

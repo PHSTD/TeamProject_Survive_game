@@ -89,7 +89,7 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             // SampleUIManager (또는 Inventory)의 SetItemDescription 메서드를 호출하여 설명을 표시합니다.
             if(SampleUIManager.Instance != null)
             SampleUIManager.Instance.SetItemDescription(myItem.description);
-            SampleUIManager.Instance.SetItemName(myItem.name);
+            SampleUIManager.Instance.SetItemName(myItem.itemName);
         }
         
     }
