@@ -23,6 +23,11 @@ public class Storage : Singleton<Storage>
 
     private string saveFilePath;
 
+    public Item Startitem;
+
+    private bool _initialItemsAdded = false;
+
+
     private void Awake()
     {
         base.Awake();
@@ -77,11 +82,31 @@ public class Storage : Singleton<Storage>
 
     public void SetStorageSlots(InventorySlot[] slots)
     {
+
         this.storageSlots = slots;
         Debug.Log($"Storage: {slots.Length}개의 슬롯이 Storage 인스턴스에 설정되었습니다.");
 
         LoadStorageData();
+        if (!HasItem(Startitem) && !_initialItemsAdded)
+        {
+            Debug.Log("저장된 데이터 값이 없으므로 초기아이템 추가");
+            AddInitialItems();
+            _initialItemsAdded = true;
+            SaveStorageData();
+        }
     }
+
+    private void AddInitialItems()
+    {
+        if (Startitem != null)
+        {
+            AddItemToStorage(Startitem, 1);
+            Debug.Log($"초기 아이템 추가: {Startitem.itemName} x 1");
+        }
+        // 필요한 만큼 초기 아이템을 여기에 추가하세요.
+        // 예: AddItemToStorage(yourOtherInitialItem, yourOtherInitialQuantity);
+    }
+
 
     public void AddItemToStorage(Item itemData, int quantity)
     {
@@ -253,6 +278,7 @@ public class Storage : Singleton<Storage>
 
     public void SaveStorageData()
     {
+
         StorageSaveData saveData = new StorageSaveData();
 
         foreach (var slot in storageSlots)
@@ -269,6 +295,7 @@ public class Storage : Singleton<Storage>
             // 아이템이 없으면 itemInSlot은 null로 남음
             saveData.slots.Add(slotSaveData);
         }
+
 
         string json = JsonUtility.ToJson(saveData, true); // true는 가독성을 위해 예쁘게 포맷팅
         File.WriteAllText(saveFilePath, json);
