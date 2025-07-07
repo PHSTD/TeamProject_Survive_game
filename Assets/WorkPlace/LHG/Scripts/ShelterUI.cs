@@ -48,8 +48,8 @@ public class ShelterUI : MonoBehaviour
             case 2:
                 DayScriptSystem.Instance.SetDialogue(DayScriptSystem.Instance.Day2Script());
                 break;
-            case 3:
-                DayScriptSystem.Instance.SetDialogue(DayScriptSystem.Instance.Day3Script());
+            default:
+                DayScriptSystem.Instance.SetDialogue(DayScriptSystem.Instance.DayRandomScript());
                 break;
         }
     }
