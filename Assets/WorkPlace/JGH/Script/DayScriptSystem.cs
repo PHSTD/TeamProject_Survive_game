@@ -213,7 +213,6 @@ public class DayScriptSystem : Singleton<DayScriptSystem>
             return;
         }
 
-        Time.timeScale = 0f;
         if (currentLine >= dialogues.Count)
         {
             ScriptText.text = "";
