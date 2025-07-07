@@ -766,9 +766,9 @@ public class EventManager : MonoBehaviour
 
     private void Start()
     {
-        eventDict[10001].ActivateEvent(); 
+        eventDict[10001].ActivateEvent();
+        loaodEventData(FileSystem.Instance.LoadEventData());
         RefreshButtons();
-        EventGeneration(1);
     }
 
 
@@ -824,8 +824,42 @@ public class EventManager : MonoBehaviour
     {
         eventButtons.ForEach(button => button.SetActive(false));
     }
+    public void SaveEventData()
+    {
+        FileSystem.Instance.SaveEventData(GetEventDataString()); 
+        Debug.Log("이벤트 데이터 저장 완료: " + GetEventDataString());
+    }
+    public void LoadEventData(Dictionary<int, int> saveData)
+    {
+        foreach (var kvp in saveData)
+        {
+            int id = kvp.Key;
+            int status = kvp.Value; // 0: 미출현, 1: 활성화, 2: 완료
 
-    public string GetEventDataString()
+            if (eventDict.TryGetValue(id, out EventController controller))
+            {
+                switch (status)
+                {
+                    case 1:
+                        controller.ActivateEvent();
+                        break;
+                    case 2:
+                        controller.ActivateEvent();
+                        controller.eventState = EventController.EventState.Done;
+                        break;
+                    default:
+                        Debug.LogWarning($"알 수 없는 이벤트 상태: {status} for ID: {id}");
+                        break;
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"이벤트 ID {id}를 찾을 수 없습니다.");
+            }
+        }
+        RefreshButtons();
+    }
+    private string GetEventDataString()
     {
         string eventDataString = "{";
         foreach (var kvp in eventDict)
@@ -836,7 +870,7 @@ public class EventManager : MonoBehaviour
             eventDataString += $"{id}:{status},";
         }
         eventDataString = eventDataString.TrimEnd(',') + "}"; // 마지막 쉼표 제거
-        
+
         return eventDataString;
     }
     //저장

@@ -27,7 +27,7 @@ public class DayTransitionUI : MonoBehaviour
     {
         gameObject.SetActive(true);
         StartCoroutine(TransitionSequence(uncompletedEvents));
-        EventManager.Instance.EventGeneration(StatusSystem.Instance.GetCurrentDay());
+        EventManager.Instance.SaveEventData();
     }
 
     private IEnumerator TransitionSequence(List<GameEventData> events)
