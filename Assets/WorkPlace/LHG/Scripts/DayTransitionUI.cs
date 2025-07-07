@@ -30,14 +30,14 @@ public class DayTransitionUI : MonoBehaviour
 
     private IEnumerator TransitionSequence(List<GameEventData> events)
     {
-        // 0. ÆäÀÌµåÀÎ
+        // 0. ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½
         yield return StartCoroutine(FadeIn());
 
-        // 1. ³¯Â¥ Ç¥½Ã
+        // 1. ï¿½ï¿½Â¥ Ç¥ï¿½ï¿½
         int day = StatusSystem.Instance.GetCurrentDay();
-        yield return StartCoroutine(TypeText(dayText, $"[{day}ÀÏÂ÷]"));
+        yield return StartCoroutine(TypeText(dayText, $"[{day}ï¿½ï¿½ï¿½ï¿½]"));
 
-        // 2. ÀÌº¥Æ® È¿°ú Ãâ·Â
+        // 2. ï¿½Ìºï¿½Æ® È¿ï¿½ï¿½ ï¿½ï¿½ï¿½
         string fullEventText = "";
         foreach (var evt in events)
         {
@@ -49,13 +49,13 @@ public class DayTransitionUI : MonoBehaviour
             EventManager.Instance.EventEffect(data);
         }
 
-        Debug.Log($"³²Àº »ê¼Ò/Àü·Â/³»±¸µµ : {StatusSystem.Instance.GetOxygen()}, {StatusSystem.Instance.GetEnergy()}, {StatusSystem.Instance.GetDurability()}");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : {StatusSystem.Instance.GetOxygen()}, {StatusSystem.Instance.GetEnergy()}, {StatusSystem.Instance.GetDurability()}");
 
 
 
         typingCoroutine = StartCoroutine(TypeText(eventText, fullEventText));
 
-        // 4. ½ºÅµ ±â´É
+        // 4. ï¿½ï¿½Åµ ï¿½ï¿½ï¿½
         isSkipping = false;
         while (typingCoroutine != null)
         {
@@ -63,7 +63,7 @@ public class DayTransitionUI : MonoBehaviour
             yield return null;
         }
 
-        // 5. È®ÀÎ ¹öÆ°
+        // 5. È®ï¿½ï¿½ ï¿½ï¿½Æ°
         confirmButton.gameObject.SetActive(true);
         
     }
@@ -99,14 +99,11 @@ public class DayTransitionUI : MonoBehaviour
 
     private void OnConfirmClicked()
     {
-        // ´ÙÀ½³¯ Ã³¸®
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
         StatusSystem.Instance.NextCurrentDay();
         StatusSystem.Instance.SetIsToDay(false);
 
-        // »õ·Î¿î ÀÌº¥Æ® ½ÃÀÛ
-        EventManager.Instance.EventStart();
-
-        // ¾À Àç·Îµù
+        // ï¿½ï¿½ ï¿½ï¿½Îµï¿½
         SceneSystem.Instance.LoadSceneWithCallback(SceneSystem.Instance.GetShelterSceneName(), () =>
         {
             DayScriptSystem.Instance.DayScript.SetActive(false);

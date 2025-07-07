@@ -25,19 +25,26 @@ public class EventUI : MonoBehaviour
     [Header("subUI ��ũ�Ѻ��� content")]
     public GameObject[] EventListContent;
 
+    [SerializeField] private Transform eventContent;
+
     private int eventIndex;
 
     private void OnEnable()
     {
-        EventUI.Instance?.UpdateUncompletedEventList();
+        Instance?.UpdateUncompletedEventList();
     }
 
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
-        else
-            Destroy(gameObject);
+        
+
+        if(EventManager.Instance.EventUI == null)
+        {
+            EventManager.Instance.EventUI = this;
+            EventManager.Instance.EventContents = eventContent;
+        }
     }
 
 
