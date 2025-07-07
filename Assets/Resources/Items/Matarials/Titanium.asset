@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Titanium
   m_EditorClassIdentifier: 
   itemName: Titanium
-  description: "\uD2F0\uD0C0\uB284\uC774\uB2E4."
+  description: "\uAC00\uBCCD\uACE0 \uB2E8\uB2E8\uD55C \uAD11\uBB3C\uC774\uB2E4. \uC5EC\uB7EC
+    \uC720\uC6A9\uD55C \uC544\uC774\uD15C \uC81C\uC791\uC5D0 \uC0AC\uC6A9\uB41C\uB2E4."
   icon: {fileID: 21300000, guid: ac95252b53ab5eb4380f21aa0882c35c, type: 3}
   WorldPrefab: {fileID: 1644994281815225958, guid: 523da8c48cb98864db2f0bf7fc76ff13,
     type: 3}
