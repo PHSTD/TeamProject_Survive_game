@@ -21,11 +21,6 @@ public class EventController : MonoBehaviour
         Done
     }
 
-    public void SetEventState(int state)
-    {
-        eventState = (EventState)state;
-    }
-
     public EventState eventState = EventState.Invalid;
 
     private void Awake()
