@@ -10,12 +10,10 @@ public class JetPack : MonoBehaviour
     [SerializeField] private GameObject _smokeEffect2;
 
     private float _airUsage = 0;
-    private AudioSource _audioSource;
 
     private void Start()
     {
         //PlayerManager.Instance.CanUseJetpack = _isJetPackOn;
-        _audioSource = GetComponent<AudioSource>();
         if (PlayerManager.Instance.CanUseJetpack)
         {
             _jetPackObject.SetActive(true);
@@ -32,7 +30,8 @@ public class JetPack : MonoBehaviour
         {
             _smokeEffect1.SetActive(true);
             _smokeEffect2.SetActive(true);
-            AudioSystem.Instance.PlaySFXByName("Sfx_JetpackSound");
+            if (!AudioSystem.Instance.IsSFXPlaying)
+                AudioSystem.Instance.PlaySFXByName("Sfx_JetpackSound");
         }
         else
         {
@@ -51,7 +50,7 @@ public class JetPack : MonoBehaviour
         if (PlayerManager.Instance.AirGauge.Value <= 0) return Vector3.zero;
 
         // 제트팩 사용 시 0.5초당 플레이어의 산소 1 감소
-        
+
         _airUsage += 2f * Time.deltaTime;
 
         if (_airUsage >= 0.1f)
