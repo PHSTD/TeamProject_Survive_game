@@ -36,6 +36,7 @@ public class SystemCanvasUI : MonoBehaviour
         if (SceneSystem.Instance != null)
         {
             SceneSystem.Instance.LoadSceneWithDelay(SceneSystem.Instance.GetFarmingSceneName());
+            EventManager.Instance.SaveTempEventData();
         }
         else
         {
@@ -54,6 +55,7 @@ public class SystemCanvasUI : MonoBehaviour
         if (SceneSystem.Instance != null)
         {
             SceneSystem.Instance.LoadSceneWithDelay(SceneSystem.Instance.GetFarmingSceneName());
+            EventManager.Instance.SaveTempEventData();
         }
         else
         {
