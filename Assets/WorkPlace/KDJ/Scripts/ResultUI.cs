@@ -39,6 +39,7 @@ public class ResultUI : MonoBehaviour
             Canvas.enabled = true;
             UpdateResultUI();
             Cursor.lockState = CursorLockMode.None; // 커서 잠금 해제
+            Cursor.visible = true; // 커서 보이기
         }
         else
         {
