@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Assets.WorkPlace.LHG.Scripts.EventSystem;
 using DesignPattern;
 
 
@@ -24,6 +23,7 @@ public class FileSystem : Singleton<FileSystem>
     private string settingPath;
     private string gameDataPath;
     private string eventFilePath;
+    private string eventTempFilePath;
     
     public Dictionary<int, EventController> eventDict = new();
 
@@ -54,6 +54,7 @@ public class FileSystem : Singleton<FileSystem>
             settingPath = Path.Combine(dataDirectory, "setting.json");
             gameDataPath = Path.Combine(dataDirectory, "gamedata.json");
             eventFilePath = Path.Combine(dataDirectory, "event.json");
+            eventTempFilePath = Path.Combine(dataDirectory, "eventTemp.json");
 
             // 핵심 수정 3: 초기화 성공 표시
             isInitialized = true;
@@ -359,6 +360,39 @@ public class FileSystem : Singleton<FileSystem>
         }
         return loadedData;
     }
+    
+    
+      // 밤, 죽을때
+      public void SaveTempEventData(string value)
+        {
+            if (EventManager.Instance != null)
+            {
+                File.WriteAllText(eventTempFilePath, value);
+            }
+            else
+            {
+                Debug.LogError("EventManager 인스턴스가 존재하지 않습니다!");
+            }
+        } 
+        
+        public Dictionary<int, int> LoadTempEventData()
+        {
+            Dictionary<int, int> loadedData = new Dictionary<int, int>();
+            if (File.Exists(eventTempFilePath))
+            {
+                string json = File.ReadAllText(eventTempFilePath);
+    
+                json = json.Trim('{', '}');
+                loadedData = json.Split(',')
+                    .Select(pair => pair.Split(':'))
+                    .ToDictionary(
+                        parts => int.Parse(parts[0]),
+                        parts => int.Parse(parts[1])
+                    );
+                
+            }
+            return loadedData;
+        }
     
 
     // ========== 파일 존재 확인 메서드들 ==========
