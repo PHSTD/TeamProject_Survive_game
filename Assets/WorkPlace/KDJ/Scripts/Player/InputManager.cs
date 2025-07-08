@@ -20,6 +20,7 @@ public class InputManager : Singleton<InputManager>
 
     private void Update()
     {
+        Debug.Log("SFX 실행여부 :" + AudioSystem.Instance.IsSFXPlaying);
         // 타이틀부터 플레이하는 경우
         if (SceneSystem.Instance?.GetCurrentSceneName() == SceneSystem.Instance?.GetFarmingSceneName())
         {
@@ -27,9 +28,27 @@ public class InputManager : Singleton<InputManager>
             return;
         }
 
+
+
         // 테스트로 사용하는 경우
         if (PlayerManager.Instance.Player != null)
             PlayerInput(); // 플레이어 입력 처리
+    }
+
+    private void LateUpdate()
+    {
+        if (IsUsingTool)
+        {
+            if (!AudioSystem.Instance.IsSFXPlaying)
+            {
+                AudioSystem.Instance.PlaySFXByName("Sfx_DrillSound");
+                Debug.Log("SFX 실행됨: Sfx_DrillSound");
+            }
+        }
+        else
+        {
+            AudioSystem.Instance.StopSFX(); // 툴 사용이 아닐 때 SFX 정지
+        }
     }
 
     private void PlayerInput()
@@ -180,6 +199,8 @@ public class InputManager : Singleton<InputManager>
             IsUsingTool = true; // 마이닝 애니메이션 실행을 위한 bool 값 설정
 
             float itemUseRate = 0.1f;
+
+
 
             if (PlayerManager.Instance.IsAkimbo)
             {

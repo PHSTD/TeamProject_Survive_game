@@ -41,7 +41,7 @@ public class AudioSystem : Singleton<AudioSystem>
     public float SFXVolume = 0.5f;
     
     
-    public bool isPlayed = false;
+    public bool IsSFXPlaying => _sfxAudioSource.isPlaying;
 
     protected override void Awake()
     {
