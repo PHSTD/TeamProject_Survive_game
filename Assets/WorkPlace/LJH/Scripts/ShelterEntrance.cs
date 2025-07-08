@@ -26,17 +26,26 @@ public class ShelterEntrance : Structure
         if (DayScriptSystem.Instance == null || DayScriptSystem.Instance.DayScript == null)
             return;
 
-        if (!MenuSystem.Instance.PauseMenu.activeSelf)
+        // TODO: 7/8
+        if (DayScriptSystem.Instance.DayScript.activeSelf)
         {
-            if (!DayScriptSystem.Instance.DayScript.activeSelf && Cursor.lockState != CursorLockMode.Locked &&
-                !SampleUIManager.Instance.inventoryPanel.activeSelf && !_resultUI.Canvas.enabled && !MenuSystem.Instance.BackToMenuDialog.activeSelf &&
-                !MenuSystem.Instance.SettingMenu.activeSelf && !MenuSystem.Instance.GameOverDialog.activeSelf)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Time.timeScale = 1f;
-                Debug.Log("커서, 타임스케일 초기화됨.");
-            }
+            Cursor.lockState = CursorLockMode.None;
         }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        // if (!MenuSystem.Instance.PauseMenu.activeSelf)
+        // {
+        //     if (!DayScriptSystem.Instance.DayScript.activeSelf && Cursor.lockState != CursorLockMode.Locked &&
+        //         !SampleUIManager.Instance.inventoryPanel.activeSelf && !_resultUI.Canvas.enabled && !MenuSystem.Instance.BackToMenuDialog.activeSelf &&
+        //         !MenuSystem.Instance.SettingMenu.activeSelf && !MenuSystem.Instance.GameOverDialog.activeSelf)
+        //     {
+        //         Cursor.lockState = CursorLockMode.Locked;
+        //         Time.timeScale = 1f;
+        //         Debug.Log("커서, 타임스케일 초기화됨.");
+        //     }
+        // }
     }
 
     public override void Interact()
