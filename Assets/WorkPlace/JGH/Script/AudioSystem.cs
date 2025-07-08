@@ -183,6 +183,17 @@ public class AudioSystem : Singleton<AudioSystem>
             _bgmAudioSource.Stop();
         }
     }
+    
+    /// <summary>
+    /// 재생 중인 SFX 정지
+    /// </summary>
+    public void StopSFX()
+    {
+        if (_sfxAudioSource != null && _sfxAudioSource.isPlaying)
+        {
+            _sfxAudioSource.Stop();
+        }
+    }
 
     /// <summary>
     /// 이름으로 BGM 재생
