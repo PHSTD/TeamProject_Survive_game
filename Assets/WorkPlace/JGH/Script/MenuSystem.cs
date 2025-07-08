@@ -638,17 +638,21 @@ public class MenuSystem : Singleton<MenuSystem>
 
     private void OnClickNewGameOk()
     {
+        GameData statData = FileSystem.Instance.GetDefaultGameData();
+        
+        
         if (StatusSystem.Instance != null)
         {
-            StatusSystem.Instance.SetCurrentDay(1);
-            StatusSystem.Instance.SetOxygen(60f);
-            StatusSystem.Instance.SetEnergy(100f);
-            StatusSystem.Instance.SetDurability(200f);
-            StatusSystem.Instance.SetIsToDay(false);
+            StatusSystem.Instance.SetCurrentDay(statData.currentDay);
+            StatusSystem.Instance.SetOxygen(statData.oxygenRemaining);
+            StatusSystem.Instance.SetEnergy(statData.electricalEnergy);
+            StatusSystem.Instance.SetDurability(statData.shelterDurability);
+            StatusSystem.Instance.SetIsToDay(statData.isToDay);
             Debug.Log("StatusSystem 기본값으로 초기화 완료");
         }
-
+        
         FileSystem.Instance.DeleteGameSaveData();
+
         string saveFilePath = Path.Combine(Application.persistentDataPath, STORAGE_FILE_NAME);
         if (File.Exists(saveFilePath))
         {

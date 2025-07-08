@@ -105,15 +105,16 @@ public class DayTransitionUI : MonoBehaviour
 
     private void OnConfirmClicked()
     {
-        // ������ ó��
+        // 다음날
         StatusSystem.Instance.NextCurrentDay();
+        // 탐색 여부 초기화
         StatusSystem.Instance.SetIsToDay(false);
-
-        // �� ��ε�
-        // TODO: 
-        SceneSystem.Instance.LoadSceneWithCallback(SceneSystem.Instance.GetShelterSceneName(), () =>
-        {
-            GameSystem.Instance.CheckGameOver();
-        });
+        // 쉘터 씬으로 이동
+        SceneSystem.Instance.LoadSceneWithDelayAndSave(SceneSystem.Instance.GetShelterSceneName());
+        
+        GameSystem.Instance.CheckGameOver();
+        // SceneSystem.Instance.LoadSceneWithCallback(SceneSystem.Instance.GetShelterSceneName(), () =>
+        // {
+        // });
     }
 }
