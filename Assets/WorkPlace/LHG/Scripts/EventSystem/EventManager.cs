@@ -50,6 +50,7 @@ public class EventManager : MonoBehaviour
     // {
     //     StartCoroutine(DelayedEventStart());
     //     OnReturnShelter.AddListener(OnReturnShelterScene);
+    
     // }
 
     // private IEnumerator DelayedEventStart()
@@ -765,17 +766,22 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    private void Start()
+     private void Start()
     {
         eventDict[10001].ActivateEvent();
-        LoadEventData(FileSystem.Instance.LoadEventData());
-        if(eventButtons[0].GetComponent<Button>().interactable == true)
-        {
-            eventButtons[0].GetComponent<Button>().onClick.Invoke();
-        }
+
+        if(StatusSystem.Instance.GetIsToDay() == false)
+            LoadEventData(FileSystem.Instance.LoadEventData());
+        else
+            LoadEventData(FileSystem.Instance.LoadTempEventData());
         RefreshButtons();
     }
-
+     
+    public void SaveTempEventData()
+    {
+        FileSystem.Instance.SaveTempEventData(GetEventDataString());
+        Debug.Log("임시 이벤트 데이터 저장 완료: " + GetEventDataString());
+    }
 
     public static EventManager Instance { get; private set; }
     private void Awake()
@@ -803,6 +809,7 @@ public class EventManager : MonoBehaviour
             eventDict[go.GetComponent<EventController>().data.id] = go.GetComponent<EventController>(); //초기화
         }
     }
+    
 
     private void RefreshButtons() //지금까지 버튼을 새로 만들필요 있을 때, 만드는 거 대신 이거 호출만 하면 된다.
     {
