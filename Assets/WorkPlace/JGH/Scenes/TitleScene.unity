@@ -1148,6 +1148,10 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 9c569df2ed9584dd0a93a2e142d972f3, type: 3}
   - name: Sfx_SpaceShipEngine
     audioClip: {fileID: 8300000, guid: 496a39f0072a64ba7bbdade50cb29d71, type: 3}
+  - name: Sfx_DrillSound
+    audioClip: {fileID: 8300000, guid: 1842450c2b0a24b78abb3afdec0697f6, type: 3}
+  - name: Sfx_JetpackSound
+    audioClip: {fileID: 8300000, guid: e0a7102bf9ca0457880064381450c567, type: 3}
   BGMVolume: 0.5
   SFXVolume: 0.5
 --- !u!4 &1050666140
@@ -1668,6 +1672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1596db838844830a7afd42aad309e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventTempFilePath: 
 --- !u!1 &1785491181 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5271345711539790978, guid: bf6c691c39f6a4e0a8e77161d38c20a9,
