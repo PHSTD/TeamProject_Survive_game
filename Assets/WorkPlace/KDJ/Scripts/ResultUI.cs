@@ -80,19 +80,19 @@ public class ResultUI : MonoBehaviour
         
         _remainO2.text = remainO2.ToString("F1");
         _O2TankMulti.text = oxygenTankCount.ToString();
-        _allO2Tank.text = (oxygenTankCount * 10).ToString("F1"); // 산소탱크 하나당 10의 산소를 제공
-        _allGainO2.text = (remainO2 + oxygenTankCount * 10).ToString("F1");
+        _allO2Tank.text = (oxygenTankCount * 15).ToString("F1"); // 산소탱크 하나당 10의 산소를 제공
+        _allGainO2.text = (remainO2 + oxygenTankCount * 15).ToString("F1");
         _shelterRemainO2.text = shelterO2.ToString("F1");
-        _shelterResultO2.text = (shelterO2 + (remainO2 + oxygenTankCount * 10)).ToString("F1");
+        _shelterResultO2.text = (shelterO2 + (remainO2 + oxygenTankCount * 15)).ToString("F1");
 
         // 전력 출력
         double shelterElec = StatusSystem.Instance.GetEnergy();
 
         _batteryMulti.text = batteryCount.ToString();
-        _allBattery.text = (batteryCount * 10).ToString("F1"); // 배터리 하나당 10의 전력을 제공
-        _allGainElec.text = (batteryCount * 10).ToString("F1");
+        _allBattery.text = (batteryCount * 15).ToString("F1"); // 배터리 하나당 10의 전력을 제공
+        _allGainElec.text = (batteryCount * 15).ToString("F1");
         _shelterRemainElec.text = shelterElec.ToString("F1");
-        _shelterResultElec.text = (shelterElec + (batteryCount * 10)).ToString("F1");
+        _shelterResultElec.text = (shelterElec + (batteryCount * 15)).ToString("F1");
 
         // 산소만 적용
         StatusSystem.Instance.SetPlusOxygen(remainO2);
