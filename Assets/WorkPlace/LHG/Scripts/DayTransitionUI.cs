@@ -1,6 +1,7 @@
 using Assets.WorkPlace.LHG.Scripts.EventSystem;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -124,6 +125,12 @@ public class DayTransitionUI : MonoBehaviour
         StatusSystem.Instance.SetIsToDay(false);
         // 쉘터 씬으로 이동
         SceneSystem.Instance.LoadSceneWithDelayAndSave(SceneSystem.Instance.GetShelterSceneName());
+        
+        if (File.Exists(FileSystem.Instance.eventTempFilePath))
+        {
+            File.Delete(FileSystem.Instance.eventTempFilePath);
+            Debug.Log("이벤트 임시 데이터 삭제 완료");
+        } 
         
         GameSystem.Instance.CheckGameOver();
         // SceneSystem.Instance.LoadSceneWithCallback(SceneSystem.Instance.GetShelterSceneName(), () =>
