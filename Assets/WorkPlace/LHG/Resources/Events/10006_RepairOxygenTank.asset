@@ -27,8 +27,8 @@ MonoBehaviour:
   MinusEnergy: 0
   PlusEnergyEfficiency: 0
   MinusEnergyEfficiency: 0
-  PlusOxygenEfficiency: 0.2
-  MinusOxygenEfficiency: 0.2
+  PlusOxygenEfficiency: 0.8
+  MinusOxygenEfficiency: 0
   requiredItemA: {fileID: 11400000, guid: 495b1522ea8b325449850d716daff447, type: 2}
   requiredAmountA: 1
   requiredItemB: {fileID: 0}
