@@ -270,7 +270,7 @@ public class FileSystem : Singleton<FileSystem>
         }
     }
 
-    private GameData GetDefaultGameData()
+    public GameData GetDefaultGameData()
     {
         return new GameData
         {
