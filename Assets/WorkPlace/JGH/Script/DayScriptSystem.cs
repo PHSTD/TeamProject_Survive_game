@@ -382,7 +382,7 @@ public class DayScriptSystem : Singleton<DayScriptSystem>
         {
             new DayScriptEntry(new DayScriptLine { speaker = "강민준 박사", text = "팀원들은 잘 살아서 돌아가고 있을까?", appear = new List<string> { "Gang" }, bgm = "", sfx = "", background = "Images/Backgrounds/TransparentWhite", characterImages = new Dictionary<string, string>() }),
             new DayScriptEntry(new DayScriptLine { speaker = "강민준 박사", text = "AI가 잘 안내하고 있겠지? 내가 끝까지 있었어야 했는데…", appear = new List<string> { "Gang" }, bgm = "", sfx = "", background = "", characterImages = new Dictionary<string, string>() }),
-            new DayScriptEntry(new DayScriptLine { speaker = "강민준 박사", text = "언젠간….팀원들을 만날 수 있을까…?", appear = new List<string> { "Gang" }, bgm = "", sfx = "", background = "", characterImages = new Dictionary<string, string>() }),
+            new DayScriptEntry(new DayScriptLine { speaker = "강민준 박사", text = "아냐, 이 화성 어딘가에 탈출할 수 있는 방법이 있을꺼야!", appear = new List<string> { "Gang" }, bgm = "", sfx = "", background = "", characterImages = new Dictionary<string, string>() }),
         };
     }
 
