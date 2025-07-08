@@ -143,6 +143,8 @@ public class ShelterUI : MonoBehaviour
             go.SetActive(false);
         }
         Tabs[TabID].SetActive(true);
+        
+        AutoSelectFirstEvent();
     }
 
 

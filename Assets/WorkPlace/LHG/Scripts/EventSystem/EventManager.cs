@@ -8,6 +8,7 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -768,6 +769,10 @@ public class EventManager : MonoBehaviour
     {
         eventDict[10001].ActivateEvent();
         LoadEventData(FileSystem.Instance.LoadEventData());
+        if(eventButtons[0].GetComponent<Button>().interactable == true)
+        {
+            eventButtons[0].GetComponent<Button>().onClick.Invoke();
+        }
         RefreshButtons();
     }
 
