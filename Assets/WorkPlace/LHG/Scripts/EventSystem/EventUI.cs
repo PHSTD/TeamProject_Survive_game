@@ -109,7 +109,7 @@ public class EventUI : MonoBehaviour
             return;
         }
 
-        string text = "완료하지 못한\n 이벤트들이 있다..\n";
+        string text = "완료하지 못한\n 이벤트를 살펴보자.\n";
         foreach (var evt in uncompleted)
         {
             text += $"- {evt.data.title}\n";
