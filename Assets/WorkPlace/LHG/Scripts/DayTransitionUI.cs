@@ -41,7 +41,7 @@ public class DayTransitionUI : MonoBehaviour
 
     // 날짜 표시
         int day = StatusSystem.Instance.GetCurrentDay();
-        yield return StartCoroutine(TypeText(dayText, $"[{day}����]"));
+        yield return StartCoroutine(TypeText(dayText, $"[{day}일차]"));
 
         // 이벤트 효과 출력
         string fullEventText = "";

@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class EventController : MonoBehaviour
 {
     public GameEventData data;
@@ -28,6 +29,7 @@ public class EventController : MonoBehaviour
     public EventState eventState = EventState.Invalid;
 
     private void Awake()
+
     {
         data = eventData;
         button = GetComponent<Button>();
@@ -138,6 +140,5 @@ public class EventController : MonoBehaviour
 
         }
     }
-}
 
 

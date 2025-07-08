@@ -24,7 +24,7 @@ public class SystemCanvasUI : MonoBehaviour
     // 사용안하는 함수 주석처리
     public void ExitWithEnoughOxygenTextDisplay()
     {
-        ExitWithNotEnoughOxygenText[0].SetText($"산소를 {StatusSystem.Instance.GetOxygen()} 소모해 탐색에 나갑니다.\r\n탐색은 하루에 한번만 가능합니다.\r\n정말로 나가시겠습니까?");
+        ExitWithNotEnoughOxygenText[0].SetText($"산소를 {(int)StatusSystem.Instance.GetOxygen()} 소모해 탐색에 나갑니다.\r\n탐색은 하루에 한번만 가능합니다.\r\n정말로 나가시겠습니까?");
     }
     
     public void ExitNotWithEnoughOxygenYes()
