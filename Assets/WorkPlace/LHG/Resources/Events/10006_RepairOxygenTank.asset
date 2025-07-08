@@ -34,5 +34,4 @@ MonoBehaviour:
   requiredItemB: {fileID: 0}
   requiredAmountB: 0
   reactiveAfterEnd: 0
-  dialogue: "\uC0B0\uC18C\uD0F1\uD06C\uB97C \uC218\uB9AC\uD558\uC9C0 \uBABB\uD588\uB2E4."
-  isActivated: 0
+  dialogue: 
