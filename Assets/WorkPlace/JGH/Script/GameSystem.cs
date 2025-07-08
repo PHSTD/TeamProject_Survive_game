@@ -189,10 +189,15 @@ public class GameSystem : Singleton<GameSystem>
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            // 파밍씬 제외하고 게임 오버 시 파일 제거
+            if (SceneSystem.Instance.GetCurrentSceneName() != SceneSystem.Instance.GetFarmingSceneName())
+            {
+                FileSystem.Instance.DeleteGameSaveData();
+            }
             
             DayScriptSystem.Instance.DayScript.SetActive(false);
             MenuSystem.Instance.GameOverDialog.SetActive(true);
-            
         }
     }
     

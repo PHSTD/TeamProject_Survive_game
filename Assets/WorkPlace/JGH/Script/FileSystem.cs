@@ -270,7 +270,7 @@ public class FileSystem : Singleton<FileSystem>
         }
     }
 
-    private GameData GetDefaultGameData()
+    public GameData GetDefaultGameData()
     {
         return new GameData
         {
@@ -278,7 +278,7 @@ public class FileSystem : Singleton<FileSystem>
             oxygenRemaining = 60f,
             electricalEnergy = 100f,
             shelterDurability = 200f,
-            isToDay = true
+            isToDay = false
         };
     }
 

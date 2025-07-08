@@ -32,15 +32,18 @@ public class DayTransitionUI : MonoBehaviour
 
     private IEnumerator TransitionSequence(List<GameEventData> events)
     {
-
-        // 0. ���̵���
+        Debug.Log("[DayTransitionUI] TransitionSequence 시작");
+        // 페이드 인
+        Debug.Log("[DayTransitionUI] 페이드 인 시작");
         yield return StartCoroutine(FadeIn());
 
-        // 1. ��¥ ǥ��
-        int day = StatusSystem.Instance.GetCurrentDay();
-        yield return StartCoroutine(TypeText(dayText, $"[{day}����]"));
+         Debug.Log("[DayTransitionUI] 페이드 인 완료");
 
-        // 2. �̺�Ʈ ȿ�� ���
+    // 날짜 표시
+        int day = StatusSystem.Instance.GetCurrentDay();
+        yield return StartCoroutine(TypeText(dayText, $"[{day}일차]"));
+
+        // 이벤트 효과 출력
         string fullEventText = "";
         foreach (var evt in events)
         {
@@ -49,28 +52,38 @@ public class DayTransitionUI : MonoBehaviour
 
         foreach (EventController ctr in EventManager.Instance.GetUnCompletedEvents())
         {
+            Debug.Log($"[DayTransitionUI] 이벤트 효과 적용: {ctr.data.dialogue}");
             EventManager.Instance.EventEffect(ctr.data);
         }
 
-        Debug.Log($"���� ���/����/������ : {StatusSystem.Instance.GetOxygen()}, {StatusSystem.Instance.GetEnergy()}, {StatusSystem.Instance.GetDurability()}");
+    Debug.Log($"[DayTransitionUI] 현재 상태 - 산소: {StatusSystem.Instance.GetOxygen()}, 에너지: {StatusSystem.Instance.GetEnergy()}, 내구도: {StatusSystem.Instance.GetDurability()}");
 
+    typingCoroutine = StartCoroutine(TypeText(eventText, fullEventText));
+    Debug.Log("[DayTransitionUI] 이벤트 텍스트 출력 완료");
 
-
-        typingCoroutine = StartCoroutine(TypeText(eventText, fullEventText));
-
-        // 4. ��ŵ ���
-        isSkipping = false;
-        while (typingCoroutine != null)
+    // 스킵 대기
+    Debug.Log("[DayTransitionUI] 스킵 대기 시작");
+    isSkipping = false;
+    while (typingCoroutine != null)
+    {
+        if (Input.GetMouseButtonDown(0)) 
         {
-            if (Input.GetMouseButtonDown(0)) isSkipping = true;
-            yield return null;
+            Debug.Log("[DayTransitionUI] 스킵 버튼 클릭 감지");
+            isSkipping = true;
         }
+        yield return null;
+    }
+    Debug.Log("[DayTransitionUI] 스킵 대기 완료");
 
-        // 5. Ȯ�� ��ư
-        confirmButton.gameObject.SetActive(true);
+    // 확인 버튼 활성화
+    Debug.Log("[DayTransitionUI] 확인 버튼 활성화");
+    confirmButton.gameObject.SetActive(true);
 
-        EventManager.Instance.EventGeneration(StatusSystem.Instance.GetCurrentDay());
-        EventManager.Instance.SaveEventData();
+    EventManager.Instance.EventGeneration(StatusSystem.Instance.GetCurrentDay());
+    Debug.Log("[DayTransitionUI] 이벤트 생성 완료");
+
+    EventManager.Instance.SaveEventData();
+    Debug.Log("[DayTransitionUI] 이벤트 데이터 저장 완료");
 
     }
 
@@ -105,15 +118,16 @@ public class DayTransitionUI : MonoBehaviour
 
     private void OnConfirmClicked()
     {
-        // ������ ó��
+        // 다음날
         StatusSystem.Instance.NextCurrentDay();
+        // 탐색 여부 초기화
         StatusSystem.Instance.SetIsToDay(false);
-
-        // �� ��ε�
-        // TODO: 
-        SceneSystem.Instance.LoadSceneWithCallback(SceneSystem.Instance.GetShelterSceneName(), () =>
-        {
-            GameSystem.Instance.CheckGameOver();
-        });
+        // 쉘터 씬으로 이동
+        SceneSystem.Instance.LoadSceneWithDelayAndSave(SceneSystem.Instance.GetShelterSceneName());
+        
+        GameSystem.Instance.CheckGameOver();
+        // SceneSystem.Instance.LoadSceneWithCallback(SceneSystem.Instance.GetShelterSceneName(), () =>
+        // {
+        // });
     }
 }
