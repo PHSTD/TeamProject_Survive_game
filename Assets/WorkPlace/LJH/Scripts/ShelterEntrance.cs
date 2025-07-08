@@ -34,6 +34,7 @@ public class ShelterEntrance : Structure
                 !MenuSystem.Instance.SettingMenu.activeSelf && !MenuSystem.Instance.GameOverDialog.activeSelf)
             {
                 Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false; // 커서 숨김
                 Time.timeScale = 1f;
                 Debug.Log("커서, 타임스케일 초기화됨.");
             }
@@ -46,6 +47,7 @@ public class ShelterEntrance : Structure
             MenuSystem.Instance.SettingMenu.activeSelf || MenuSystem.Instance.GameOverDialog.activeSelf || MenuSystem.Instance.PauseMenu.activeSelf)
             {
                 Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true; // 커서 보임
                 Debug.Log("커서 잠금 해제됨.");
             }
         }
