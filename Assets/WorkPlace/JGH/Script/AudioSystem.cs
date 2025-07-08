@@ -39,6 +39,9 @@ public class AudioSystem : Singleton<AudioSystem>
     // 볼륨 값 저장용
     public float BGMVolume = 0.5f;
     public float SFXVolume = 0.5f;
+    
+    
+    public bool isPlayed = false;
 
     protected override void Awake()
     {
