@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
         PlayerEffect();
         Move(ref PlayerManager.Instance.Speed);
         Jump(ref PlayerManager.Instance.Speed);
-        Run(ref PlayerManager.Instance.Speed);
+        //Run(ref PlayerManager.Instance.Speed);w
         CameraLimit();
         _playerInteraction.FindCloseInteractableItemAtRay();
     }
