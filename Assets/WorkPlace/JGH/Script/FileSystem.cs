@@ -23,7 +23,7 @@ public class FileSystem : Singleton<FileSystem>
     private string settingPath;
     private string gameDataPath;
     private string eventFilePath;
-    private string eventTempFilePath;
+    public string eventTempFilePath;
     
     public Dictionary<int, EventController> eventDict = new();
 
@@ -361,8 +361,6 @@ public class FileSystem : Singleton<FileSystem>
         return loadedData;
     }
     
-    
-      // 밤, 죽을때
       public void SaveTempEventData(string value)
         {
             if (EventManager.Instance != null)
@@ -422,6 +420,12 @@ public class FileSystem : Singleton<FileSystem>
             {
                 File.Delete(eventFilePath);
                 Debug.Log("이벤트 데이터 삭제 완료");
+            }        
+            
+            if (File.Exists(eventTempFilePath))
+            {
+                File.Delete(eventTempFilePath);
+                Debug.Log("이벤트 임시 데이터 삭제 완료");
             }        
             
         }
