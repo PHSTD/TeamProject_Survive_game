@@ -48,7 +48,7 @@ public class DayTransitionUI : MonoBehaviour
         string fullEventText = "";
         foreach (var evt in events)
         {
-            fullEventText += $"- {evt.dialogue}\n{evt.eventEffectDesc}\n\n";
+            fullEventText += $"{evt.dialogue}\n{evt.eventEffectDesc}\n\n";
         }
 
         foreach (EventController ctr in EventManager.Instance.GetUnCompletedEvents())
