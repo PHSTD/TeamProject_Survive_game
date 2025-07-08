@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class ShelterEntrance : Structure
@@ -27,7 +28,7 @@ public class ShelterEntrance : Structure
             return;
 
         // TODO: 7/8
-        if (DayScriptSystem.Instance.DayScript.activeSelf)
+        if (DayScriptSystem.Instance.DayScript.activeSelf || MenuSystem.Instance.PauseMenu.activeSelf || MenuSystem.Instance.SettingMenu.activeSelf || MenuSystem.Instance.BackToMenuDialog.activeSelf)
         {
             Cursor.lockState = CursorLockMode.None;
         }
