@@ -144,20 +144,12 @@ public class MenuSystem : Singleton<MenuSystem>
         bool isCurrentlyActive = PauseMenu.activeSelf;
 
         AllMenuFalse(); // 항상 모든 메뉴 비활성화
-        
 
         if (!isCurrentlyActive)
         {
             // PauseMenu를 열 때
             PauseMenu.SetActive(true);
             Time.timeScale = 0f;
-            
-            if (SceneSystem.Instance.GetCurrentSceneName() == SceneSystem.Instance.GetFarmingSceneName())
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true; 
-            }
-            
         }
         else
         {
@@ -165,17 +157,11 @@ public class MenuSystem : Singleton<MenuSystem>
             PauseMenu.SetActive(false);
             Time.timeScale = 1f;
             
-            if (SceneSystem.Instance.GetCurrentSceneName() == SceneSystem.Instance.GetFarmingSceneName())
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = true; 
-            }
-            else
+            if (SceneSystem.Instance.GetCurrentSceneName() != SceneSystem.Instance.GetFarmingSceneName())
             {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true; 
             }
-
         }
     }
 
