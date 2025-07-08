@@ -6,8 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.WorkPlace.LHG.Scripts.EventSystem
-{
+
     public class EventController : MonoBehaviour
     {
         public GameEventData data;
@@ -130,6 +129,5 @@ namespace Assets.WorkPlace.LHG.Scripts.EventSystem
             }
         }
     }
-}
 
 
