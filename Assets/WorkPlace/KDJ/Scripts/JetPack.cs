@@ -10,11 +10,12 @@ public class JetPack : MonoBehaviour
     [SerializeField] private GameObject _smokeEffect2;
 
     private float _airUsage = 0;
+    private AudioSource _audioSource;
 
     private void Start()
     {
         //PlayerManager.Instance.CanUseJetpack = _isJetPackOn;
-
+        _audioSource = GetComponent<AudioSource>();
         if (PlayerManager.Instance.CanUseJetpack)
         {
             _jetPackObject.SetActive(true);
@@ -31,11 +32,13 @@ public class JetPack : MonoBehaviour
         {
             _smokeEffect1.SetActive(true);
             _smokeEffect2.SetActive(true);
+            AudioSystem.Instance.PlaySFXByName("Sfx_JetpackSound");
         }
         else
         {
             _smokeEffect1.SetActive(false);
             _smokeEffect2.SetActive(false);
+            AudioSystem.Instance.StopSFX();
         }
     }
 
