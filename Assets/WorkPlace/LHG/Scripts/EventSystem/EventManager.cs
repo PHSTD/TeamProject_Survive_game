@@ -50,7 +50,7 @@ public class EventManager : MonoBehaviour
     // {
     //     StartCoroutine(DelayedEventStart());
     //     OnReturnShelter.AddListener(OnReturnShelterScene);
-    
+
     // }
 
     // private IEnumerator DelayedEventStart()
@@ -715,10 +715,29 @@ public class EventManager : MonoBehaviour
 
     public void EventEffect(GameEventData data)
     {
+        //만약 산소, 전력 획득효율감소 이벤트가 valid상태라면 eventstate=1이라면, GetuncompletedEvents?
+        //statusSystem.Instance.setplusOxygen함수를 *= 0.8 이렇게 되려나
+        //이렇게 짜면 eventeffect매일 밤마다 0.8씩 계속 곱해질듯?
+
+        //if (data.id[10005].eventstate==1)
+        //{
+        //    StatusSystem.Instance.SetPlusEnergy *= 0.8; 
+        //}
+
+        //if (data.id[10006].eventstate=valid)
+        //{
+        //    StatusSystem.Instance.SetPlusOxygen *= 0.8;
+        //    (StatusSystem.Instance.SetPlusOxygen)0.8 *= this;
+        //}
+
         StatusSystem.Instance.SetMinusDurability(data.RandomMinusDuraValue);
         StatusSystem.Instance.SetMinusDurability(data.MinusDurability);
         StatusSystem.Instance.SetMinusEnergy(data.MinusEnergy);
         StatusSystem.Instance.SetMinusOxygen(data.MinusOxygen);
+
+        StatusSystem.Instance.SetEfficiencyPlusEnergy(data.PlusEnergyEfficiency);
+        StatusSystem.Instance.SetEfficiencyPlusOxygen(data.PlusOxygenEfficiency);
+
         //StatusSystem.Instance.SetMinusOxygenGainMultiplier(data.MinusOxygenEfficiency);
         //StatusSystem.Instance.SetMinusEnergyGainMultiplier(data.MinusEnergyEfficiency);
         Debug.Log($"완료여부 점검 : [EventEffect] {data.title}, isComplete: {data.isComplete}");
@@ -749,9 +768,9 @@ public class EventManager : MonoBehaviour
             .Where(controller => controller.data.id <= randomRange.y && controller.data.id >= randomRange.x) // 활성화된 이벤트만 필터링
             .ToList();
 
-        
 
-        
+
+
 
         for (int i = 0; i < randomRange.z; i++)
         {
@@ -766,17 +785,17 @@ public class EventManager : MonoBehaviour
         }
     }
 
-     private void Start()
+    private void Start()
     {
         eventDict[10001].ActivateEvent();
 
-        if(StatusSystem.Instance.GetIsToDay() == false)
+        if (StatusSystem.Instance.GetIsToDay() == false)
             LoadEventData(FileSystem.Instance.LoadEventData());
         else
             LoadEventData(FileSystem.Instance.LoadTempEventData());
         RefreshButtons();
     }
-     
+
     public void SaveTempEventData()
     {
         FileSystem.Instance.SaveTempEventData(GetEventDataString());
@@ -787,7 +806,7 @@ public class EventManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
-        Instance = this;
+            Instance = this;
 
         eventButtons = EventContents.Cast<Transform>()
             .Select(t => t.gameObject)
@@ -809,7 +828,7 @@ public class EventManager : MonoBehaviour
             eventDict[go.GetComponent<EventController>().data.id] = go.GetComponent<EventController>(); //초기화
         }
     }
-    
+
 
     private void RefreshButtons() //지금까지 버튼을 새로 만들필요 있을 때, 만드는 거 대신 이거 호출만 하면 된다.
     {
@@ -838,7 +857,7 @@ public class EventManager : MonoBehaviour
     }
     public void SaveEventData()
     {
-        FileSystem.Instance.SaveEventData(GetEventDataString()); 
+        FileSystem.Instance.SaveEventData(GetEventDataString());
         Debug.Log("이벤트 데이터 저장 완료: " + GetEventDataString());
     }
     public void LoadEventData(Dictionary<int, int> saveData)
